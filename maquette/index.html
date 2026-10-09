@@ -97,6 +97,10 @@
     width: 96px; height: 96px; border-radius: 50%; object-fit: cover;
     border: 2px solid var(--accent); margin-bottom: 24px; background: var(--line);
   }
+  .photo.placeholder {
+    display: grid; place-items: center;
+    font-family: var(--mono); font-size: 1.6rem; color: var(--accent);
+  }
   .chips { display: flex; flex-wrap: wrap; gap: 8px; }
   .chip { font-family: var(--mono); font-size: .78rem; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--line); }
 
@@ -180,7 +184,8 @@
     <div class="bento">
       <div class="tile big reveal">
         <div>
-          <img class="photo" src="../media/me.png" alt="Photo d’Azarias">
+          <!-- Photo à remplacer : <img class="photo" src="../media/nouvelle-photo.jpg" alt="Photo d’Azarias"> -->
+          <div class="photo placeholder" aria-hidden="true">AS</div>
           <p style="font-size:1.25rem">Je développe des solutions <strong>web, mobiles et desktop</strong>.
             En parallèle je fais de l’infographie, du montage vidéo et je m’initie à l’analyse de données.</p>
         </div>
