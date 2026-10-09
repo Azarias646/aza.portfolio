@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azarias Sawadogo — Maquette v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0f0c;
+    --card: #171814;
+    --line: #2a2b26;
+    --text: #edeae2;
+    --muted: #9a978d;
+    --accent: #c6f432;
+    --accent-ink: #0e0f0c;
+    --sans: 'Space Grotesk', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  [data-theme="light"] {
+    --bg: #f4f1ea;
+    --card: #ebe7dd;
+    --line: #d6d1c4;
+    --text: #141510;
+    --muted: #5f5c53;
+    --accent: #3d5afe;
+    --accent-ink: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: var(--sans); line-height: 1.5;
+    transition: background .3s, color .3s;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  .mono { font-family: var(--mono); font-size: .85rem; color: var(--muted); }
+
+  /* Nav */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: blur(10px);
+    background: color-mix(in srgb, var(--bg) 80%, transparent);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-family: var(--mono); font-weight: 500; }
+  .logo span { color: var(--accent); }
+  .links { display: flex; gap: 28px; font-size: .95rem; }
+  .links a { color: var(--muted); transition: color .2s; }
+  .links a:hover { color: var(--text); }
+  .toggle {
+    font-family: var(--mono); font-size: .8rem; cursor: pointer;
+    background: none; color: var(--text);
+    border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px;
+  }
+
+  /* Hero */
+  .hero { padding-top: 120px; padding-bottom: 96px; }
+  .status {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+  @keyframes pulse { 50% { opacity: .3; } }
+  h1 {
+    font-size: clamp(3rem, 9vw, 7.5rem); line-height: .95;
+    letter-spacing: -.04em; font-weight: 700; margin: 32px 0 28px;
+  }
+  h1 em { font-style: normal; color: var(--accent); }
+  .lead { font-size: clamp(1.1rem, 2vw, 1.4rem); max-width: 640px; color: var(--muted); }
+  .lead strong { color: var(--text); font-weight: 500; }
+  .typed::after { content: '▍'; color: var(--accent); animation: pulse 1s steps(1) infinite; }
+  .cta { display: flex; gap: 12px; margin-top: 40px; flex-wrap: wrap; }
+  .btn {
+    padding: 14px 24px; border-radius: 999px; font-weight: 500;
+    border: 1px solid var(--line); transition: transform .2s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+
+  /* Sections */
+  section { padding: 96px 0; border-top: 1px solid var(--line); }
+  .head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 48px; gap: 16px; }
+  h2 { font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -.03em; }
+
+  /* Bento about */
+  .bento { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .tile { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 28px; }
+  .tile.big { grid-column: span 2; grid-row: span 2; display: flex; flex-direction: column; justify-content: space-between; }
+  .tile.wide { grid-column: span 2; }
+  .tile h3 { font-size: 1rem; margin-bottom: 14px; }
+  .num { font-size: 3rem; font-weight: 700; letter-spacing: -.04em; color: var(--accent); }
+  .photo {
+    width: 96px; height: 96px; border-radius: 50%; object-fit: cover;
+    border: 2px solid var(--accent); margin-bottom: 24px; background: var(--line);
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { font-family: var(--mono); font-size: .78rem; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--line); }
+
+  /* Projects */
+  .project {
+    display: grid; grid-template-columns: 70px 1fr auto; gap: 24px; align-items: center;
+    padding: 32px 0; border-bottom: 1px solid var(--line); position: relative;
+  }
+  .project:hover h3 { color: var(--accent); }
+  .project:hover .arrow { transform: translate(4px, -4px); color: var(--accent); }
+  .project h3 { font-size: clamp(1.4rem, 3vw, 2.2rem); letter-spacing: -.02em; transition: color .2s; }
+  .project p { color: var(--muted); margin-top: 6px; }
+  .project .chips { margin-top: 14px; }
+  .arrow { font-size: 2rem; transition: transform .2s, color .2s; }
+
+  /* Timeline */
+  .timeline { display: grid; gap: 0; }
+  .step { display: grid; grid-template-columns: 160px 1fr; gap: 24px; padding: 24px 0; border-bottom: 1px dashed var(--line); }
+  .step h3 { font-size: 1.15rem; }
+  .step p { color: var(--muted); }
+
+  /* Contact */
+  .contact { text-align: center; padding: 140px 0; }
+  .contact a.mail {
+    display: inline-block; font-size: clamp(1.6rem, 5vw, 4rem); font-weight: 700;
+    letter-spacing: -.03em; border-bottom: 3px solid var(--accent); margin: 24px 0 40px;
+  }
+  .socials { display: flex; justify-content: center; gap: 24px; }
+  footer { border-top: 1px solid var(--line); padding: 28px 0; }
+  footer .wrap { display: flex; justify-content: space-between; }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s, transform .7s; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (max-width: 760px) {
+    .links { display: none; }
+    .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .project > div { min-width: 0; }
+    .tile.big, .tile.wide { grid-column: span 2; }
+    .project { grid-template-columns: 1fr auto; }
+    .project .mono:first-child { display: none; }
+    .step { grid-template-columns: 1fr; gap: 4px; }
+    footer .wrap { flex-direction: column; gap: 8px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#" class="logo">azarias<span>.dev</span></a>
+    <div class="links">
+      <a href="#about">À propos</a>
+      <a href="#work">Projets</a>
+      <a href="#path">Parcours</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="toggle" id="toggle">☾ dark</button>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <span class="status mono"><span class="dot"></span>Disponible pour un stage / une mission</span>
+  <h1>Azarias<br>Sawadogo<em>.</em></h1>
+  <p class="lead">Étudiant en génie logiciel. Je conçois des applications
+    <strong class="typed" id="typed">web</strong> — du back-end Django jusqu’à l’interface.</p>
+  <div class="cta">
+    <a href="#work" class="btn primary">Voir mes projets ↓</a>
+    <a href="../document/Mon C.V.pdf" class="btn">Télécharger le CV</a>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="head reveal"><h2>À propos</h2><span class="mono">01 / 04</span></div>
+    <div class="bento">
+      <div class="tile big reveal">
+        <div>
+          <img class="photo" src="../media/me.png" alt="Photo d’Azarias">
+          <p style="font-size:1.25rem">Je développe des solutions <strong>web, mobiles et desktop</strong>.
+            En parallèle je fais de l’infographie, du montage vidéo et je m’initie à l’analyse de données.</p>
+        </div>
+        <p class="mono">📍 Burkina Faso · FR / EN</p>
+      </div>
+      <div class="tile reveal"><div class="num">4+</div><p class="mono">projets livrés</p></div>
+      <div class="tile reveal"><div class="num">15+</div><p class="mono">technologies</p></div>
+      <div class="tile wide reveal">
+        <h3>Développement</h3>
+        <div class="chips">
+          <span class="chip">Python</span><span class="chip">Django</span><span class="chip">JavaScript</span>
+          <span class="chip">React</span><span class="chip">Node.js</span><span class="chip">Java</span>
+          <span class="chip">Flutter</span><span class="chip">Ionic</span><span class="chip">HTML/CSS</span>
+        </div>
+      </div>
+      <div class="tile wide reveal">
+        <h3>Data & bases</h3>
+        <div class="chips">
+          <span class="chip">MySQL</span><span class="chip">PostgreSQL</span><span class="chip">Power BI</span><span class="chip">Excel / VBA</span>
+        </div>
+      </div>
+      <div class="tile wide reveal">
+        <h3>Design & outils</h3>
+        <div class="chips">
+          <span class="chip">Photoshop</span><span class="chip">Adobe XD</span><span class="chip">Git</span>
+          <span class="chip">GitHub</span><span class="chip">Linux</span><span class="chip">Bootstrap</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="head reveal"><h2>Projets sélectionnés</h2><span class="mono">02 / 04</span></div>
+
+    <a class="project reveal" href="#">
+      <span class="mono">01</span>
+      <div>
+        <h3>Progiciel commercial</h3>
+        <p>Gestion des ventes, stocks et clients pour une PME. 2 mois.</p>
+        <div class="chips"><span class="chip">Django</span><span class="chip">MySQL</span><span class="chip">Bootstrap</span></div>
+      </div>
+      <span class="arrow">↗</span>
+    </a>
+    <a class="project reveal" href="#">
+      <span class="mono">02</span>
+      <div>
+        <h3>Gestion de parc automobile</h3>
+        <p>Suivi des véhicules, affectations et entretiens. 3 semaines.</p>
+        <div class="chips"><span class="chip">Django</span><span class="chip">MySQL</span><span class="chip">HTML</span></div>
+      </div>
+      <span class="arrow">↗</span>
+    </a>
+    <a class="project reveal" href="#">
+      <span class="mono">03</span>
+      <div>
+        <h3>Gestion de magasin</h3>
+        <p>Outil de caisse et d’inventaire automatisé. 2 semaines.</p>
+        <div class="chips"><span class="chip">VBA</span><span class="chip">Excel</span></div>
+      </div>
+      <span class="arrow">↗</span>
+    </a>
+    <a class="project reveal" href="#">
+      <span class="mono">04</span>
+      <div>
+        <h3>Suivi des dépenses</h3>
+        <p>Tableau de bord de consommation et budget. 2 semaines.</p>
+        <div class="chips"><span class="chip">VBA</span><span class="chip">Excel</span></div>
+      </div>
+      <span class="arrow">↗</span>
+    </a>
+  </div>
+</section>
+
+<section id="path">
+  <div class="wrap">
+    <div class="head reveal"><h2>Parcours</h2><span class="mono">03 / 04</span></div>
+    <div class="timeline">
+      <div class="step reveal"><span class="mono">2025 — auj.</span><div><h3>Licence Génie Logiciel — fin de cycle</h3><p>[École / ville à compléter]</p></div></div>
+      <div class="step reveal"><span class="mono">2024</span><div><h3>Stage / projet [à compléter]</h3><p>Description courte de la mission et du résultat.</p></div></div>
+      <div class="step reveal"><span class="mono">2022</span><div><h3>Début du cursus</h3><p>[À compléter]</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="wrap">
+    <span class="mono">04 / 04 — Contact</span>
+    <h2 class="reveal" style="margin-top:16px">Un projet, un stage, une idée ?</h2>
+    <a class="mail reveal" href="mailto:azasawpro@gmail.com">azasawpro@gmail.com</a>
+    <div class="socials mono">
+      <a href="https://github.com/Azarias646">GitHub ↗</a>
+      <a href="https://www.linkedin.com/in/azarias-sawadogo-90345a2a2/">LinkedIn ↗</a>
+      <a href="https://wa.me/22655194949">WhatsApp ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap mono">
+    <span>© 2026 Azarias Sawadogo</span>
+    <span>Fait main — HTML, CSS, JS</span>
+  </div>
+</footer>
+
+<script>
+  // Thème clair / sombre
+  const root = document.documentElement, btn = document.getElementById('toggle');
+  btn.onclick = () => {
+    const light = root.dataset.theme !== 'light';
+    root.dataset.theme = light ? 'light' : 'dark';
+    btn.textContent = light ? '☀ light' : '☾ dark';
+  };
+
+  // Texte qui défile dans le hero
+  const words = ['web', 'mobiles', 'desktop', 'data'];
+  let i = 0;
+  const typed = document.getElementById('typed');
+  setInterval(() => { i = (i + 1) % words.length; typed.textContent = words[i]; }, 2000);
+
+  // Apparition au scroll
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: .15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
