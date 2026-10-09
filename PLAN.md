@@ -10,7 +10,7 @@ Branche : `new` · Maquette : [`maquette/index.html`](maquette/index.html)
 | Grille de logos de compétences | Compétences groupées par domaine (texte, plus lisible) |
 | Carrousel jQuery + lightSlider pour les projets | Liste de projets numérotée, chaque projet → page « étude de cas » |
 | jQuery + 2 plugins | HTML/CSS/JS natif, zéro dépendance |
-| Pas de parcours | Section Parcours (DSI, IBM Z Xplore, licence, master) |
+| Pas de parcours | Section Parcours (DSI, stages Aïobi & Foulisa, licence UUA, IBM Z Xplore, master) |
 | Contact par icônes | Gros appel à l'action e-mail + liens sociaux |
 
 ## 2. Structure du site
