@@ -10,14 +10,14 @@ Branche : `new` · Maquette : [`maquette/index.html`](maquette/index.html)
 | Grille de logos de compétences | Compétences groupées par domaine (texte, plus lisible) |
 | Carrousel jQuery + lightSlider pour les projets | Liste de projets numérotée, chaque projet → page « étude de cas » |
 | jQuery + 2 plugins | HTML/CSS/JS natif, zéro dépendance |
-| Pas de parcours | Section Parcours (formation, stages) |
+| Pas de parcours | Section Parcours (DSI, IBM Z Xplore, licence, master) |
 | Contact par icônes | Gros appel à l'action e-mail + liens sociaux |
 
 ## 2. Structure du site
 
-1. **Hero** — nom en très grand, badge « Disponible pour un stage », phrase d'accroche avec mot qui change (web / mobiles / desktop / data), boutons *Projets* et *CV*.
+1. **Hero** — nom en grand + portrait N&B, badge « DSI · Aïobi & BBS Holding », accroche data engineer & DSI, boutons *Projets* et *CV*.
 2. **À propos** — grille « bento » : photo + bio, chiffres clés, compétences par domaine.
-3. **Projets** — 4 projets numérotés (Progiciel commercial, Parc automobile, Gestion de magasin, Suivi dépenses). Au clic : page dédiée avec contexte, problème, solution, captures, vidéo démo YouTube, lien GitHub.
+3. **Projets** — ERPNext multi-filiales, Lakehouse MinIO (GPS, Airflow, PySpark), Migration SAGE 100, AzaLab, NutriFaso, Agent Squad + explorations + archives (anciens projets Django/VBA).
 4. **Parcours** — frise chronologique formation / expériences.
 5. **Contact** — e-mail, GitHub, LinkedIn, WhatsApp.
 

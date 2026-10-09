@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Azarias Sawadogo — Maquette v2</title>
+<title>Azarias Sawadogo — Data engineer & DSI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -58,7 +58,19 @@
   }
 
   /* Hero */
-  .hero { padding-top: 120px; padding-bottom: 96px; }
+  .hero {
+    padding-top: 96px; padding-bottom: 96px;
+    display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 56px; align-items: center;
+  }
+  .portrait { position: relative; }
+  .portrait img {
+    width: 100%; aspect-ratio: 4 / 5; object-fit: cover; display: block;
+    border-radius: 24px; border: 1px solid var(--line); filter: grayscale(1) contrast(1.05);
+  }
+  .portrait figcaption {
+    position: absolute; left: 16px; bottom: 16px;
+    background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px;
+  }
   .status {
     display: inline-flex; align-items: center; gap: 8px;
     border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px;
@@ -66,7 +78,7 @@
   .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
   @keyframes pulse { 50% { opacity: .3; } }
   h1 {
-    font-size: clamp(3rem, 9vw, 7.5rem); line-height: .95;
+    font-size: clamp(3rem, 8vw, 6.5rem); line-height: .95;
     letter-spacing: -.04em; font-weight: 700; margin: 32px 0 28px;
   }
   h1 em { font-style: normal; color: var(--accent); }
@@ -91,16 +103,9 @@
   .tile { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 28px; }
   .tile.big { grid-column: span 2; grid-row: span 2; display: flex; flex-direction: column; justify-content: space-between; }
   .tile.wide { grid-column: span 2; }
+  .tile.full { grid-column: 1 / -1; }
   .tile h3 { font-size: 1rem; margin-bottom: 14px; }
   .num { font-size: 3rem; font-weight: 700; letter-spacing: -.04em; color: var(--accent); }
-  .photo {
-    width: 96px; height: 96px; border-radius: 50%; object-fit: cover;
-    border: 2px solid var(--accent); margin-bottom: 24px; background: var(--line);
-  }
-  .photo.placeholder {
-    display: grid; place-items: center;
-    font-family: var(--mono); font-size: 1.6rem; color: var(--accent);
-  }
   .chips { display: flex; flex-wrap: wrap; gap: 8px; }
   .chip { font-family: var(--mono); font-size: .78rem; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--line); }
 
@@ -115,6 +120,12 @@
   .project p { color: var(--muted); margin-top: 6px; }
   .project .chips { margin-top: 14px; }
   .arrow { font-size: 2rem; transition: transform .2s, color .2s; }
+  .tag { color: var(--accent); }
+  .sub { list-style: none; margin-top: 12px; color: var(--muted); }
+  .sub li::before { content: '└ '; font-family: var(--mono); color: var(--line); }
+  .minor { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 48px; }
+  .minor .tile p { color: var(--muted); font-size: .95rem; margin-top: 6px; }
+  .archive { margin-top: 32px; }
 
   /* Timeline */
   .timeline { display: grid; gap: 0; }
@@ -138,6 +149,9 @@
 
   @media (max-width: 760px) {
     .links { display: none; }
+    .hero { grid-template-columns: 1fr; gap: 40px; padding-top: 56px; }
+    .portrait { max-width: 320px; }
+    .minor { grid-template-columns: 1fr; }
     .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .project > div { min-width: 0; }
     .tile.big, .tile.wide { grid-column: span 2; }
@@ -168,14 +182,20 @@
 </nav>
 
 <header class="hero wrap">
-  <span class="status mono"><span class="dot"></span>Disponible pour un stage / une mission</span>
-  <h1>Azarias<br>Sawadogo<em>.</em></h1>
-  <p class="lead">Étudiant en génie logiciel. Je conçois des applications
-    <strong class="typed" id="typed">web</strong> — du back-end Django jusqu’à l’interface.</p>
-  <div class="cta">
-    <a href="#work" class="btn primary">Voir mes projets ↓</a>
-    <a href="../document/Mon C.V.pdf" class="btn">Télécharger le CV</a>
+  <div>
+    <span class="status mono"><span class="dot"></span>DSI · Aïobi &amp; BBS Holding</span>
+    <h1>Azarias<br>Sawadogo<em>.</em></h1>
+    <p class="lead">Data engineer &amp; DSI à Ouagadougou. Je fais tourner l’ERP d’un groupe multi-filiales et je construis
+      des <strong class="typed" id="typed">pipelines de données</strong>, de l’infrastructure jusqu’aux indicateurs métier.</p>
+    <div class="cta">
+      <a href="#work" class="btn primary">Voir mes projets ↓</a>
+      <a href="../document/Mon C.V.pdf" class="btn">Télécharger le CV</a>
+    </div>
   </div>
+  <figure class="portrait">
+    <img src="../media/azarias.jpg" alt="Portrait d’Azarias Sawadogo">
+    <figcaption class="mono">📍 Ouagadougou, BF</figcaption>
+  </figure>
 </header>
 
 <section id="about">
@@ -183,35 +203,41 @@
     <div class="head reveal"><h2>À propos</h2><span class="mono">01 / 04</span></div>
     <div class="bento">
       <div class="tile big reveal">
-        <div>
-          <!-- Photo à remplacer : <img class="photo" src="../media/nouvelle-photo.jpg" alt="Photo d’Azarias"> -->
-          <div class="photo placeholder" aria-hidden="true">AS</div>
-          <p style="font-size:1.25rem">Je développe des solutions <strong>web, mobiles et desktop</strong>.
-            En parallèle je fais de l’infographie, du montage vidéo et je m’initie à l’analyse de données.</p>
-        </div>
-        <p class="mono">📍 Burkina Faso · FR / EN</p>
+        <p style="font-size:1.25rem">Diplômé en <strong>génie logiciel</strong> (2025), je suis aujourd’hui <strong>DSI</strong>
+          d’Aïobi et de BBS Holding. Je pilote leur ERPNext multi-filiales de bout en bout et je m’occupe moi-même
+          de la géolocalisation, de la logistique et du reporting comptable par filiale.</p>
+        <p style="margin-top:16px;color:var(--muted)">Mon terrain de jeu préféré : le <strong style="color:var(--text)">data engineering</strong>.
+          Lakehouse, Spark, Airflow, et un homelab pour tout tester.</p>
+        <p class="mono" style="margin-top:24px">Aussi curieux de : DBA · QA · cloud · sysadmin · OSINT / GEOINT</p>
       </div>
-      <div class="tile reveal"><div class="num">4+</div><p class="mono">projets livrés</p></div>
-      <div class="tile reveal"><div class="num">15+</div><p class="mono">technologies</p></div>
+      <div class="tile reveal"><div class="num">1</div><p class="mono">ERP multi-filiales en production</p></div>
+      <div class="tile reveal"><div class="num">2</div><p class="mono">sociétés sous ma responsabilité</p></div>
       <div class="tile wide reveal">
-        <h3>Développement</h3>
+        <h3>ERP &amp; métier</h3>
         <div class="chips">
-          <span class="chip">Python</span><span class="chip">Django</span><span class="chip">JavaScript</span>
-          <span class="chip">React</span><span class="chip">Node.js</span><span class="chip">Java</span>
-          <span class="chip">Flutter</span><span class="chip">Ionic</span><span class="chip">HTML/CSS</span>
+          <span class="chip">Frappe / ERPNext</span><span class="chip">Server Scripts</span><span class="chip">Jinja</span>
+          <span class="chip">Property Setters</span><span class="chip">Rôles &amp; permissions</span><span class="chip">Comptabilité</span>
         </div>
       </div>
       <div class="tile wide reveal">
-        <h3>Data & bases</h3>
+        <h3>Data engineering</h3>
         <div class="chips">
-          <span class="chip">MySQL</span><span class="chip">PostgreSQL</span><span class="chip">Power BI</span><span class="chip">Excel / VBA</span>
+          <span class="chip">MinIO</span><span class="chip">Spark (S3A)</span><span class="chip">PySpark</span>
+          <span class="chip">Airflow</span><span class="chip">ETL</span><span class="chip">Lakehouse</span>
         </div>
       </div>
       <div class="tile wide reveal">
-        <h3>Design & outils</h3>
+        <h3>Infra &amp; exploitation</h3>
         <div class="chips">
-          <span class="chip">Photoshop</span><span class="chip">Adobe XD</span><span class="chip">Git</span>
-          <span class="chip">GitHub</span><span class="chip">Linux</span><span class="chip">Bootstrap</span>
+          <span class="chip">Docker</span><span class="chip">Docker Compose</span><span class="chip">Linux / SSH</span>
+          <span class="chip">Tailscale</span><span class="chip">Caddy</span><span class="chip">Beszel</span><span class="chip">Sauvegardes</span>
+        </div>
+      </div>
+      <div class="tile full reveal">
+        <h3>Bases &amp; dev</h3>
+        <div class="chips">
+          <span class="chip">PostgreSQL</span><span class="chip">SQL</span><span class="chip">Python</span>
+          <span class="chip">Django / DRF</span><span class="chip">ODBC</span><span class="chip">n8n</span>
         </div>
       </div>
     </div>
@@ -225,39 +251,80 @@
     <a class="project reveal" href="#">
       <span class="mono">01</span>
       <div>
-        <h3>Progiciel commercial</h3>
-        <p>Gestion des ventes, stocks et clients pour une PME. 2 mois.</p>
-        <div class="chips"><span class="chip">Django</span><span class="chip">MySQL</span><span class="chip">Bootstrap</span></div>
+        <span class="mono tag">Pro · Aïobi &amp; BBS Holding</span>
+        <h3>ERPNext multi-filiales</h3>
+        <p>Administration complète de l’ERP du groupe : applications maison (provisioning, gestion de flotte),
+          formats d’impression, rapports, tableau de bord comptable par filiale. Bac à sable cloné de la prod,
+          sauvegarde et diff avant chaque écriture.</p>
+        <div class="chips"><span class="chip">Frappe</span><span class="chip">PostgreSQL</span><span class="chip">Docker</span><span class="chip">Jinja</span></div>
       </div>
       <span class="arrow">↗</span>
     </a>
     <a class="project reveal" href="#">
       <span class="mono">02</span>
       <div>
-        <h3>Gestion de parc automobile</h3>
-        <p>Suivi des véhicules, affectations et entretiens. 3 semaines.</p>
-        <div class="chips"><span class="chip">Django</span><span class="chip">MySQL</span><span class="chip">HTML</span></div>
+        <span class="mono tag">Data engineering</span>
+        <h3>Lakehouse MinIO</h3>
+        <p>Le socle data commun à plusieurs chantiers :</p>
+        <ul class="sub">
+          <li>Pipeline GPS : protocole binaire des boîtiers Galileosky décodé, données stockées dans MinIO</li>
+          <li>DAG Airflow d’ingestion et ETL Spark</li>
+          <li>Nettoyage PySpark multi-format : PDF, images, CSV, JSON, Excel</li>
+        </ul>
+        <div class="chips"><span class="chip">MinIO</span><span class="chip">Spark</span><span class="chip">Airflow</span><span class="chip">PySpark</span></div>
       </div>
       <span class="arrow">↗</span>
     </a>
     <a class="project reveal" href="#">
       <span class="mono">03</span>
       <div>
-        <h3>Gestion de magasin</h3>
-        <p>Outil de caisse et d’inventaire automatisé. 2 semaines.</p>
-        <div class="chips"><span class="chip">VBA</span><span class="chip">Excel</span></div>
+        <span class="mono tag">Migration</span>
+        <h3>Migration SAGE 100</h3>
+        <p>Rétro-analyse des fichiers natifs SAGE, puis extraction des données via le pilote ODBC.</p>
+        <div class="chips"><span class="chip">ODBC</span><span class="chip">Python</span><span class="chip">SQL</span></div>
       </div>
       <span class="arrow">↗</span>
     </a>
     <a class="project reveal" href="#">
       <span class="mono">04</span>
       <div>
-        <h3>Suivi des dépenses</h3>
-        <p>Tableau de bord de consommation et budget. 2 semaines.</p>
-        <div class="chips"><span class="chip">VBA</span><span class="chip">Excel</span></div>
+        <span class="mono tag">Infra · auto-hébergement</span>
+        <h3>AzaLab</h3>
+        <p>Mon homelab sur un HP Z2. Supervision, accès distant et reverse proxy en place ;
+          en cours : PostgreSQL central, puis Nextcloud, Jellyfin, Navidrome, Vaultwarden…</p>
+        <div class="chips"><span class="chip">Beszel</span><span class="chip">Tailscale</span><span class="chip">Caddy</span><span class="chip">Docker</span></div>
       </div>
       <span class="arrow">↗</span>
     </a>
+    <a class="project reveal" href="#">
+      <span class="mono">05</span>
+      <div>
+        <span class="mono tag">Produit · équipe</span>
+        <h3>NutriFaso</h3>
+        <p>Plateforme de recommandation nutritionnelle. Mon rôle : architecture, base de données et backend Django.</p>
+        <div class="chips"><span class="chip">Django</span><span class="chip">PostgreSQL</span><span class="chip">Architecture</span></div>
+      </div>
+      <span class="arrow">↗</span>
+    </a>
+    <a class="project reveal" href="#">
+      <span class="mono">06</span>
+      <div>
+        <span class="mono tag">IA · agents</span>
+        <h3>Agent Squad</h3>
+        <p>Une équipe d’agents de développement autonomes sur OpenHarness, pilotée depuis Discord. Stack opérationnelle.</p>
+        <div class="chips"><span class="chip">OpenHarness</span><span class="chip">Discord</span><span class="chip">Agents</span></div>
+      </div>
+      <span class="arrow">↗</span>
+    </a>
+
+    <div class="minor">
+      <div class="tile reveal"><span class="mono tag">Documentation</span><h3>Schémas de facturation</h3><p>Cartographie de bases de facturation (eau, électricité, paiement mobile).</p></div>
+      <div class="tile reveal"><span class="mono tag">Exploration</span><h3>Veille sociale</h3><p>Collecte de commentaires Facebook et LinkedIn.</p></div>
+      <div class="tile reveal"><span class="mono tag">Automatisation</span><h3>Offres d’emploi WhatsApp</h3><p>Workflow n8n qui détecte les offres dans des groupes.</p></div>
+    </div>
+
+    <p class="mono archive reveal">Archives : progiciel commercial, gestion de parc auto (Django) · outils Excel/VBA →
+      <a href="https://github.com/Azarias646/My-Projects" style="color:var(--text)">GitHub ↗</a></p>
   </div>
 </section>
 
@@ -265,9 +332,10 @@
   <div class="wrap">
     <div class="head reveal"><h2>Parcours</h2><span class="mono">03 / 04</span></div>
     <div class="timeline">
-      <div class="step reveal"><span class="mono">2025 — auj.</span><div><h3>Licence Génie Logiciel — fin de cycle</h3><p>[École / ville à compléter]</p></div></div>
-      <div class="step reveal"><span class="mono">2024</span><div><h3>Stage / projet [à compléter]</h3><p>Description courte de la mission et du résultat.</p></div></div>
-      <div class="step reveal"><span class="mono">2022</span><div><h3>Début du cursus</h3><p>[À compléter]</p></div></div>
+      <div class="step reveal"><span class="mono">Aujourd’hui</span><div><h3>DSI — Aïobi &amp; BBS Holding</h3><p>ERPNext multi-filiales, data, géolocalisation et logistique, reporting comptable.</p></div></div>
+      <div class="step reveal"><span class="mono">En cours</span><div><h3>IBM Z Xplore — Fundamentals</h3><p>Les bases des mainframes IBM Z.</p></div></div>
+      <div class="step reveal"><span class="mono">2025</span><div><h3>Licence en génie logiciel</h3><p>[École à compléter]</p></div></div>
+      <div class="step reveal"><span class="mono">Prochaine étape</span><div><h3>Master</h3><p>Orientation data / infrastructure, en préparation.</p></div></div>
     </div>
   </div>
 </section>
@@ -275,7 +343,7 @@
 <section id="contact" class="contact">
   <div class="wrap">
     <span class="mono">04 / 04 — Contact</span>
-    <h2 class="reveal" style="margin-top:16px">Un projet, un stage, une idée ?</h2>
+    <h2 class="reveal" style="margin-top:16px">Un projet data, un ERP, une infra à monter ?</h2>
     <a class="mail reveal" href="mailto:azasawpro@gmail.com">azasawpro@gmail.com</a>
     <div class="socials mono">
       <a href="https://github.com/Azarias646">GitHub ↗</a>
@@ -302,7 +370,7 @@
   };
 
   // Texte qui défile dans le hero
-  const words = ['web', 'mobiles', 'desktop', 'data'];
+  const words = ['pipelines de données', 'lakehouses', 'ERP', 'infrastructures'];
   let i = 0;
   const typed = document.getElementById('typed');
   setInterval(() => { i = (i + 1) % words.length; typed.textContent = words[i]; }, 2000);
