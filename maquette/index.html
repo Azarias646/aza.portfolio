@@ -133,13 +133,26 @@
     content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--filet);
     transform-origin: left; transition: transform 900ms var(--courbe-sortie);
   }
-  section .tete { transition: opacity 700ms var(--courbe-sortie) 150ms, transform 700ms var(--courbe-sortie) 150ms, clip-path 700ms var(--courbe-sortie) 150ms; }
-  section .tete ~ * { transition: opacity 800ms var(--courbe-sortie) 350ms, transform 800ms var(--courbe-sortie) 350ms; }
+  section .tete h2 { transition: opacity 700ms var(--courbe-sortie) 150ms, transform 700ms var(--courbe-sortie) 150ms, clip-path 700ms var(--courbe-sortie) 150ms; }
+  section .filigrane { transition: opacity 1200ms var(--courbe-sortie), translate 1400ms var(--courbe-sortie); }
+  section .tete ~ :not(.projets, .parcours, .canaux) { transition: opacity 800ms var(--courbe-sortie) 350ms, transform 800ms var(--courbe-sortie) 350ms; }
   .anime section.attente::before { transform: scaleX(0); }
-  .anime section.attente .tete { opacity: 0; transform: translateY(48px); clip-path: inset(0 0 100% 0); }
-  .anime section.attente .tete ~ * { opacity: 0; transform: translateY(72px); }
+  .anime section.attente .tete h2 { opacity: 0; transform: translateY(48px); clip-path: inset(0 0 100% 0); }
+  .anime section.attente .filigrane { opacity: 0; translate: 120px 0; }
+  .anime section.attente .tete ~ :not(.projets, .parcours, .canaux) { opacity: 0; transform: translateY(72px); }
+  .cascade { transition: opacity 700ms var(--courbe-sortie), transform 700ms var(--courbe-sortie); transition-delay: calc(250ms + var(--i, 0) * 80ms); }
+  .anime section.attente .cascade { opacity: 0; transform: translateX(-32px); }
 
-  .tete { margin-bottom: 40px; }
+  .tete { margin-bottom: 40px; position: relative; }
+  .tete h2 { position: relative; z-index: 1; }
+  .barre { color: var(--accent-texte); margin-right: .12em; font-weight: 500; }
+  .filigrane {
+    position: absolute; left: -.04em; top: 50%; z-index: 0; pointer-events: none; white-space: nowrap;
+    font-size: clamp(72px, 15vw, 210px); line-height: 1; font-weight: 700; font-variation-settings: 'wdth' 125; letter-spacing: -.04em;
+    color: transparent; -webkit-text-stroke: 1px var(--filet); transform: translateY(-58%);
+  }
+  .contact .filigrane { left: 0; right: 0; text-align: center; }
+  section { overflow-x: clip; }
   h2 { font-size: clamp(32px, 4.5vw, 48px); line-height: 1.05; font-weight: 700; font-variation-settings: 'wdth' 125; letter-spacing: -.035em; text-wrap: balance; }
   h3 { font-size: var(--taille-titre-bloc); font-weight: 600; }
 
@@ -227,6 +240,14 @@
   .schema .l.a { stroke: var(--accent-trait); stroke-width: 1.6; }
   .schema .pointille { stroke-dasharray: 3 4; }
   .schema.trace .l:not(.pointille) { stroke-dashoffset: 400; }
+
+  /* Aperçu flottant au survol d'un projet */
+  .survol {
+    position: fixed; left: 0; top: 0; z-index: 9; width: 300px; padding: 14px; pointer-events: none;
+    background: var(--fond); border: 1px solid var(--filet); border-radius: var(--rayon-lg);
+    opacity: 0; scale: .85; rotate: -4deg; transition: opacity var(--duree-standard) var(--courbe-sortie), scale var(--duree-standard) var(--courbe-sortie);
+  }
+  .survol.visible { opacity: 1; scale: 1; }
 
   /* Parcours */
   .parcours { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; }
@@ -325,7 +346,7 @@
 
 <section id="apropos">
   <div class="wrap">
-    <div class="tete"><h2>À propos</h2></div>
+    <div class="tete"><span class="filigrane" aria-hidden="true">Profil</span><h2><span class="barre" aria-hidden="true">/</span>À propos</h2></div>
     <div class="apropos">
       <div class="recit">
         <p>Savoir comment fonctionnent les choses, que ce soit les applications, les infrastructures ou même les métiers,
@@ -399,7 +420,7 @@
 
 <section id="projets">
   <div class="wrap">
-    <div class="tete"><h2>Projets</h2></div>
+    <div class="tete"><span class="filigrane" aria-hidden="true">Réalisations</span><h2><span class="barre" aria-hidden="true">/</span>Projets</h2></div>
     <div class="projets">
       <a class="projet" href="#" aria-haspopup="dialog"><template class="schema-src"><svg class="schema" viewBox="0 0 360 170" role="img" aria-label="Schéma de fonctionnement"><rect class="n" x="16" y="18" width="92" height="30" rx="8"/><text x="62.0" y="37.0">Filiale A</text><rect class="n" x="16" y="70" width="92" height="30" rx="8"/><text x="62.0" y="89.0">Filiale B</text><rect class="n" x="16" y="122" width="92" height="30" rx="8"/><text x="62.0" y="141.0">Filiale C</text><path class="l" d="M108 33 C140 33 140 85 156 85"/><path class="l" d="M108 85 H156"/><path class="l" d="M108 137 C140 137 140 85 156 85"/><rect class="n a" x="156" y="64" width="72" height="42" rx="8"/><text x="192.0" y="89.0">ERP</text><path class="l a" d="M228 78 C246 78 246 40 262 40"/><path class="l a" d="M228 92 C246 92 246 130 262 130"/><rect class="n" x="262" y="24" width="84" height="32" rx="8"/><text x="304.0" y="44.0">Factures</text><rect class="n" x="262" y="114" width="84" height="32" rx="8"/><text x="304.0" y="134.0">Comptabilité</text></svg></template>
         <div>
@@ -467,7 +488,7 @@
 
 <section id="parcours">
   <div class="wrap">
-    <div class="tete"><h2>Parcours</h2></div>
+    <div class="tete"><span class="filigrane" aria-hidden="true">Parcours</span><h2><span class="barre" aria-hidden="true">/</span>Parcours</h2></div>
     <div class="parcours">
       <div>
         <h3 class="colonne">Expérience</h3>
@@ -487,7 +508,7 @@
 
 <section id="contact" class="contact">
   <div class="wrap">
-    <div class="tete"><h2>Envie de collaborer ou d’échanger ?</h2></div>
+    <div class="tete"><span class="filigrane" aria-hidden="true">Contact</span><h2><span class="barre" aria-hidden="true">/</span>Envie de collaborer ou d’échanger ?</h2></div>
     <div class="canaux">
       <div class="courriel">
         <span class="pastille"><svg class="logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg></span>
@@ -515,6 +536,8 @@
     </div>
   </div>
 </section>
+
+<div class="survol" id="survol" aria-hidden="true"></div>
 
 <footer>
   <div class="wrap petit">
@@ -626,6 +649,42 @@
   }));
   document.getElementById('fp-fermer').onclick = () => fp.close();
   fp.addEventListener('click', e => { if (e.target === fp) fp.close(); });
+
+  // Lignes en cascade : chaque élément reçoit son rang
+  document.querySelectorAll('.projets, .parcours > div, .outils, .canaux').forEach(liste => {
+    [...liste.children].filter(e => !e.matches('h3')).forEach((e, i) => { e.classList.add('cascade'); e.style.setProperty('--i', i); });
+  });
+
+  // Mots en filigrane : glissent lentement avec le défilement
+  const filigranes = [...document.querySelectorAll('.filigrane')];
+  if (!reduit) {
+    const glisse = () => filigranes.forEach(f => {
+      const r = f.parentElement.getBoundingClientRect();
+      const t = (r.top + r.height / 2) / innerHeight - .5;
+      f.style.transform = `translate(${t * -160}px, -58%)`;
+    });
+    addEventListener('scroll', glisse, { passive: true }); glisse();
+  }
+
+  // Projets : le schéma suit le curseur au survol
+  const survol = document.getElementById('survol');
+  if (!reduit && matchMedia('(pointer: fine)').matches) {
+    let cx = 0, cy = 0, x = 0, y = 0, actif = false;
+    const boucle = () => {
+      x += (cx - x) * .18; y += (cy - y) * .18;
+      survol.style.translate = `${x + 24}px ${y - 80}px`;
+      if (actif || Math.abs(cx - x) > .5) requestAnimationFrame(boucle);
+    };
+    document.querySelectorAll('.projet').forEach(a => {
+      a.addEventListener('pointerenter', e => {
+        survol.replaceChildren(a.querySelector('.schema-src').content.cloneNode(true));
+        if (!actif) { x = cx = e.clientX; y = cy = e.clientY; }
+        actif = true; survol.classList.add('visible'); requestAnimationFrame(boucle);
+      });
+      a.addEventListener('pointermove', e => { cx = e.clientX; cy = e.clientY; });
+      a.addEventListener('pointerleave', () => { actif = false; survol.classList.remove('visible'); });
+    });
+  }
 
   // Copier l'adresse e-mail
   const copier = document.getElementById('copier'), adresse = document.getElementById('adresse');
