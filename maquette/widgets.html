@@ -500,7 +500,7 @@
   .jauge-axe { fill: var(--texte); }
   .jauge-texte { display: grid; justify-items: center; gap: 0; margin-top: 6px; }
   .jauge-texte strong { font-size: 20px; font-weight: 700; }
-  .jauge-bornes { position: absolute; left: 0; right: 0; top: calc(min(260px, 100%) * 124 / 220 - 6px); display: flex; justify-content: space-between; width: min(300px, 100%); margin: 0 auto; }
+  .jauge-borne { fill: var(--texte-attenue); font: 500 11px var(--police); text-anchor: middle; }
 
   /* Schémas : blocs aussi arrondis que le reste */
   .schema rect { rx: 14px; ry: 14px; }
@@ -616,14 +616,15 @@
       <p id="fiche-texte"></p>
       <div class="niveau">
         <div class="jauge">
-          <svg viewBox="0 0 220 124" aria-hidden="true">
+          <svg viewBox="0 0 220 142" aria-hidden="true">
             <path class="jauge-fond" d="M22 110 A88 88 0 0 1 198 110"/>
             <path class="jauge-valeur" id="jauge-valeur" d="M22 110 A88 88 0 0 1 198 110"/>
             <line class="jauge-aiguille" id="jauge-aiguille" x1="110" y1="110" x2="110" y2="42"/>
             <circle class="jauge-axe" cx="110" cy="110" r="7"/>
+            <text class="jauge-borne" x="22" y="138">Notions</text>
+            <text class="jauge-borne" x="198" y="138">Avancé</text>
           </svg>
           <div class="jauge-texte"><span class="petit">Mon niveau</span><strong id="fiche-niveau"></strong></div>
-          <div class="jauge-bornes petit"><span>Notions</span><span>Avancé</span></div>
         </div>
       </div>
     </div>
