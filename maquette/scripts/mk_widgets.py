@@ -57,6 +57,61 @@ r("  // Copier l'adresse e-mail", """  // Boutons : le fond se remplit depuis le
 
   // Copier l'adresse e-mail""")
 
+
+# Contact : grande carte d'appel à l'action, puis un vrai pied de page (colonnes de liens, copyright, réseaux)
+_m = re.search(r'<section id="contact" class="diapo contact">.*?</section>', s, flags=re.S)
+_ancien = _m.group(0)
+def _logo(dom):
+    return re.search(r'href="[^"]*' + dom + r'[^"]*"[^>]*>\s*<span class="pastille">(<svg.*?</svg>)</span>', _ancien, flags=re.S).group(1)
+_li, _gh, _wa = _logo('linkedin'), _logo('github.com'), _logo('wa.me')
+_cv = re.search(r'<a href="([^"]*CV[^"]*)"', s).group(1)
+_nav_liens = '\n        '.join(re.findall(r'<a href="#(?:apropos|projets|parcours)">.*?</a>', re.search(r'<div class="liens">.*?</div>', s, flags=re.S).group(0), flags=re.S))
+_nouveau = f"""<section id="contact" class="diapo contact">
+  <div class="wrap">
+    <div class="cta">
+      <div class="tete"><h2><span class="barre" aria-hidden="true">/</span>Envie de collaborer ou d’échanger ?</h2></div>
+      <div class="cta-courriel">
+        <span class="petit">E-mail, le plus direct</span>
+        <span class="adresse" id="adresse">azasawpro@gmail.com</span>
+        <div class="courriel-actions">
+          <button class="copier" id="copier" type="button">Copier</button>
+          <a class="btn principal" href="mailto:azasawpro@gmail.com">Écrire</a>
+        </div>
+      </div>
+    </div>
+    <footer class="pied">
+      <div class="pied-marque">
+        <span class="marque">Azarias Sawadogo</span>
+        <p class="petit">Développeur systèmes et bases de données · Data engineer junior</p>
+      </div>
+      <nav class="pied-col" aria-label="Plan du site">
+        <h3>Navigation</h3>
+        {_nav_liens}
+      </nav>
+      <div class="pied-col">
+        <h3>Réseaux</h3>
+        <a href="https://www.linkedin.com/in/azarias-sawadogo-90345a2a2/" target="_blank" rel="noopener">{_li}LinkedIn</a>
+        <a href="https://github.com/Azarias646" target="_blank" rel="noopener">{_gh}GitHub</a>
+        <a href="https://wa.me/22655194949" target="_blank" rel="noopener">{_wa}WhatsApp</a>
+      </div>
+      <div class="pied-col">
+        <h3>Documents</h3>
+        <a href="{_cv}" target="_blank" rel="noopener"><svg class="trait" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>Mon CV</a>
+      </div>
+      <div class="pied-bas">
+        <span class="petit">© 2026 Azarias Sawadogo · Logos : Simple Icons</span>
+        <div class="sociaux">
+          <a href="https://www.linkedin.com/in/azarias-sawadogo-90345a2a2/" target="_blank" rel="noopener" aria-label="LinkedIn">{_li}</a>
+          <a href="https://github.com/Azarias646" target="_blank" rel="noopener" aria-label="GitHub">{_gh}</a>
+          <a href="https://wa.me/22655194949" target="_blank" rel="noopener" aria-label="WhatsApp">{_wa}</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</section>"""
+s = s.replace(_ancien, _nouveau)
+r("document.querySelectorAll('.projets, .parcours > div, .outils, .canaux, .recit')", "document.querySelectorAll('.projets, .parcours > div, .outils, .canaux, .recit, .pied')")
+
 css = """
   /* ===== Variante widgets : cartes sombres très arrondies, accent vert du design system, pastilles rondes, pilules ===== */
   :root {
@@ -236,6 +291,48 @@ css = """
   .btn.principal, #contact .btn.principal { --balayage: var(--accent-texte); }
   .btn.principal:hover, #contact .btn.principal:hover { background: var(--accent); }
   .btn.rempli, .copier.rempli { color: var(--page); transition: color 160ms linear 200ms, transform var(--duree-rapide); }
+
+  /* Contact : carte d'appel à l'action + pied de page */
+  .contact .wrap { display: grid; gap: 56px; }
+  .cta {
+    display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 40px; align-items: end;
+    padding: 52px 48px; border-radius: var(--rayon-xl);
+    background: radial-gradient(90% 130% at 100% 0%, var(--cta-halo), transparent 70%), var(--barre-fond);
+    border: 1px solid var(--barre-bord);
+  }
+  /* Fond et bordure partagés par la barre de navigation, la carte d'appel et le pied de page */
+  :root { --cta-halo: rgba(29, 90, 78, .55); --barre-fond: linear-gradient(180deg, #1d1d21 0%, #101012 100%); --barre-bord: rgba(255, 255, 255, .08); }
+  :root[data-theme="light"] { --cta-halo: rgba(29, 90, 78, .16); --barre-fond: linear-gradient(180deg, #ffffff 0%, #f1f1f3 100%); --barre-bord: rgba(0, 0, 0, .07); }
+  @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --cta-halo: rgba(29, 90, 78, .16); --barre-fond: linear-gradient(180deg, #ffffff 0%, #f1f1f3 100%); --barre-bord: rgba(0, 0, 0, .07); } }
+  .contact .cta .tete { text-align: left; margin: 0; }
+  .cta h2 { font-size: clamp(30px, 4vw, 48px); }
+  .cta-courriel { display: grid; gap: 8px; justify-items: start; min-width: 0; }
+  .cta-courriel .courriel-actions { margin-top: 12px; }
+  .contact footer.pied, #contact footer.pied { margin: 0; padding: 36px 40px 22px; border: 1px solid var(--barre-bord); border-radius: var(--rayon-xl); background: var(--barre-fond); display: grid; grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr)); gap: 32px 24px; }
+  .pied-marque .marque { font-size: 18px; }
+  .pied-marque p { margin-top: 8px; max-width: 32ch; }
+  .pied-col { display: grid; gap: 10px; align-content: start; }
+  .pied-col h3 { font-size: 13px; font-weight: 600; color: var(--texte); margin-bottom: 4px; }
+  .pied-col a { display: inline-flex; align-items: center; gap: 10px; color: var(--texte-attenue); font-size: 14px; font-weight: 600; width: fit-content; transition: color var(--duree-rapide); }
+  .pied-col .ico, .pied-col svg.logo, .pied-col svg.trait { width: 20px; height: 20px; flex: none; }
+  .pied-col svg.logo { fill: #8d9096; padding: 1px; }
+  .pied-col svg.trait { fill: none; stroke: #8d9096; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .pied-col a:hover svg.logo { fill: var(--accent-trait); }
+  .pied-col a:hover svg.trait { stroke: var(--accent-trait); }
+  .pied-col a:hover .ico .clair { fill: var(--accent-trait); }
+  footer.pied nav { padding: 0; position: static; background: none; }
+  footer.pied nav::after { content: none; }
+  .pied-col a:hover { color: var(--texte); }
+  .pied-bas { grid-column: 1 / -1; margin-top: 8px; display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center; padding-top: 20px; border-top: 1px solid var(--filet); }
+  .sociaux { display: flex; gap: 4px; }
+  .sociaux a { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; color: var(--texte-attenue); transition: background var(--duree-rapide), color var(--duree-rapide); }
+  .sociaux a:hover { background: var(--surface-2); color: var(--texte); }
+  .sociaux svg.logo { width: 18px; height: 18px; }
+  @media (max-width: 760px) {
+    .cta { grid-template-columns: 1fr; padding: 32px 24px; }
+    .contact footer.pied, #contact footer.pied { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .pied-marque { grid-column: 1 / -1; }
+  }
 
   /* Repères */
   .points button[aria-current="true"]::before { border-radius: var(--rayon-pilule); background: var(--accent-trait); }

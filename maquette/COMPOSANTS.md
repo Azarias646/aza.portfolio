@@ -200,11 +200,32 @@ Grille de 4 colonnes, écart 12 px. `.outils` est en `display: contents`, pour q
 - Étape en cours (`.etape.actuelle`) : année dans une pilule `--accent`, texte `--sur-accent`, sur une seule ligne.
 - Mobile : une seule colonne ; l'année passe au-dessus de l'intitulé.
 
-### 3.14 Contact — `.courriel`, `a.reseau`
+### 3.14 Contact — `.cta`, `footer.pied`
 
-- **Bloc e-mail** (pleine largeur) : pastille de 52 px, libellé « E-mail, le plus direct », adresse en grand (20–30 px, sélectionnable), boutons « Copier » et « Écrire ». **Pas de surbrillance** (choix validé).
+L'écran Contact a deux blocs, traités comme la barre de navigation : même fond dégradé (`--barre-fond`), même bordure fine (`--barre-bord`), mêmes icônes.
+
+| Jeton | Sombre | Clair |
+|---|---|---|
+| `--barre-fond` | dégradé 180° `#1d1d21` → `#101012` | dégradé 180° `#ffffff` → `#f1f1f3` |
+| `--barre-bord` | `rgba(255,255,255,.08)` | `rgba(0,0,0,.07)` |
+| `--cta-halo` | `rgba(29,90,78,.55)` | `rgba(29,90,78,.16)` |
+
+- **Carte d'appel à l'action (`.cta`)** :
+  - coins 28 px, padding 52 × 48 px ;
+  - halo vert (`--cta-halo`) en haut à droite, par-dessus `--barre-fond` ;
+  - deux colonnes : à gauche, le titre « / Envie de collaborer ou d'échanger ? » (30–48 px) ; à droite, « E-mail, le plus direct », l'adresse en grand (sélectionnable) et les boutons « Copier » et « Écrire » (§ 3.4) ;
+  - **pas de surbrillance** sur l'e-mail (choix validé) ;
   - « Copier » utilise `navigator.clipboard`. S'il n'est pas disponible, l'adresse est sélectionnée. Le bouton affiche « Copiée » pendant 1,8 s.
-- **Cartes réseaux** (3 colonnes) : pastille de 44 px, nom, identifiant, action en `--accent-texte` (« Voir le profil ↗ », « Voir le code ↗ », « Discuter ↗ »). Ouvrent un nouvel onglet.
+- **Pied de page (`footer.pied`)** :
+  - carte aux coins 28 px, padding 36 × 40 px ;
+  - grille de 4 colonnes : nom et rôle | Navigation | Réseaux | Documents ;
+  - **Navigation :** mêmes liens et mêmes icônes bicolores que la barre (À propos, Projets, Parcours) ;
+  - **Réseaux :** LinkedIn, GitHub, WhatsApp avec leur logo 20 px gris ;
+  - **Documents :** Mon CV, avec une icône de document au trait ;
+  - liens : 14 px, gras 600, `--texte-attenue`. Au survol : `--texte`, et l'icône passe en `--accent-trait` ;
+  - **ligne du bas** (`.pied-bas`), sous un filet : « © 2026 Azarias Sawadogo · Logos : Simple Icons » à gauche, icônes des réseaux à droite (ronds de 40 px, logo 18 px, `aria-label`).
+- **Mobile (< 760 px) :** la carte passe sur une colonne. Le pied passe sur 2 colonnes, le nom sur toute la largeur.
+- Les liens internes du pied (`#apropos`…) changent d'écran comme ceux de la barre. Les liens externes ouvrent un nouvel onglet.
 
 ### 3.15 Titre de section — `.tete`
 
@@ -265,6 +286,6 @@ Grille de 4 colonnes, écart 12 px. `.outils` est en `display: contents`, pour q
 | Composants plats | Cartes avec léger dégradé, halo sous la navbar | Style widgets choisi |
 | Aucune section qui glisse ; un seul moment orchestré par écran | Transition entre écrans + apparition en cascade | Demandé |
 | Échelle de rayons 6/8/12/18/26 | 10/16/22/28 | Style widgets, plus arrondi |
-| Couleurs uniquement par jetons | Navbar : couleurs propres (dégradé, icônes grises) | Reproduit la référence |
+| Couleurs uniquement par jetons | Navbar, carte d'appel et pied de page : dégradé et icônes grises propres (`--barre-fond`, `--barre-bord`, gris d'icônes en dur) | Reproduit les références |
 
 Si ces choix sont confirmés, il faudra les reporter dans `aza-structure` (nouvelle version du design system) plutôt que de les laisser comme exceptions.
