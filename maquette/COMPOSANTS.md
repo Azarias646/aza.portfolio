@@ -103,13 +103,18 @@ Barre flottante en haut de l'écran.
 
 | Variante | Classe | Style |
 |---|---|---|
-| Principal | `.btn.principal` | Pilule, aplat `--accent`, texte `--sur-accent` ; survol `--accent-survol` |
-| Secondaire | `.btn.second` | Pilule, fond `--surface-2`, texte `--texte` |
-| Copier | `button.copier` | Pilule 48 px de haut, fond `--surface-2` |
+| Principal | `.btn.principal` | Pilule, aplat `--accent`, texte `--sur-accent` ; au survol, remplissage `--accent-texte`, texte `--page` |
+| Secondaire | `.btn.second` | Pilule en contour 1 px `--texte-discret`, fond transparent, texte `--texte` ; au survol, remplissage `--texte`, texte `--page` |
+| Copier | `button.copier` | Comme le secondaire, 48 px de haut |
 
 - Hauteur 48 px, padding 0 × 24 px, gras 600. Icône éventuelle 16 px au trait.
 - Appui : `scale(.98)` en 120 ms.
 - **Un seul bouton principal par zone.**
+- **Survol : remplissage directionnel** (*direction-aware hover*).
+  - Le fond (`::before`, couleur `--balayage`) entre par le côté où arrive le curseur et repart par le côté où il sort. Glissement de 460 ms, `cubic-bezier(.65, 0, .35, 1)`.
+  - Le texte change de couleur en 160 ms, avec 200 ms de retard : il bascule quand le fond le recouvre à moitié.
+  - Le script lit le côté d'entrée et de sortie (`pointerenter` / `pointerleave`) et le passe dans la variable `--bx`. La classe `.rempli` marque l'état survolé.
+  - Pas d'effet au toucher (écran tactile).
 
 ### 3.5 Carte
 

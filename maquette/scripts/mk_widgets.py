@@ -38,6 +38,25 @@ r('<a href="#apropos">À propos</a>', '<a href="#apropos"><svg class="ico" viewB
 r('<a href="#projets">Projets</a>', '<a href="#projets"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 3.5 7 12 11.5 20.5 7z" class="clair"/><path d="M3.5 8.3 11.3 12.5V21.5L3.5 17.2z"/><path d="M20.5 8.3 12.7 12.5V21.5L20.5 17.2z" class="moyen"/></svg><span>Projets</span></a>')
 r('<a href="#parcours">Parcours</a>', '<a href="#parcours"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 2.5h1.8v19H5z"/><path d="M6.8 3.5h11.7l-2.6 4.2 2.6 4.3H6.8z" class="clair"/></svg><span>Parcours</span></a>')
 r('<a href="#contact">Contact</a>', '<a href="#contact"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5A2.5 2.5 0 0 1 5.5 3h13A2.5 2.5 0 0 1 21 5.5v9a2.5 2.5 0 0 1-2.5 2.5H10l-4.5 4v-4h0A2.5 2.5 0 0 1 3 14.5z" class="clair"/><circle cx="8.5" cy="10" r="1.3"/><circle cx="12" cy="10" r="1.3"/><circle cx="15.5" cy="10" r="1.3"/></svg><span>Contact</span></a>')
+
+# Boutons : remplissage directionnel au survol (le fond entre par le côté du curseur et sort par le côté opposé)
+r("  // Copier l'adresse e-mail", """  // Boutons : le fond se remplit depuis le côté par lequel entre le curseur, et repart par celui où il sort
+  document.querySelectorAll('.btn, .copier').forEach(b => {
+    const cote = e => { const r = b.getBoundingClientRect(); return e.clientX < r.left + r.width / 2 ? -1 : 1; };
+    b.addEventListener('pointerenter', e => {
+      if (e.pointerType === 'touch') return;
+      b.classList.add('sans-transition'); b.style.setProperty('--bx', (cote(e) * 101) + '%');
+      void b.offsetWidth;
+      b.classList.remove('sans-transition'); b.style.setProperty('--bx', '0%'); b.classList.add('rempli');
+    });
+    b.addEventListener('pointerleave', e => {
+      if (e.pointerType === 'touch') return;
+      b.style.setProperty('--bx', (cote(e) * 101) + '%'); b.classList.remove('rempli');
+    });
+  });
+
+  // Copier l'adresse e-mail""")
+
 css = """
   /* ===== Variante widgets : cartes sombres très arrondies, accent vert du design system, pastilles rondes, pilules ===== */
   :root {
@@ -204,6 +223,19 @@ css = """
   :root[data-theme="light"] .ico .clair { fill: #b5b8bc; }
   .diapo { z-index: 0; }
   .diapo.active { z-index: 1; }
+
+  /* Boutons : remplissage directionnel au survol */
+  .btn, .copier, #contact .copier { position: relative; overflow: hidden; isolation: isolate; transition: color 320ms var(--courbe-sortie), transform var(--duree-rapide); }
+  .btn::before, .copier::before {
+    content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: var(--balayage);
+    transform: translateX(var(--bx, -101%)); transition: transform 460ms cubic-bezier(.65, 0, .35, 1);
+  }
+  .btn.sans-transition::before, .copier.sans-transition::before { transition: none; }
+  .btn.second, .copier, #contact .copier { background: transparent; border: 1px solid var(--texte-discret); color: var(--texte); --balayage: var(--texte); }
+  .btn.second:hover, .copier:hover, #contact .copier:hover { background: transparent; }
+  .btn.principal, #contact .btn.principal { --balayage: var(--accent-texte); }
+  .btn.principal:hover, #contact .btn.principal:hover { background: var(--accent); }
+  .btn.rempli, .copier.rempli { color: var(--page); transition: color 160ms linear 200ms, transform var(--duree-rapide); }
 
   /* Repères */
   .points button[aria-current="true"]::before { border-radius: var(--rayon-pilule); background: var(--accent-trait); }

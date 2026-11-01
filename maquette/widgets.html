@@ -545,6 +545,19 @@
   .diapo { z-index: 0; }
   .diapo.active { z-index: 1; }
 
+  /* Boutons : remplissage directionnel au survol */
+  .btn, .copier, #contact .copier { position: relative; overflow: hidden; isolation: isolate; transition: color 320ms var(--courbe-sortie), transform var(--duree-rapide); }
+  .btn::before, .copier::before {
+    content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: var(--balayage);
+    transform: translateX(var(--bx, -101%)); transition: transform 460ms cubic-bezier(.65, 0, .35, 1);
+  }
+  .btn.sans-transition::before, .copier.sans-transition::before { transition: none; }
+  .btn.second, .copier, #contact .copier { background: transparent; border: 1px solid var(--texte-discret); color: var(--texte); --balayage: var(--texte); }
+  .btn.second:hover, .copier:hover, #contact .copier:hover { background: transparent; }
+  .btn.principal, #contact .btn.principal { --balayage: var(--accent-texte); }
+  .btn.principal:hover, #contact .btn.principal:hover { background: var(--accent); }
+  .btn.rempli, .copier.rempli { color: var(--page); transition: color 160ms linear 200ms, transform var(--duree-rapide); }
+
   /* Repères */
   .points button[aria-current="true"]::before { border-radius: var(--rayon-pilule); background: var(--accent-trait); }
 </style>
@@ -994,6 +1007,21 @@
   // Lignes en cascade : chaque élément reçoit son rang
   document.querySelectorAll('.projets, .parcours > div, .outils, .canaux, .recit').forEach(liste => {
     [...liste.children].filter(e => !e.matches('h3')).forEach((e, i) => { e.classList.add('cascade'); e.style.setProperty('--i', i); });
+  });
+
+  // Boutons : le fond se remplit depuis le côté par lequel entre le curseur, et repart par celui où il sort
+  document.querySelectorAll('.btn, .copier').forEach(b => {
+    const cote = e => { const r = b.getBoundingClientRect(); return e.clientX < r.left + r.width / 2 ? -1 : 1; };
+    b.addEventListener('pointerenter', e => {
+      if (e.pointerType === 'touch') return;
+      b.classList.add('sans-transition'); b.style.setProperty('--bx', (cote(e) * 101) + '%');
+      void b.offsetWidth;
+      b.classList.remove('sans-transition'); b.style.setProperty('--bx', '0%'); b.classList.add('rempli');
+    });
+    b.addEventListener('pointerleave', e => {
+      if (e.pointerType === 'touch') return;
+      b.style.setProperty('--bx', (cote(e) * 101) + '%'); b.classList.remove('rempli');
+    });
   });
 
   // Copier l'adresse e-mail
