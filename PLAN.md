@@ -1,6 +1,6 @@
 # Portfolio v2 — Plan
 
-Branche : `new` · Maquette : [`maquette/index.html`](maquette/index.html)
+Branche : `new` · Maquette retenue : [`maquette/widgets.html`](maquette/widgets.html) · **Composants : [`maquette/COMPOSANTS.md`](maquette/COMPOSANTS.md)**
 
 ## 1. Ce qui change par rapport à la v1
 
@@ -21,14 +21,11 @@ Branche : `new` · Maquette : [`maquette/index.html`](maquette/index.html)
 4. **Parcours** — années seulement : master IA (2026, en cours), poste actuel, IBM Z Xplore, stages, licence.
 5. **Contact** — « Envie de collaborer ou d'échanger ? » : e-mail (avec bouton copier), LinkedIn, GitHub, WhatsApp.
 
-## 3. Design — `Azarias646/aza-structure` (design-system/, v0.2.0)
+## 3. Design
 
-- **Thèmes** : sombre en référence, clair toujours disponible ; suit le système, choix manuel possible.
-- **Couleurs** : uniquement les rôles des jetons (`page`, `surface`, `filet`, `texte`, `accent`…), neutres sans teinte, un seul accent (`#1D5A4E` / `#7CCBB7` en sombre).
-- **Typo** : Roboto Flex (Manrope en repli), auto-hébergées. Titres de vitrine élargis (`wdth` 125), chiffres clés condensés (`wdth` 88, `tabular-nums`). Pas de police mono, pas de capitales.
-- **Formes** : rayons 6 / 8 / 12 / 18 / 26 px, pilule pour l'action principale.
-- **Lumière** : halo de scène derrière le portrait, une seule carte éclairée par la lueur d'accent ; composants plats.
-- **Mouvement** : un seul moment à l'ouverture (arrivée du portrait, 600 ms), portrait qui s'incline au pointeur, enfoncement à l'appui ; transition entre les sections (le filet se trace, puis le contenu monte) — écart volontaire à la règle « aucune section qui glisse » du design system, à ta demande ; mouvement réduit respecté.
+Tout le détail (jetons, composants, animations, accessibilité, écarts au design system) est dans [`maquette/COMPOSANTS.md`](maquette/COMPOSANTS.md).
+
+En résumé : design system `aza-structure` 0.2.0 (vert `#1D5A4E`, Roboto Flex, neutres sans teinte) habillé en style « widgets » (cartes sombres arrondies, pastilles rondes, pilules, bento), navigation plein écran avec transition par poussée et contenu qui apparaît en fondu doux.
 
 ## 4. Étapes
 
