@@ -6,7 +6,7 @@ Branche : `new` · Maquette : [`maquette/index.html`](maquette/index.html)
 
 | v1 (actuelle) | v2 (proposée) |
 |---|---|
-| Thème turquoise, fond image clair/sombre | Thème « éditorial » sombre, accent vert citron (bleu en mode clair) |
+| Thème turquoise, fond image clair/sombre | Design system `aza-structure` 0.2.0 : neutres sans teinte, un seul accent vert turquoise |
 | Grille de logos de compétences | Compétences groupées par domaine (texte, plus lisible) |
 | Carrousel jQuery + lightSlider pour les projets | Liste de projets numérotée, chaque projet → page « étude de cas » |
 | jQuery + 2 plugins | HTML/CSS/JS natif, zéro dépendance |
@@ -21,13 +21,14 @@ Branche : `new` · Maquette : [`maquette/index.html`](maquette/index.html)
 4. **Parcours** — frise chronologique formation / expériences.
 5. **Contact** — e-mail, GitHub, LinkedIn, WhatsApp.
 
-## 3. Design
+## 3. Design — `Azarias646/aza-structure` (design-system/, v0.2.0)
 
-- **Typo** : Space Grotesk (titres/texte) + JetBrains Mono (détails « dev »).
-- **Couleurs (sombre)** : fond `#0e0f0c`, texte `#edeae2`, gris `#9a978d`, accent `#c6f432`.
-- **Couleurs (clair)** : fond `#f4f1ea`, texte `#141510`, accent `#3d5afe`.
-- **Animations** : apparition au scroll, hover sur les projets, respect de `prefers-reduced-motion`.
-- **Responsive** : mobile d'abord, grille bento qui passe en 2 colonnes.
+- **Thèmes** : sombre en référence, clair toujours disponible ; suit le système, choix manuel possible.
+- **Couleurs** : uniquement les rôles des jetons (`page`, `surface`, `filet`, `texte`, `accent`…), neutres sans teinte, un seul accent (`#1D5A4E` / `#7CCBB7` en sombre).
+- **Typo** : Roboto Flex (Manrope en repli), auto-hébergées. Titres de vitrine élargis (`wdth` 125), chiffres clés condensés (`wdth` 88, `tabular-nums`). Pas de police mono, pas de capitales.
+- **Formes** : rayons 6 / 8 / 12 / 18 / 26 px, pilule pour l'action principale.
+- **Lumière** : halo de scène derrière le portrait, une seule carte éclairée par la lueur d'accent ; composants plats.
+- **Mouvement** : un seul moment à l'ouverture (arrivée du portrait, 600 ms), portrait qui s'incline au pointeur, enfoncement à l'appui ; aucune apparition au scroll ; mouvement réduit respecté.
 
 ## 4. Étapes
 

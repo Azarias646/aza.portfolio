@@ -3,166 +3,204 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Azarias Sawadogo — Data engineer & DSI</title>
+<title>Azarias Sawadogo — Data engineer &amp; DSI</title>
+<!-- Maquette : polices chargées depuis Google Fonts. Version finale : auto-hébergées (P1). -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&family=Manrope:wght@400..800&display=swap" rel="stylesheet">
 <style>
+  /* Jetons : aza-structure/design-system/jetons/jetons.json (v0.2.0) */
   :root {
-    --bg: #0e0f0c;
-    --card: #171814;
-    --line: #2a2b26;
-    --text: #edeae2;
-    --muted: #9a978d;
-    --accent: #c6f432;
-    --accent-ink: #0e0f0c;
-    --sans: 'Space Grotesk', system-ui, sans-serif;
-    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    color-scheme: dark;
+    --page: #0d0e0f;
+    --fond: #141516;
+    --surface: #1b1c1e;
+    --surface-2: #222426;
+    --filet: #2c2e31;
+    --texte: #eceeee;
+    --texte-attenue: #9a9ea2;
+    --texte-discret: #868a8e;
+    --accent: #1d5a4e;
+    --accent-survol: #256b5e;
+    --accent-texte: #7ccbb7;
+    --accent-trait: #7ccbb7;
+    --sur-accent: #e6f4f0;
+    --halo-scene: rgba(255, 255, 255, .07);
+
+    --rayon-xs: 6px; --rayon-sm: 8px; --rayon-md: 12px;
+    --rayon-lg: 18px; --rayon-xl: 26px; --rayon-pilule: 999px;
+
+    --taille-petit: 12.5px; --taille-texte: 14.5px; --taille-titre-bloc: 16px;
+    --taille-titre-ecran: 24px; --taille-chiffre-cle: 30px;
+
+    --duree-rapide: 120ms; --duree-standard: 220ms; --duree-lente: 600ms;
+    --courbe-sortie: cubic-bezier(.2, .8, .2, 1);
+    --courbe-douce: cubic-bezier(.45, 0, .55, 1);
+
+    --police: 'Roboto Flex', 'Manrope', system-ui, sans-serif;
   }
-  [data-theme="light"] {
-    --bg: #f4f1ea;
-    --card: #ebe7dd;
-    --line: #d6d1c4;
-    --text: #141510;
-    --muted: #5f5c53;
-    --accent: #3d5afe;
-    --accent-ink: #ffffff;
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      color-scheme: light;
+      --page: #e4e6e7; --fond: #eef0f0; --surface: #fafafa; --surface-2: #f2f3f3;
+      --filet: #d8dbdc; --texte: #141516; --texte-attenue: #5a5f63; --texte-discret: #6b7075;
+      --accent-texte: #256b5e; --accent-trait: #2e7d6c; --sur-accent: #ffffff;
+      --halo-scene: rgba(255, 255, 255, .9);
+    }
   }
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --page: #e4e6e7; --fond: #eef0f0; --surface: #fafafa; --surface-2: #f2f3f3;
+    --filet: #d8dbdc; --texte: #141516; --texte-attenue: #5a5f63; --texte-discret: #6b7075;
+    --accent-texte: #256b5e; --accent-trait: #2e7d6c; --sur-accent: #ffffff;
+    --halo-scene: rgba(255, 255, 255, .9);
+  }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body {
-    background: var(--bg); color: var(--text);
-    font-family: var(--sans); line-height: 1.5;
-    transition: background .3s, color .3s;
+    background: var(--page); color: var(--texte);
+    font-family: var(--police); font-size: var(--taille-texte); line-height: 1.55;
   }
   a { color: inherit; text-decoration: none; }
   .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
-  .mono { font-family: var(--mono); font-size: .85rem; color: var(--muted); }
+  .petit { font-size: var(--taille-petit); color: var(--texte-attenue); }
+  .chiffre { font-variation-settings: 'wdth' 88; font-variant-numeric: tabular-nums; }
+  :focus-visible { outline: 2px solid var(--accent-trait); outline-offset: 3px; border-radius: var(--rayon-sm); }
 
-  /* Nav */
-  nav {
-    position: sticky; top: 0; z-index: 10;
-    backdrop-filter: blur(10px);
-    background: color-mix(in srgb, var(--bg) 80%, transparent);
-    border-bottom: 1px solid var(--line);
+  /* Navigation */
+  nav { position: sticky; top: 0; z-index: 10; background: var(--page); border-bottom: 1px solid var(--filet); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+  .logo { font-weight: 700; font-size: 16px; font-variation-settings: 'wdth' 125; letter-spacing: -.02em; }
+  .liens { display: flex; gap: 4px; }
+  .liens a {
+    padding: 8px 12px; border-radius: var(--rayon-sm); color: var(--texte-attenue);
+    transition: background var(--duree-rapide), color var(--duree-rapide);
   }
-  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
-  .logo { font-family: var(--mono); font-weight: 500; }
-  .logo span { color: var(--accent); }
-  .links { display: flex; gap: 28px; font-size: .95rem; }
-  .links a { color: var(--muted); transition: color .2s; }
-  .links a:hover { color: var(--text); }
-  .toggle {
-    font-family: var(--mono); font-size: .8rem; cursor: pointer;
-    background: none; color: var(--text);
-    border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px;
+  .liens a:hover { color: var(--texte); background: var(--surface); }
+  .theme {
+    height: 40px; padding: 0 14px; border-radius: var(--rayon-md); cursor: pointer;
+    background: var(--surface); color: var(--texte); border: 1px solid var(--filet); font: inherit;
   }
 
-  /* Hero */
-  .hero {
-    padding-top: 96px; padding-bottom: 96px;
-    display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 56px; align-items: center;
+  /* Vitrine */
+  .vitrine {
+    padding-top: 88px; padding-bottom: 104px;
+    display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 56px; align-items: center;
   }
-  .portrait { position: relative; }
+  .etat { display: inline-flex; align-items: center; gap: 8px; color: var(--texte-attenue); }
+  .rond { width: 8px; height: 8px; border-radius: 50%; background: var(--accent-trait); animation: veille 2.4s var(--courbe-douce) infinite; }
+  @keyframes veille { 50% { opacity: .35; } }
+  h1 {
+    font-size: clamp(52px, 9.5vw, 118px); line-height: .92; font-weight: 700;
+    font-variation-settings: 'wdth' 125; letter-spacing: -.045em; margin: 28px 0 28px;
+  }
+  .accroche { font-size: clamp(16px, 1.8vw, 19px); max-width: 560px; color: var(--texte-attenue); }
+  .accroche strong { color: var(--texte); font-weight: 600; }
+  .actions { display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; height: 48px; padding: 0 24px; font-weight: 600;
+    border-radius: var(--rayon-pilule); transition: background var(--duree-rapide), transform var(--duree-rapide);
+  }
+  .btn:active { transform: scale(.98); }
+  .btn.principal { background: var(--accent); color: var(--sur-accent); }
+  .btn.principal:hover { background: var(--accent-survol); }
+  .btn.second { color: var(--texte); border: 1px solid var(--filet); }
+  .btn.second:hover { background: var(--surface); }
+
+  /* Portrait : objet central éclairé par un halo, s'incline au pointeur */
+  .scene { position: relative; perspective: 900px; }
+  .scene::before {
+    content: ''; position: absolute; inset: -12% -18%; z-index: 0;
+    background: radial-gradient(closest-side, var(--halo-scene), transparent);
+  }
+  .portrait {
+    position: relative; z-index: 1; transform-style: preserve-3d;
+    transition: transform var(--duree-standard) var(--courbe-sortie);
+    animation: arrivee var(--duree-lente) var(--courbe-sortie) both;
+  }
+  @keyframes arrivee { from { opacity: 0; transform: translateY(24px) scale(.97); } }
   .portrait img {
     width: 100%; aspect-ratio: 4 / 5; object-fit: cover; display: block;
-    border-radius: 24px; border: 1px solid var(--line); filter: grayscale(1) contrast(1.05);
+    border-radius: var(--rayon-xl); filter: grayscale(1) contrast(1.05);
   }
-  .portrait figcaption {
-    position: absolute; left: 16px; bottom: 16px;
-    background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px;
-  }
-  .status {
-    display: inline-flex; align-items: center; gap: 8px;
-    border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px;
-  }
-  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
-  @keyframes pulse { 50% { opacity: .3; } }
-  h1 {
-    font-size: clamp(3rem, 8vw, 6.5rem); line-height: .95;
-    letter-spacing: -.04em; font-weight: 700; margin: 32px 0 28px;
-  }
-  h1 em { font-style: normal; color: var(--accent); }
-  .lead { font-size: clamp(1.1rem, 2vw, 1.4rem); max-width: 640px; color: var(--muted); }
-  .lead strong { color: var(--text); font-weight: 500; }
-  .typed::after { content: '▍'; color: var(--accent); animation: pulse 1s steps(1) infinite; }
-  .cta { display: flex; gap: 12px; margin-top: 40px; flex-wrap: wrap; }
-  .btn {
-    padding: 14px 24px; border-radius: 999px; font-weight: 500;
-    border: 1px solid var(--line); transition: transform .2s;
-  }
-  .btn:hover { transform: translateY(-2px); }
-  .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .lieu { margin-top: 14px; text-align: center; position: relative; z-index: 1; }
 
   /* Sections */
-  section { padding: 96px 0; border-top: 1px solid var(--line); }
-  .head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 48px; gap: 16px; }
-  h2 { font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -.03em; }
+  section { padding: 96px 0; border-top: 1px solid var(--filet); }
+  .tete { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 40px; }
+  h2 { font-size: clamp(32px, 4.5vw, 48px); line-height: 1.05; font-weight: 700; font-variation-settings: 'wdth' 125; letter-spacing: -.035em; }
+  h3 { font-size: var(--taille-titre-bloc); font-weight: 600; }
 
-  /* Bento about */
-  .bento { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
-  .tile { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 28px; }
-  .tile.big { grid-column: span 2; grid-row: span 2; display: flex; flex-direction: column; justify-content: space-between; }
-  .tile.wide { grid-column: span 2; }
-  .tile.full { grid-column: 1 / -1; }
-  .tile h3 { font-size: 1rem; margin-bottom: 14px; }
-  .num { font-size: 3rem; font-weight: 700; letter-spacing: -.04em; color: var(--accent); }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  .chip { font-family: var(--mono); font-size: .78rem; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--line); }
+  /* À propos */
+  .apropos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  .carte { background: var(--surface); border-radius: var(--rayon-lg); padding: 24px; }
+  .carte.bio { grid-column: span 2; grid-row: span 2; display: flex; flex-direction: column; justify-content: space-between; gap: 24px; }
+  .carte.bio p:first-child { font-size: 18px; line-height: 1.5; }
+  .carte.large { grid-column: span 2; }
+  .carte.pleine { grid-column: 1 / -1; }
+  .carte.lueur { box-shadow: 0 0 0 1px var(--accent), 0 18px 60px -18px var(--accent-survol); }
+  .cle { font-size: var(--taille-chiffre-cle); font-weight: 620; color: var(--accent-texte); line-height: 1.1; }
+  .cle + p { margin-top: 6px; }
+  .carte h3 { margin-bottom: 12px; }
+  .puces { display: flex; flex-wrap: wrap; gap: 6px; }
+  .puce { font-size: var(--taille-petit); padding: 5px 10px; border-radius: var(--rayon-sm); background: var(--surface-2); color: var(--texte); }
 
-  /* Projects */
-  .project {
-    display: grid; grid-template-columns: 70px 1fr auto; gap: 24px; align-items: center;
-    padding: 32px 0; border-bottom: 1px solid var(--line); position: relative;
+  /* Projets */
+  .projet {
+    display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; gap: 24px; align-items: start;
+    padding: 28px 0; border-bottom: 1px solid var(--filet);
   }
-  .project:hover h3 { color: var(--accent); }
-  .project:hover .arrow { transform: translate(4px, -4px); color: var(--accent); }
-  .project h3 { font-size: clamp(1.4rem, 3vw, 2.2rem); letter-spacing: -.02em; transition: color .2s; }
-  .project p { color: var(--muted); margin-top: 6px; }
-  .project .chips { margin-top: 14px; }
-  .arrow { font-size: 2rem; transition: transform .2s, color .2s; }
-  .tag { color: var(--accent); }
-  .sub { list-style: none; margin-top: 12px; color: var(--muted); }
-  .sub li::before { content: '└ '; font-family: var(--mono); color: var(--line); }
-  .minor { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 48px; }
-  .minor .tile p { color: var(--muted); font-size: .95rem; margin-top: 6px; }
-  .archive { margin-top: 32px; }
+  .projet:first-of-type { border-top: 1px solid var(--filet); }
+  .numero { padding-top: 6px; }
+  .projet h3 { font-size: clamp(22px, 2.6vw, 30px); line-height: 1.15; font-weight: 700; font-variation-settings: 'wdth' 112; letter-spacing: -.02em; margin: 4px 0 8px; }
+  .projet p, .projet li { color: var(--texte-attenue); }
+  .projet ul { list-style: none; margin-top: 10px; display: grid; gap: 4px; }
+  .projet li { padding-left: 16px; position: relative; }
+  .projet li::before { content: ''; position: absolute; left: 0; top: .7em; width: 8px; height: 1px; background: var(--texte-discret); }
+  .projet .puces { margin-top: 14px; }
+  .fleche {
+    width: 44px; height: 44px; border-radius: var(--rayon-pilule); border: 1px solid var(--filet);
+    display: grid; place-items: center; transition: background var(--duree-rapide);
+  }
+  .projet:hover .fleche { background: var(--surface); }
+  .projet:hover h3 { color: var(--accent-texte); }
+  .autres { margin-top: 40px; display: grid; gap: 0; }
+  .autre { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 24px; padding: 14px 0; border-bottom: 1px dashed var(--filet); }
+  .archive { margin-top: 28px; }
+  .archive a { color: var(--accent-texte); }
 
-  /* Timeline */
-  .timeline { display: grid; gap: 0; }
-  .step { display: grid; grid-template-columns: 160px 1fr; gap: 24px; padding: 24px 0; border-bottom: 1px dashed var(--line); }
-  .step h3 { font-size: 1.15rem; }
-  .step p { color: var(--muted); }
+  /* Parcours */
+  .etape { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--filet); }
+  .etape:first-child { border-top: 1px solid var(--filet); }
+  .etape p { color: var(--texte-attenue); }
 
   /* Contact */
-  .contact { text-align: center; padding: 140px 0; }
-  .contact a.mail {
-    display: inline-block; font-size: clamp(1.6rem, 5vw, 4rem); font-weight: 700;
-    letter-spacing: -.03em; border-bottom: 3px solid var(--accent); margin: 24px 0 40px;
+  .contact { text-align: center; padding: 128px 0; }
+  .contact .mail {
+    display: inline-block; font-size: clamp(26px, 5vw, 56px); font-weight: 700;
+    font-variation-settings: 'wdth' 112; letter-spacing: -.03em;
+    color: var(--accent-texte); margin: 20px 0 36px;
   }
-  .socials { display: flex; justify-content: center; gap: 24px; }
-  footer { border-top: 1px solid var(--line); padding: 28px 0; }
-  footer .wrap { display: flex; justify-content: space-between; }
-
-  /* Reveal */
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s, transform .7s; }
-  .reveal.in { opacity: 1; transform: none; }
+  .contact .mail:hover { text-decoration: underline; text-underline-offset: 8px; text-decoration-thickness: 2px; }
+  .reseaux { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+  .reseaux a { padding: 10px 16px; border-radius: var(--rayon-pilule); border: 1px solid var(--filet); transition: background var(--duree-rapide); }
+  .reseaux a:hover { background: var(--surface); }
+  footer { border-top: 1px solid var(--filet); padding: 24px 0; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
 
   @media (max-width: 760px) {
-    .links { display: none; }
-    .hero { grid-template-columns: 1fr; gap: 40px; padding-top: 56px; }
-    .portrait { max-width: 320px; }
-    .minor { grid-template-columns: 1fr; }
-    .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .project > div { min-width: 0; }
-    .tile.big, .tile.wide { grid-column: span 2; }
-    .project { grid-template-columns: 1fr auto; }
-    .project .mono:first-child { display: none; }
-    .step { grid-template-columns: 1fr; gap: 4px; }
-    footer .wrap { flex-direction: column; gap: 8px; }
+    .liens { display: none; }
+    .vitrine { grid-template-columns: 1fr; gap: 48px; padding-top: 48px; }
+    .scene { max-width: 320px; }
+    .apropos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .carte.bio, .carte.large { grid-column: 1 / -1; }
+    .projet { grid-template-columns: minmax(0, 1fr) auto; }
+    .numero { display: none; }
+    .autre, .etape { grid-template-columns: 1fr; gap: 2px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    * { animation: none !important; transition: none !important; }
-    .reveal { opacity: 1; transform: none; }
+    *, *::before { animation: none !important; transition: none !important; }
+    .portrait { transform: none !important; }
   }
 </style>
 </head>
@@ -170,218 +208,227 @@
 
 <nav>
   <div class="wrap">
-    <a href="#" class="logo">azarias<span>.dev</span></a>
-    <div class="links">
-      <a href="#about">À propos</a>
-      <a href="#work">Projets</a>
-      <a href="#path">Parcours</a>
+    <a href="#" class="logo">Azarias</a>
+    <div class="liens">
+      <a href="#apropos">À propos</a>
+      <a href="#projets">Projets</a>
+      <a href="#parcours">Parcours</a>
       <a href="#contact">Contact</a>
     </div>
-    <button class="toggle" id="toggle">☾ dark</button>
+    <button class="theme" id="theme" type="button" aria-label="Changer de thème">Thème : auto</button>
   </div>
 </nav>
 
-<header class="hero wrap">
+<header class="vitrine wrap">
   <div>
-    <span class="status mono"><span class="dot"></span>DSI · Aïobi &amp; BBS Holding</span>
-    <h1>Azarias<br>Sawadogo<em>.</em></h1>
-    <p class="lead">Data engineer &amp; DSI à Ouagadougou. Je fais tourner l’ERP d’un groupe multi-filiales et je construis
-      des <strong class="typed" id="typed">pipelines de données</strong>, de l’infrastructure jusqu’aux indicateurs métier.</p>
-    <div class="cta">
-      <a href="#work" class="btn primary">Voir mes projets ↓</a>
-      <a href="../document/CV-Azarias-Sawadogo-2026.pdf" download class="btn">Télécharger le CV</a>
+    <span class="etat petit"><span class="rond" aria-hidden="true"></span>DSI chez Aïobi et BBS Holding</span>
+    <h1>Azarias<br>Sawadogo</h1>
+    <p class="accroche">Data engineer et DSI à Ouagadougou. Je fais tourner l’ERP d’un groupe multi-filiales
+      et je construis <strong>des pipelines de données</strong>, de l’infrastructure jusqu’aux indicateurs métier.</p>
+    <div class="actions">
+      <a href="#projets" class="btn principal">Voir mes projets</a>
+      <a href="../document/CV-Azarias-Sawadogo-2026.pdf" download class="btn second">Télécharger le CV</a>
     </div>
   </div>
-  <figure class="portrait">
-    <img src="../media/azarias.jpg" alt="Portrait d’Azarias Sawadogo">
-    <figcaption class="mono">📍 Ouagadougou, BF</figcaption>
-  </figure>
+  <div class="scene">
+    <figure class="portrait" id="portrait">
+      <img src="../media/azarias.jpg" alt="Portrait d’Azarias Sawadogo">
+    </figure>
+    <p class="lieu petit">Ouagadougou, Burkina Faso</p>
+  </div>
 </header>
 
-<section id="about">
+<section id="apropos">
   <div class="wrap">
-    <div class="head reveal"><h2>À propos</h2><span class="mono">01 / 04</span></div>
-    <div class="bento">
-      <div class="tile big reveal">
-        <p style="font-size:1.25rem">Licencié en <strong>informatique de gestion</strong> (2025), je suis aujourd’hui <strong>DSI</strong>
-          d’Aïobi et de BBS Holding. Je pilote leur ERPNext multi-filiales de bout en bout et je m’occupe moi-même
-          de la géolocalisation, de la logistique et du reporting comptable par filiale.</p>
-        <p style="margin-top:16px;color:var(--muted)">Mon terrain de jeu préféré : le <strong style="color:var(--text)">data engineering</strong>.
-          Lakehouse, Spark, Airflow, et un homelab pour tout tester.</p>
-        <p class="mono" style="margin-top:24px">Aussi curieux de : DBA · QA · cloud · sysadmin · OSINT / GEOINT<br>Langues : français · anglais (intermédiaire) · mooré</p>
+    <div class="tete"><h2>À propos</h2></div>
+    <div class="apropos">
+      <div class="carte bio">
+        <p>Licencié en informatique de gestion (2025), je suis aujourd’hui DSI d’Aïobi et de BBS Holding.
+          Je pilote leur ERPNext multi-filiales de bout en bout et je m’occupe moi-même de la géolocalisation,
+          de la logistique et du reporting comptable par filiale.</p>
+        <p class="petit">Mon terrain préféré : le data engineering. Aussi curieux de bases de données, QA, cloud,
+          administration système, OSINT et GEOINT. Français, anglais (intermédiaire), mooré.</p>
       </div>
-      <div class="tile reveal"><div class="num">1</div><p class="mono">ERP multi-filiales en production</p></div>
-      <div class="tile reveal"><div class="num">2</div><p class="mono">sociétés sous ma responsabilité</p></div>
-      <div class="tile wide reveal">
-        <h3>ERP &amp; métier</h3>
-        <div class="chips">
-          <span class="chip">Frappe / ERPNext</span><span class="chip">Server Scripts</span><span class="chip">Jinja</span>
-          <span class="chip">Property Setters</span><span class="chip">Rôles &amp; permissions</span><span class="chip">Comptabilité</span>
+      <div class="carte lueur"><div class="cle chiffre">1</div><p class="petit">ERP multi-filiales en production</p></div>
+      <div class="carte"><div class="cle chiffre">2</div><p class="petit">sociétés sous ma responsabilité</p></div>
+      <div class="carte large">
+        <h3>ERP et métier</h3>
+        <div class="puces">
+          <span class="puce">Frappe / ERPNext</span><span class="puce">Server Scripts</span><span class="puce">Jinja</span>
+          <span class="puce">Property Setters</span><span class="puce">Rôles et permissions</span><span class="puce">Comptabilité</span>
         </div>
       </div>
-      <div class="tile wide reveal">
+      <div class="carte large">
         <h3>Data engineering</h3>
-        <div class="chips">
-          <span class="chip">MinIO</span><span class="chip">Spark (S3A)</span><span class="chip">PySpark</span>
-          <span class="chip">Airflow</span><span class="chip">ETL</span><span class="chip">Lakehouse</span>
+        <div class="puces">
+          <span class="puce">MinIO</span><span class="puce">Spark (S3A)</span><span class="puce">PySpark</span>
+          <span class="puce">Airflow</span><span class="puce">ETL</span><span class="puce">Lakehouse</span>
         </div>
       </div>
-      <div class="tile wide reveal">
-        <h3>Infra &amp; exploitation</h3>
-        <div class="chips">
-          <span class="chip">Docker</span><span class="chip">Docker Compose</span><span class="chip">Linux / SSH</span>
-          <span class="chip">Ubuntu / Debian</span><span class="chip">Windows</span><span class="chip">Tailscale</span><span class="chip">Caddy</span><span class="chip">Beszel</span><span class="chip">Sauvegardes</span>
+      <div class="carte large">
+        <h3>Infrastructure et exploitation</h3>
+        <div class="puces">
+          <span class="puce">Docker</span><span class="puce">Docker Compose</span><span class="puce">Ubuntu / Debian</span>
+          <span class="puce">Windows</span><span class="puce">Tailscale</span><span class="puce">Caddy</span><span class="puce">Beszel</span><span class="puce">Sauvegardes</span>
         </div>
       </div>
-      <div class="tile full reveal">
-        <h3>Bases &amp; dev</h3>
-        <div class="chips">
-          <span class="chip">PostgreSQL</span><span class="chip">MySQL</span><span class="chip">MongoDB</span><span class="chip">SQL</span><span class="chip">Python</span>
-          <span class="chip">Django / DRF</span><span class="chip">Flutter</span><span class="chip">JavaScript</span><span class="chip">VBA</span><span class="chip">ODBC</span><span class="chip">n8n</span>
+      <div class="carte pleine">
+        <h3>Bases de données et développement</h3>
+        <div class="puces">
+          <span class="puce">PostgreSQL</span><span class="puce">MySQL</span><span class="puce">MongoDB</span><span class="puce">SQL</span>
+          <span class="puce">Python</span><span class="puce">Django / DRF</span><span class="puce">Flutter</span><span class="puce">JavaScript</span>
+          <span class="puce">VBA</span><span class="puce">ODBC</span><span class="puce">n8n</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="work">
+<section id="projets">
   <div class="wrap">
-    <div class="head reveal"><h2>Projets sélectionnés</h2><span class="mono">02 / 04</span></div>
+    <div class="tete"><h2>Projets sélectionnés</h2></div>
 
-    <a class="project reveal" href="#">
-      <span class="mono">01</span>
+    <a class="projet" href="#">
+      <span class="numero petit chiffre">01</span>
       <div>
-        <span class="mono tag">Pro · Aïobi &amp; BBS Holding</span>
+        <span class="petit">Professionnel · Aïobi et BBS Holding</span>
         <h3>ERPNext multi-filiales</h3>
         <p>Administration complète de l’ERP du groupe : applications maison (provisioning, gestion de flotte),
-          formats d’impression, rapports, tableau de bord comptable par filiale. Bac à sable cloné de la prod,
+          formats d’impression, rapports, tableau de bord comptable par filiale. Bac à sable cloné de la production,
           sauvegarde et diff avant chaque écriture.</p>
-        <div class="chips"><span class="chip">Frappe</span><span class="chip">PostgreSQL</span><span class="chip">Docker</span><span class="chip">Jinja</span></div>
+        <div class="puces"><span class="puce">Frappe</span><span class="puce">PostgreSQL</span><span class="puce">Docker</span><span class="puce">Jinja</span></div>
       </div>
-      <span class="arrow">↗</span>
+      <span class="fleche" aria-hidden="true">↗</span>
     </a>
-    <a class="project reveal" href="#">
-      <span class="mono">02</span>
+    <a class="projet" href="#">
+      <span class="numero petit chiffre">02</span>
       <div>
-        <span class="mono tag">Data engineering</span>
+        <span class="petit">Data engineering</span>
         <h3>Lakehouse MinIO</h3>
-        <p>Le socle data commun à plusieurs chantiers :</p>
-        <ul class="sub">
+        <p>Le socle de données commun à plusieurs chantiers :</p>
+        <ul>
           <li>Pipeline GPS : protocole binaire des boîtiers Galileosky décodé, données stockées dans MinIO</li>
           <li>DAG Airflow d’ingestion et ETL Spark</li>
           <li>Nettoyage PySpark multi-format : PDF, images, CSV, JSON, Excel</li>
         </ul>
-        <div class="chips"><span class="chip">MinIO</span><span class="chip">Spark</span><span class="chip">Airflow</span><span class="chip">PySpark</span></div>
+        <div class="puces"><span class="puce">MinIO</span><span class="puce">Spark</span><span class="puce">Airflow</span><span class="puce">PySpark</span></div>
       </div>
-      <span class="arrow">↗</span>
+      <span class="fleche" aria-hidden="true">↗</span>
     </a>
-    <a class="project reveal" href="#">
-      <span class="mono">03</span>
+    <a class="projet" href="#">
+      <span class="numero petit chiffre">03</span>
       <div>
-        <span class="mono tag">Migration</span>
+        <span class="petit">Migration</span>
         <h3>Migration SAGE 100</h3>
-        <p>Rétro-analyse des fichiers natifs SAGE, puis extraction des données via le pilote ODBC.</p>
-        <div class="chips"><span class="chip">ODBC</span><span class="chip">Python</span><span class="chip">SQL</span></div>
+        <p>Analyse des fichiers natifs SAGE, puis extraction des données par le pilote ODBC.</p>
+        <div class="puces"><span class="puce">ODBC</span><span class="puce">Python</span><span class="puce">SQL</span></div>
       </div>
-      <span class="arrow">↗</span>
+      <span class="fleche" aria-hidden="true">↗</span>
     </a>
-    <a class="project reveal" href="#">
-      <span class="mono">04</span>
+    <a class="projet" href="#">
+      <span class="numero petit chiffre">04</span>
       <div>
-        <span class="mono tag">Infra · auto-hébergement</span>
+        <span class="petit">Infrastructure · auto-hébergement</span>
         <h3>AzaLab</h3>
         <p>Mon homelab sur un HP Z2. Supervision, accès distant et reverse proxy en place ;
-          en cours : PostgreSQL central, puis Nextcloud, Jellyfin, Navidrome, Vaultwarden…</p>
-        <div class="chips"><span class="chip">Beszel</span><span class="chip">Tailscale</span><span class="chip">Caddy</span><span class="chip">Docker</span></div>
+          en cours : un PostgreSQL central, puis Nextcloud, Jellyfin, Navidrome, Vaultwarden…</p>
+        <div class="puces"><span class="puce">Beszel</span><span class="puce">Tailscale</span><span class="puce">Caddy</span><span class="puce">Docker</span></div>
       </div>
-      <span class="arrow">↗</span>
+      <span class="fleche" aria-hidden="true">↗</span>
     </a>
-    <a class="project reveal" href="#">
-      <span class="mono">05</span>
+    <a class="projet" href="#">
+      <span class="numero petit chiffre">05</span>
       <div>
-        <span class="mono tag">Produit · équipe</span>
+        <span class="petit">Produit · en équipe</span>
         <h3>NutriFaso</h3>
         <p>Plateforme de recommandation nutritionnelle. Mon rôle : architecture, base de données et backend Django.</p>
-        <div class="chips"><span class="chip">Django</span><span class="chip">PostgreSQL</span><span class="chip">Architecture</span></div>
+        <div class="puces"><span class="puce">Django</span><span class="puce">PostgreSQL</span><span class="puce">Architecture</span></div>
       </div>
-      <span class="arrow">↗</span>
+      <span class="fleche" aria-hidden="true">↗</span>
     </a>
-    <a class="project reveal" href="#">
-      <span class="mono">06</span>
+    <a class="projet" href="#">
+      <span class="numero petit chiffre">06</span>
       <div>
-        <span class="mono tag">IA · agents</span>
+        <span class="petit">IA · agents</span>
         <h3>Agent Squad</h3>
-        <p>Une équipe d’agents de développement autonomes sur OpenHarness, pilotée depuis Discord. Stack opérationnelle.</p>
-        <div class="chips"><span class="chip">OpenHarness</span><span class="chip">Discord</span><span class="chip">Agents</span></div>
+        <p>Une équipe d’agents de développement autonomes sur OpenHarness, pilotée depuis Discord. La stack est opérationnelle.</p>
+        <div class="puces"><span class="puce">OpenHarness</span><span class="puce">Discord</span><span class="puce">Agents</span></div>
       </div>
-      <span class="arrow">↗</span>
+      <span class="fleche" aria-hidden="true">↗</span>
     </a>
 
-    <div class="minor">
-      <div class="tile reveal"><span class="mono tag">Documentation</span><h3>Schémas de facturation</h3><p>Cartographie de bases de facturation (eau, électricité, paiement mobile).</p></div>
-      <div class="tile reveal"><span class="mono tag">Exploration</span><h3>Veille sociale</h3><p>Collecte de commentaires Facebook et LinkedIn.</p></div>
-      <div class="tile reveal"><span class="mono tag">Automatisation</span><h3>Offres d’emploi WhatsApp</h3><p>Workflow n8n qui détecte les offres dans des groupes.</p></div>
+    <div class="autres">
+      <div class="autre"><h3>Schémas de facturation</h3><p class="petit">Cartographie de bases de facturation (eau, électricité, paiement mobile).</p></div>
+      <div class="autre"><h3>Veille sociale</h3><p class="petit">Collecte de commentaires Facebook et LinkedIn.</p></div>
+      <div class="autre"><h3>Offres d’emploi WhatsApp</h3><p class="petit">Workflow n8n qui détecte les offres dans des groupes.</p></div>
     </div>
 
-    <p class="mono archive reveal">Archives : progiciel commercial, gestion de parc auto (Django) · outils Excel/VBA →
-      <a href="https://github.com/Azarias646/My-Projects" style="color:var(--text)">GitHub ↗</a></p>
+    <p class="petit archive">Archives : progiciel commercial, gestion de parc automobile (Django), outils Excel/VBA —
+      <a href="https://github.com/Azarias646/My-Projects">sur GitHub</a></p>
   </div>
 </section>
 
-<section id="path">
+<section id="parcours">
   <div class="wrap">
-    <div class="head reveal"><h2>Parcours</h2><span class="mono">03 / 04</span></div>
-    <div class="timeline">
-      <div class="step reveal"><span class="mono">Avr. 2026 — auj.</span><div><h3>DSI — Aïobi &amp; BBS Holding</h3><p>ERPNext multi-filiales, data, géolocalisation et logistique, reporting comptable.</p></div></div>
-      <div class="step reveal"><span class="mono">Oct. 2025 — avr. 2026</span><div><h3>Stagiaire Data / IA — Aïobi</h3><p>Premiers pipelines de données et socle lakehouse.</p></div></div>
-      <div class="step reveal"><span class="mono">Juin — sept. 2025</span><div><h3>Stagiaire développeur mobile — Foulisa</h3><p>Développement d’applications mobiles (Flutter).</p></div></div>
-      <div class="step reveal"><span class="mono">2022 — 2025</span><div><h3>Licence Informatique de Gestion</h3><p>Université de l’Unité Africaine (ex IAM), Ouagadougou.</p></div></div>
-      <div class="step reveal"><span class="mono">En cours</span><div><h3>IBM Z Xplore — Fundamentals</h3><p>Les bases des mainframes IBM Z.</p></div></div>
-      <div class="step reveal"><span class="mono">Prochaine étape</span><div><h3>Master</h3><p>Orientation data / infrastructure, en préparation.</p></div></div>
+    <div class="tete"><h2>Parcours</h2></div>
+    <div>
+      <div class="etape"><span class="petit">Avril 2026 — aujourd’hui</span><div><h3>DSI — Aïobi et BBS Holding</h3><p>ERPNext multi-filiales, données, géolocalisation et logistique, reporting comptable.</p></div></div>
+      <div class="etape"><span class="petit">Oct. 2025 — avril 2026</span><div><h3>Stagiaire Data / IA — Aïobi</h3><p>Premiers pipelines de données et socle lakehouse.</p></div></div>
+      <div class="etape"><span class="petit">Juin — sept. 2025</span><div><h3>Stagiaire développeur mobile — Foulisa</h3><p>Développement d’applications mobiles (Flutter).</p></div></div>
+      <div class="etape"><span class="petit">2022 — 2025</span><div><h3>Licence Informatique de Gestion</h3><p>Université de l’Unité Africaine (ex IAM), Ouagadougou.</p></div></div>
+      <div class="etape"><span class="petit">En cours</span><div><h3>IBM Z Xplore — Fundamentals</h3><p>Les bases des mainframes IBM Z.</p></div></div>
+      <div class="etape"><span class="petit">Prochaine étape</span><div><h3>Master</h3><p>Orientation données et infrastructure, en préparation.</p></div></div>
     </div>
   </div>
 </section>
 
 <section id="contact" class="contact">
   <div class="wrap">
-    <span class="mono">04 / 04 — Contact</span>
-    <h2 class="reveal" style="margin-top:16px">Un projet data, un ERP, une infra à monter ?</h2>
-    <a class="mail reveal" href="mailto:azasawpro@gmail.com">azasawpro@gmail.com</a>
-    <div class="socials mono">
-      <a href="https://github.com/Azarias646">GitHub ↗</a>
-      <a href="https://www.linkedin.com/in/azarias-sawadogo-90345a2a2/">LinkedIn ↗</a>
-      <a href="https://wa.me/22655194949">WhatsApp ↗</a>
+    <h2>Un projet de données, un ERP, une infra à monter ?</h2>
+    <a class="mail" href="mailto:azasawpro@gmail.com">azasawpro@gmail.com</a>
+    <div class="reseaux">
+      <a href="https://github.com/Azarias646">GitHub</a>
+      <a href="https://www.linkedin.com/in/azarias-sawadogo-90345a2a2/">LinkedIn</a>
+      <a href="https://wa.me/22655194949">WhatsApp</a>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="wrap mono">
+  <div class="wrap petit">
     <span>© 2026 Azarias Sawadogo</span>
-    <span>Fait main — HTML, CSS, JS</span>
+    <span>Design system aza-structure 0.2.0</span>
   </div>
 </footer>
 
 <script>
-  // Thème clair / sombre
-  const root = document.documentElement, btn = document.getElementById('toggle');
+  // Thème : suit le système par défaut, choix manuel possible
+  const root = document.documentElement, btn = document.getElementById('theme');
+  const modes = ['auto', 'dark', 'light'], noms = { auto: 'auto', dark: 'sombre', light: 'clair' };
+  let mode = 'auto';
+  try { mode = localStorage.getItem('theme') || 'auto'; } catch (e) {}
+  const appliquer = () => {
+    if (mode === 'auto') delete root.dataset.theme; else root.dataset.theme = mode;
+    btn.textContent = 'Thème : ' + noms[mode];
+  };
+  appliquer();
   btn.onclick = () => {
-    const light = root.dataset.theme !== 'light';
-    root.dataset.theme = light ? 'light' : 'dark';
-    btn.textContent = light ? '☀ light' : '☾ dark';
+    mode = modes[(modes.indexOf(mode) + 1) % modes.length];
+    try { localStorage.setItem('theme', mode); } catch (e) {}
+    appliquer();
   };
 
-  // Texte qui défile dans le hero
-  const words = ['pipelines de données', 'lakehouses', 'ERP', 'infrastructures'];
-  let i = 0;
-  const typed = document.getElementById('typed');
-  setInterval(() => { i = (i + 1) % words.length; typed.textContent = words[i]; }, 2000);
-
-  // Apparition au scroll
-  const io = new IntersectionObserver(entries => entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-  }), { threshold: .15 });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  // Le portrait s'incline doucement en suivant le pointeur (14° / 10° au plus)
+  const portrait = document.getElementById('portrait');
+  const reduit = matchMedia('(prefers-reduced-motion: reduce)');
+  if (!reduit.matches && matchMedia('(pointer: fine)').matches) {
+    addEventListener('pointermove', e => {
+      const r = portrait.getBoundingClientRect();
+      const x = Math.max(-1, Math.min(1, (e.clientX - (r.left + r.width / 2)) / (innerWidth / 2)));
+      const y = Math.max(-1, Math.min(1, (e.clientY - (r.top + r.height / 2)) / (innerHeight / 2)));
+      portrait.style.transform = `rotateY(${x * 14}deg) rotateX(${-y * 10}deg)`;
+    });
+  }
 </script>
 </body>
 </html>
