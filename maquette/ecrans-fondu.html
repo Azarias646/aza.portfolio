@@ -371,6 +371,12 @@
   .anime section.attente .filigrane { opacity: 0; translate: 0 0; }
   .anime section.attente .tete ~ :not(.projets, .parcours, .canaux, .apropos) { opacity: 0; transform: translateY(14px); }
   .anime section.attente .cascade { opacity: 0; transform: translateY(14px); }
+  /* Le nom : fondu doux ligne par ligne, à l'ouverture et à chaque retour sur l'écran d'accueil */
+  .ligne-nom { display: block; transition: opacity 1100ms cubic-bezier(.25, .1, .25, 1) 150ms, transform 1300ms cubic-bezier(.2, .8, .2, 1) 150ms;
+    animation: nom-fondu 1300ms cubic-bezier(.2, .8, .2, 1) 200ms backwards; }
+  .ligne-nom + .ligne-nom { transition-delay: 300ms; animation-delay: 360ms; }
+  @keyframes nom-fondu { from { opacity: 0; transform: translateY(14px); } }
+  .anime section.attente .ligne-nom { opacity: 0; transform: translateY(14px); }
 </style>
 </head>
 <body>
@@ -393,7 +399,7 @@
 <header class="vitrine wrap">
   <div>
     <p class="role">Développeur systèmes et bases de données<span aria-hidden="true">·</span>Data engineer junior</p>
-    <h1>Azarias<br>Sawadogo</h1>
+    <h1><span class="ligne-nom">Azarias</span><span class="ligne-nom">Sawadogo</span></h1>
     <p class="accroche">J’aime ce qui se passe en coulisses : <strong>là où les données naissent, circulent et prennent du sens</strong>.
       Je développe et interconnecte des systèmes sobres et fiables, qu’on peut comprendre, réparer et sur lesquels on peut compter.</p>
     <div class="actions">
