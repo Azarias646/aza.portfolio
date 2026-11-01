@@ -71,11 +71,15 @@ _nouveau = f"""<section id="contact" class="diapo contact">
     <div class="cta">
       <div class="tete"><h2><span class="barre" aria-hidden="true">/</span>Envie de collaborer ou d’échanger ?</h2></div>
       <div class="cta-courriel">
-        <span class="petit">E-mail, le plus direct</span>
         <span class="adresse" id="adresse">azasawpro@gmail.com</span>
-        <div class="courriel-actions">
-          <button class="copier" id="copier" type="button">Copier</button>
-          <a class="btn principal" href="mailto:azasawpro@gmail.com">Écrire</a>
+        <div class="icones-actions">
+          <button class="icone-action" id="copier" type="button" aria-label="Copier l’adresse" title="Copier l’adresse">
+            <svg class="i-copier" viewBox="0 0 24 24" aria-hidden="true"><rect x="8.5" y="8.5" width="12" height="12" rx="3"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></svg>
+            <svg class="i-ok" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+          </button>
+          <a class="icone-action" href="mailto:azasawpro@gmail.com" aria-label="Écrire un e-mail" title="Écrire un e-mail">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a>
         </div>
       </div>
     </div>
@@ -111,6 +115,10 @@ _nouveau = f"""<section id="contact" class="diapo contact">
 </section>"""
 s = s.replace(_ancien, _nouveau)
 r("document.querySelectorAll('.projets, .parcours > div, .outils, .canaux, .recit')", "document.querySelectorAll('.projets, .parcours > div, .outils, .canaux, .recit, .pied')")
+
+
+r("    const ok = () => { copier.textContent = 'Copiée'; setTimeout(() => copier.textContent = 'Copier', 1800); };",
+  "    const ok = () => { copier.classList.add('copie'); copier.setAttribute('aria-label', 'Adresse copiée'); copier.title = 'Adresse copiée'; setTimeout(() => { copier.classList.remove('copie'); copier.setAttribute('aria-label', 'Copier l’adresse'); copier.title = 'Copier l’adresse'; }, 1800); };")
 
 css = """
   /* ===== Variante widgets : cartes sombres très arrondies, accent vert du design system, pastilles rondes, pilules ===== */
@@ -306,8 +314,19 @@ css = """
   @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --cta-halo: rgba(29, 90, 78, .16); --barre-fond: linear-gradient(180deg, #ffffff 0%, #f1f1f3 100%); --barre-bord: rgba(0, 0, 0, .07); } }
   .contact .cta .tete { text-align: left; margin: 0; }
   .cta h2 { font-size: clamp(30px, 4vw, 48px); }
-  .cta-courriel { display: grid; gap: 8px; justify-items: start; min-width: 0; }
-  .cta-courriel .courriel-actions { margin-top: 12px; }
+  .cta-courriel { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; min-width: 0; justify-content: flex-end; }
+  .icones-actions { display: flex; gap: 4px; }
+  .icone-action {
+    width: 40px; height: 40px; display: grid; place-items: center; border: 0; border-radius: 50%;
+    background: transparent; color: var(--texte-discret); cursor: pointer;
+    transition: background var(--duree-rapide), color var(--duree-rapide), transform var(--duree-rapide);
+  }
+  .icone-action:hover { background: var(--surface-2); color: var(--texte); }
+  .icone-action:active { transform: scale(.94); }
+  .icone-action svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; grid-area: 1 / 1; transition: opacity var(--duree-standard), transform var(--duree-standard) var(--courbe-sortie); }
+  .icone-action .i-ok { opacity: 0; transform: scale(.6); color: var(--accent-trait); }
+  .icone-action.copie .i-copier { opacity: 0; transform: scale(.6); }
+  .icone-action.copie .i-ok { opacity: 1; transform: none; }
   .contact footer.pied, #contact footer.pied { margin: 0; padding: 36px 40px 22px; border: 1px solid var(--barre-bord); border-radius: var(--rayon-xl); background: var(--barre-fond); display: grid; grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr)); gap: 32px 24px; }
   .pied-marque .marque { font-size: 18px; }
   .pied-marque p { margin-top: 8px; max-width: 32ch; }

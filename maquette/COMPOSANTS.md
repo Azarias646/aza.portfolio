@@ -105,7 +105,6 @@ Barre flottante en haut de l'écran.
 |---|---|---|
 | Principal | `.btn.principal` | Pilule, aplat `--accent`, texte `--sur-accent` ; au survol, remplissage `--accent-texte`, texte `--page` |
 | Secondaire | `.btn.second` | Pilule en contour 1 px `--texte-discret`, fond transparent, texte `--texte` ; au survol, remplissage `--texte`, texte `--page` |
-| Copier | `button.copier` | Comme le secondaire, 48 px de haut |
 
 - Hauteur 48 px, padding 0 × 24 px, gras 600. Icône éventuelle 16 px au trait.
 - Appui : `scale(.98)` en 120 ms.
@@ -213,9 +212,11 @@ L'écran Contact a deux blocs, traités comme la barre de navigation : même fon
 - **Carte d'appel à l'action (`.cta`)** :
   - coins 28 px, padding 52 × 48 px ;
   - halo vert (`--cta-halo`) en haut à droite, par-dessus `--barre-fond` ;
-  - deux colonnes : à gauche, le titre « / Envie de collaborer ou d'échanger ? » (30–48 px) ; à droite, « E-mail, le plus direct », l'adresse en grand (sélectionnable) et les boutons « Copier » et « Écrire » (§ 3.4) ;
-  - **pas de surbrillance** sur l'e-mail (choix validé) ;
-  - « Copier » utilise `navigator.clipboard`. S'il n'est pas disponible, l'adresse est sélectionnée. Le bouton affiche « Copiée » pendant 1,8 s.
+  - deux colonnes : à gauche, le titre « / Envie de collaborer ou d'échanger ? » (30–48 px) ; à droite, l'adresse e-mail en grand (sélectionnable), suivie de deux icônes d'action discrètes ;
+  - **pas de libellé ni de surbrillance** sur l'e-mail (choix validés) ;
+  - **icônes d'action (`.icone-action`)** : ronds de 40 px sans fond, icône au trait de 19 px en `--texte-discret`. Au survol, fond `--surface-2` et icône `--texte`. À l'appui, `scale(.94)` ;
+    - **Copier** (`#copier`, deux carrés) : utilise `navigator.clipboard`, ou sélectionne l'adresse si ce n'est pas possible. L'icône devient une coche verte (`--accent-trait`) pendant 1,8 s, et l'`aria-label` passe à « Adresse copiée » ;
+    - **Écrire** (flèche ↗) : lien `mailto:`. `aria-label` « Écrire un e-mail ».
 - **Pied de page (`footer.pied`)** :
   - carte aux coins 28 px, padding 36 × 40 px ;
   - grille de 4 colonnes : nom et rôle | Navigation | Réseaux | Documents ;
