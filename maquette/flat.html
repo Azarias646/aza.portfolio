@@ -670,7 +670,7 @@
     }
     verrou = true;
     apres.classList.add('entree');
-    const duree = 800, courbe = 'cubic-bezier(.77, 0, .175, 1)';
+    const duree = 560, courbe = 'cubic-bezier(.65, 0, .35, 1)';
     avant.animate([
       { transform: 'translateY(0)' },
       { transform: `translateY(${-100 * sens}%)` }
@@ -681,9 +681,9 @@
     ], { duration: duree, easing: courbe }).onfinish = () => {
       avant.classList.remove('active'); avant.classList.add('attente');
       apres.classList.remove('entree'); apres.classList.add('active');
-      setTimeout(() => { verrou = false; }, 250);
+      setTimeout(() => { verrou = false; }, 60);
     };
-    setTimeout(() => apres.classList.remove('attente'), duree * .55);
+    setTimeout(() => apres.classList.remove('attente'), duree * .4);
   };
   diapos.forEach((d, i) => { if (i) d.classList.add('attente'); });
   diapos[0].classList.add('active');
@@ -702,9 +702,9 @@
     if (verrou) { e.preventDefault(); return; }
     if (!auBord(d, sens)) { cumul = 0; return; }
     e.preventDefault();
-    if (performance.now() - dernierDefilement < 350) return;
+    if (performance.now() - dernierDefilement < 220) return;
     cumul += e.deltaY;
-    if (Math.abs(cumul) > 40) { cumul = 0; aller(courant + sens); }
+    if (Math.abs(cumul) > 24) { cumul = 0; aller(courant + sens); }
   }, { passive: false });
 
   // Glissement du doigt

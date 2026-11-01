@@ -369,7 +369,7 @@
   #accueil { padding-block: 72px 112px; }
   nav { position: sticky; top: env(safe-area-inset-top, 0px); }
   .points { display: none; }
-  .fondu { opacity: var(--o, 1); transform: translateY(calc((1 - var(--o, 1)) * 18px)); transition: opacity 220ms linear, transform 220ms linear; will-change: opacity, transform; }
+  .fondu { opacity: var(--o, 1); transform: translateY(calc((1 - var(--o, 1)) * 32px)); transition: opacity 1400ms cubic-bezier(.25, .1, .25, 1) var(--d, 0ms), transform 1600ms cubic-bezier(.2, .8, .2, 1) var(--d, 0ms); will-change: opacity, transform; }
 </style>
 </head>
 <body>
@@ -651,20 +651,21 @@
     });
   }
 
-  // Apparition en fondu : l'opacité de chaque bloc suit sa progression dans l'écran
+  // Apparition en fondu : chaque bloc se révèle lentement en entrant dans l'écran,
+  // les blocs qui entrent ensemble apparaissent l'un après l'autre
   const blocs = [...document.querySelectorAll('.diapo:not(#accueil) .tete, .recit p, .groupe, .projet, .etape, .colonne, .courriel, .reseau, .contact footer')];
   if (!reduit && 'IntersectionObserver' in window) {
-    const max = new WeakMap();
-    const paliers = Array.from({ length: 21 }, (_, i) => i / 20);
-    const io = new IntersectionObserver(entrees => entrees.forEach(e => {
-      const h = e.boundingClientRect.height || 1;
-      const visible = e.intersectionRect.height / Math.min(h, e.rootBounds ? e.rootBounds.height * .5 : h);
-      const o = Math.max(max.get(e.target) || .06, Math.min(1, visible * 1.15));
-      max.set(e.target, o);
-      e.target.style.setProperty('--o', o.toFixed(3));
-      if (o >= 1) io.unobserve(e.target);
-    }), { threshold: paliers, rootMargin: '0px 0px -8% 0px' });
-    blocs.forEach(b => { b.classList.add('fondu'); b.style.setProperty('--o', .06); io.observe(b); });
+    let lot = [], minuterie = null;
+    const io = new IntersectionObserver(entrees => {
+      entrees.filter(e => e.isIntersecting).forEach(e => { lot.push(e.target); io.unobserve(e.target); });
+      clearTimeout(minuterie);
+      minuterie = setTimeout(() => {
+        lot.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top || a.getBoundingClientRect().left - b.getBoundingClientRect().left)
+           .forEach((b, i) => { b.style.setProperty('--d', (i * 140) + 'ms'); b.style.setProperty('--o', 1); });
+        lot = [];
+      }, 30);
+    }, { threshold: .15, rootMargin: '0px 0px -10% 0px' });
+    blocs.forEach(b => { b.classList.add('fondu'); b.style.setProperty('--o', 0); io.observe(b); });
   }
 
   // Menu : surligne la section en cours de lecture
