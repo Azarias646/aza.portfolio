@@ -103,7 +103,7 @@ _nouveau = f"""<section id="contact" class="diapo contact">
         <a href="{_cv}" target="_blank" rel="noopener"><svg class="trait" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>Mon CV</a>
       </div>
       <div class="pied-bas">
-        <span class="petit">© 2026 Azarias Sawadogo · Logos : Simple Icons</span>
+        <span class="petit">© 2026 Azarias Sawadogo</span>
         <div class="sociaux">
           <a href="https://www.linkedin.com/in/azarias-sawadogo-90345a2a2/" target="_blank" rel="noopener" aria-label="LinkedIn">{_li}</a>
           <a href="https://github.com/Azarias646" target="_blank" rel="noopener" aria-label="GitHub">{_gh}</a>

@@ -224,7 +224,7 @@ L'écran Contact a deux blocs, traités comme la barre de navigation : même fon
   - **Réseaux :** LinkedIn, GitHub, WhatsApp avec leur logo 20 px gris ;
   - **Documents :** Mon CV, avec une icône de document au trait ;
   - liens : 14 px, gras 600, `--texte-attenue`. Au survol : `--texte`, et l'icône passe en `--accent-trait` ;
-  - **ligne du bas** (`.pied-bas`), sous un filet : « © 2026 Azarias Sawadogo · Logos : Simple Icons » à gauche, icônes des réseaux à droite (ronds de 40 px, logo 18 px, `aria-label`).
+  - **ligne du bas** (`.pied-bas`), sous un filet : « © 2026 Azarias Sawadogo » à gauche, icônes des réseaux à droite (ronds de 40 px, logo 18 px, `aria-label`).
 - **Mobile (< 760 px) :** la carte passe sur une colonne. Le pied passe sur 2 colonnes, le nom sur toute la largeur.
 - Les liens internes du pied (`#apropos`…) changent d'écran comme ceux de la barre. Les liens externes ouvrent un nouvel onglet.
 
