@@ -646,6 +646,7 @@
   diapos[0].classList.add('active');
   const depart = diapos.findIndex(d => '#' + d.id === location.hash);
   if (depart > 0) { aller(depart, true); } else marquer();
+  addEventListener('hashchange', () => { const i = diapos.findIndex(d => '#' + d.id === location.hash); if (i >= 0) aller(i); });
 
   // Molette : défile d'abord le contenu de l'écran, puis change d'écran une fois au bord
   let cumul = 0, dernierDefilement = 0;
