@@ -241,14 +241,6 @@
   .schema .pointille { stroke-dasharray: 3 4; }
   .schema.trace .l:not(.pointille) { stroke-dashoffset: 400; }
 
-  /* Aperçu flottant au survol d'un projet */
-  .survol {
-    position: fixed; left: 0; top: 0; z-index: 9; width: 300px; padding: 14px; pointer-events: none;
-    background: var(--fond); border: 1px solid var(--filet); border-radius: var(--rayon-lg);
-    opacity: 0; scale: .85; rotate: -4deg; transition: opacity var(--duree-standard) var(--courbe-sortie), scale var(--duree-standard) var(--courbe-sortie);
-  }
-  .survol.visible { opacity: 1; scale: 1; }
-
   /* Parcours */
   .parcours { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; }
   .colonne { font-size: var(--taille-petit); font-weight: 500; color: var(--texte-attenue); padding-bottom: 12px; border-bottom: 1px solid var(--filet); }
@@ -537,8 +529,6 @@
   </div>
 </section>
 
-<div class="survol" id="survol" aria-hidden="true"></div>
-
 <footer>
   <div class="wrap petit">
     <span>© 2026 Azarias Sawadogo</span>
@@ -664,26 +654,6 @@
       f.style.transform = `translate(${t * -160}px, -58%)`;
     });
     addEventListener('scroll', glisse, { passive: true }); glisse();
-  }
-
-  // Projets : le schéma suit le curseur au survol
-  const survol = document.getElementById('survol');
-  if (!reduit && matchMedia('(pointer: fine)').matches) {
-    let cx = 0, cy = 0, x = 0, y = 0, actif = false;
-    const boucle = () => {
-      x += (cx - x) * .18; y += (cy - y) * .18;
-      survol.style.translate = `${x + 24}px ${y - 80}px`;
-      if (actif || Math.abs(cx - x) > .5) requestAnimationFrame(boucle);
-    };
-    document.querySelectorAll('.projet').forEach(a => {
-      a.addEventListener('pointerenter', e => {
-        survol.replaceChildren(a.querySelector('.schema-src').content.cloneNode(true));
-        if (!actif) { x = cx = e.clientX; y = cy = e.clientY; }
-        actif = true; survol.classList.add('visible'); requestAnimationFrame(boucle);
-      });
-      a.addEventListener('pointermove', e => { cx = e.clientX; cy = e.clientY; });
-      a.addEventListener('pointerleave', () => { actif = false; survol.classList.remove('visible'); });
-    });
   }
 
   // Copier l'adresse e-mail
