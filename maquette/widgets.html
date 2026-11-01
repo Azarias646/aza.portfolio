@@ -486,6 +486,25 @@
   .schema .n.a + text { fill: var(--sur-accent); }
   .fp-schema { background: var(--page); border-radius: var(--rayon-lg); }
 
+  /* Fenêtre d'un outil : pastille verte, jauge en demi-cercle */
+  .fiche-tete .pastille { width: 48px; height: 48px; border-radius: 50%; background: var(--accent); color: var(--sur-accent); }
+  .fiche-tete .pastille svg { width: 24px; height: 24px; fill: var(--sur-accent); }
+  .fiche-tete .pastille.trace svg { fill: none; stroke: var(--sur-accent); }
+  .niveau { border-top: 0; padding-top: 0; }
+  .jauge { position: relative; display: grid; justify-items: center; padding-top: 4px; }
+  .jauge svg { width: min(260px, 100%); height: auto; overflow: visible; }
+  .jauge-fond, .jauge-valeur { fill: none; stroke-width: 26; stroke-linecap: butt; }
+  .jauge-fond { stroke: var(--surface-2); }
+  .jauge-valeur { stroke: var(--accent); stroke-dasharray: 277; stroke-dashoffset: 277; transition: stroke-dashoffset 900ms var(--courbe-sortie) 120ms; }
+  .jauge-aiguille { stroke: var(--texte); stroke-width: 5; stroke-linecap: round; transform-origin: 110px 110px; transform: rotate(-90deg); transition: transform 900ms var(--courbe-sortie) 120ms; }
+  .jauge-axe { fill: var(--texte); }
+  .jauge-texte { display: grid; justify-items: center; gap: 0; margin-top: 6px; }
+  .jauge-texte strong { font-size: 20px; font-weight: 700; }
+  .jauge-bornes { position: absolute; left: 0; right: 0; top: calc(min(260px, 100%) * 124 / 220 - 6px); display: flex; justify-content: space-between; width: min(300px, 100%); margin: 0 auto; }
+
+  /* Schémas : blocs aussi arrondis que le reste */
+  .schema rect { rx: 14px; ry: 14px; }
+
   /* Repères */
   .points button[aria-current="true"]::before { border-radius: var(--rayon-pilule); background: var(--accent-trait); }
 </style>
@@ -596,8 +615,16 @@
       </div>
       <p id="fiche-texte"></p>
       <div class="niveau">
-        <div class="niveau-ligne"><span class="petit">Mon niveau</span><strong id="fiche-niveau"></strong></div>
-        <div class="crans" id="fiche-crans" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="jauge">
+          <svg viewBox="0 0 220 124" aria-hidden="true">
+            <path class="jauge-fond" d="M22 110 A88 88 0 0 1 198 110"/>
+            <path class="jauge-valeur" id="jauge-valeur" d="M22 110 A88 88 0 0 1 198 110"/>
+            <line class="jauge-aiguille" id="jauge-aiguille" x1="110" y1="110" x2="110" y2="42"/>
+            <circle class="jauge-axe" cx="110" cy="110" r="7"/>
+          </svg>
+          <div class="jauge-texte"><span class="petit">Mon niveau</span><strong id="fiche-niveau"></strong></div>
+          <div class="jauge-bornes petit"><span>Notions</span><span>Avancé</span></div>
+        </div>
       </div>
     </div>
   </dialog>
@@ -894,8 +921,14 @@
     document.getElementById('fiche-niveau').textContent = niveaux[n - 1] || '';
     document.getElementById('fiche-logo').innerHTML = b.querySelector('svg').outerHTML;
     document.getElementById('fiche-logo').className = 'pastille' + (b.classList.contains('trace') ? ' trace' : '');
-    document.querySelectorAll('#fiche-crans i').forEach((c, i) => c.classList.toggle('plein', i < n));
+    const part = n / 3, valeur = document.getElementById('jauge-valeur'), aiguille = document.getElementById('jauge-aiguille');
+    valeur.style.transition = aiguille.style.transition = 'none';
+    valeur.style.strokeDashoffset = 277; aiguille.style.transform = 'rotate(-90deg)';
     fiche.showModal();
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      valeur.style.transition = aiguille.style.transition = '';
+      valeur.style.strokeDashoffset = 277 * (1 - part); aiguille.style.transform = `rotate(${-90 + 180 * part}deg)`;
+    }));
   }));
   document.getElementById('fiche-fermer').onclick = () => fiche.close();
   fiche.addEventListener('click', e => { if (e.target === fiche) fiche.close(); });
