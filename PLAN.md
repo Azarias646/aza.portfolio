@@ -4,22 +4,23 @@ Branche : `new` · Maquette retenue : [`maquette/widgets.html`](maquette/widgets
 
 ## 1. Ce qui change par rapport à la v1
 
-| v1 (actuelle) | v2 (proposée) |
+| v1 (actuelle) | v2 (maquette widgets) |
 |---|---|
-| Thème turquoise, fond image clair/sombre | Design system `aza-structure` 0.2.0 : neutres sans teinte, un seul accent vert turquoise |
-| Grille de logos de compétences | Compétences groupées par domaine (texte, plus lisible) |
-| Carrousel jQuery + lightSlider pour les projets | Liste de projets numérotée, chaque projet → page « étude de cas » |
+| Thème turquoise, fond image clair/sombre | Design system `aza-structure` 0.2.0 (vert `#1D5A4E`) en style « widgets » : cartes sombres arrondies, pastilles rondes, pilules |
+| Page qui défile | Navigation plein écran : un écran par section, transition par poussée, contenu qui apparaît en fondu |
+| Grille de logos de compétences | Bento « À propos » : récit + outils par domaine, fiche de chaque outil avec jauge de niveau |
+| Carrousel jQuery des projets | Cartes de projets ; au clic, fiche avec schéma de fonctionnement |
+| Pas de parcours | Parcours en deux cartes : Expérience / Cursus et certifications |
+| Contact par icônes | Carte d'appel à l'action (e-mail + icônes copier / écrire) et pied de page en colonnes |
 | jQuery + 2 plugins | HTML/CSS/JS natif, zéro dépendance |
-| Pas de parcours | Section Parcours (DSI, stages Aïobi & Foulisa, licence UUA, IBM Z Xplore, master) |
-| Contact par icônes | Gros appel à l'action e-mail + liens sociaux |
 
 ## 2. Structure du site
 
-1. **Présentation** — « Développeur systèmes et bases de données · Data engineer junior », nom en grand, portrait N&B, accroche, boutons *Me contacter* et *Mon CV*.
-2. **À propos** — un vrai texte de présentation + les outils avec leurs logos (Données, Systèmes, Développement, OSINT / GEOINT).
+1. **Accueil** — « Développeur systèmes et bases de données · Data engineer junior », nom en grand (fondu ligne par ligne), portrait N&B qui s'incline au pointeur, accroche, boutons *Me contacter* et *Mon CV*.
+2. **À propos** — récit en trois paragraphes + outils avec logos en bento (Data, Systèmes, Développement, Renseignement en sources ouvertes).
 3. **Projets** — ERP de facturation et comptabilité, Lakehouse, Homelab, NutriFaso, Automatisation IA.
-4. **Parcours** — années seulement : master IA (2026, en cours), poste actuel, IBM Z Xplore, stages, licence.
-5. **Contact** — « Envie de collaborer ou d'échanger ? » : e-mail (avec bouton copier), LinkedIn, GitHub, WhatsApp.
+4. **Parcours** — Expérience (poste actuel, stages Aïobi et Foulisa) et Cursus et certifications (master IA en cours, IBM Z Xplore, licence UUA), années seulement.
+5. **Contact** — « Envie de collaborer ou d'échanger ? », e-mail avec icônes copier / écrire, puis pied de page (navigation, réseaux, CV).
 
 ## 3. Design
 
@@ -29,7 +30,7 @@ En résumé : design system `aza-structure` 0.2.0 (vert `#1D5A4E`, Roboto Flex, 
 
 ## 4. Étapes
 
-1. Valider la maquette (couleurs, sections, textes).
+1. Valider la maquette (couleurs, sections, textes) — en cours ; reste à valider les niveaux de maîtrise des outils.
 2. Monter la structure finale : `index.html`, `css/`, `js/`, `projets/<nom>.html`, `assets/` (images compressées en WebP).
 3. Rédiger les études de cas des 4 projets + compléter le parcours.
 4. SEO & partage : balises meta, Open Graph (aperçu LinkedIn/WhatsApp), favicon.
