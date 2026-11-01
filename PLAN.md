@@ -15,11 +15,11 @@ Branche : `new` · Maquette : [`maquette/index.html`](maquette/index.html)
 
 ## 2. Structure du site
 
-1. **Hero** — nom en grand + portrait N&B, badge « DSI · Aïobi & BBS Holding », accroche data engineer & DSI, boutons *Projets* et *CV*.
-2. **À propos** — grille « bento » : photo + bio, chiffres clés, compétences par domaine.
-3. **Projets** — ERPNext multi-filiales, Lakehouse MinIO (GPS, Airflow, PySpark), Migration SAGE 100, AzaLab, NutriFaso, Agent Squad + explorations + archives (anciens projets Django/VBA).
-4. **Parcours** — frise chronologique formation / expériences.
-5. **Contact** — e-mail, GitHub, LinkedIn, WhatsApp.
+1. **Présentation** — « Développeur systèmes et bases de données · Data engineer junior », nom en grand, portrait N&B, accroche, boutons *Me contacter* et *Mon CV*.
+2. **À propos** — un vrai texte de présentation + les outils avec leurs logos (Données, Systèmes, Développement, OSINT / GEOINT).
+3. **Projets** — ERP de facturation et comptabilité, Lakehouse, Homelab, NutriFaso, Automatisation IA.
+4. **Parcours** — années seulement : master IA (2026, en cours), poste actuel, IBM Z Xplore, stages, licence.
+5. **Contact** — « Envie de collaborer ou d'échanger ? » : e-mail (avec bouton copier), LinkedIn, GitHub, WhatsApp.
 
 ## 3. Design — `Azarias646/aza-structure` (design-system/, v0.2.0)
 
@@ -28,7 +28,7 @@ Branche : `new` · Maquette : [`maquette/index.html`](maquette/index.html)
 - **Typo** : Roboto Flex (Manrope en repli), auto-hébergées. Titres de vitrine élargis (`wdth` 125), chiffres clés condensés (`wdth` 88, `tabular-nums`). Pas de police mono, pas de capitales.
 - **Formes** : rayons 6 / 8 / 12 / 18 / 26 px, pilule pour l'action principale.
 - **Lumière** : halo de scène derrière le portrait, une seule carte éclairée par la lueur d'accent ; composants plats.
-- **Mouvement** : un seul moment à l'ouverture (arrivée du portrait, 600 ms), portrait qui s'incline au pointeur, enfoncement à l'appui ; aucune apparition au scroll ; mouvement réduit respecté.
+- **Mouvement** : un seul moment à l'ouverture (arrivée du portrait, 600 ms), portrait qui s'incline au pointeur, enfoncement à l'appui ; transition entre les sections (le filet se trace, puis le contenu monte) — écart volontaire à la règle « aucune section qui glisse » du design system, à ta demande ; mouvement réduit respecté.
 
 ## 4. Étapes
 
