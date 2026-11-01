@@ -505,6 +505,46 @@
   /* Schémas : blocs aussi arrondis que le reste */
   .schema rect { rx: 14px; ry: 14px; }
 
+  /* Barre de navigation : flottante, dégradé sombre, fine bordure claire, halo de lumière en dessous */
+  nav { background: transparent; border: 0; padding: 12px 0 6px; position: relative; z-index: 12; }
+  nav .wrap { position: relative; height: auto; }
+  nav .wrap::before {
+    content: ''; position: absolute; inset: 0 max(24px, env(safe-area-inset-right, 0px)) 0 max(24px, env(safe-area-inset-left, 0px));
+    border-radius: 18px; z-index: -1;
+    background: linear-gradient(180deg, #1d1d21 0%, #101012 100%);
+    border: 1px solid rgba(255, 255, 255, .08); border-bottom-color: rgba(255, 255, 255, .03);
+  }
+  nav::after {
+    content: ''; position: absolute; left: 50%; top: calc(100% - 6px); width: min(900px, 90%); height: 120px; translate: -50% 0;
+    background: radial-gradient(50% 100% at 50% 0%, rgba(255, 255, 255, .07), transparent 70%); pointer-events: none; z-index: -1;
+  }
+  nav .wrap { padding-block: 8px; }
+  nav .wrap > .marque { padding-left: 22px; }
+  nav .wrap > .theme { margin-right: 14px; }
+  .liens { gap: 6px; }
+  .liens a { display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 12px; font-weight: 600; font-size: 15px; color: var(--texte-attenue); }
+  .liens a:hover { background: rgba(255, 255, 255, .05); color: var(--texte); }
+  .liens a.active { color: var(--texte); background: rgba(255, 255, 255, .06); }
+  .ico { width: 22px; height: 22px; flex: none; }
+  .ico path, .ico circle { fill: #8d9096; }
+  .ico .moyen { fill: #b8bbbf; }
+  .ico .clair { fill: #d9dbdd; }
+  .liens a.active .ico .clair { fill: var(--accent-trait); }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) nav .wrap::before { background: linear-gradient(180deg, #ffffff 0%, #f1f1f3 100%); border-color: rgba(0, 0, 0, .07); }
+    :root:not([data-theme="dark"]) nav::after { background: radial-gradient(50% 100% at 50% 0%, rgba(0, 0, 0, .06), transparent 70%); }
+    :root:not([data-theme="dark"]) .liens a:hover, :root:not([data-theme="dark"]) .liens a.active { background: rgba(0, 0, 0, .05); }
+    :root:not([data-theme="dark"]) .ico path, :root:not([data-theme="dark"]) .ico circle { fill: #7d8187; }
+    :root:not([data-theme="dark"]) .ico .clair { fill: #b5b8bc; }
+  }
+  :root[data-theme="light"] nav .wrap::before { background: linear-gradient(180deg, #ffffff 0%, #f1f1f3 100%); border-color: rgba(0, 0, 0, .07); }
+  :root[data-theme="light"] nav::after { background: radial-gradient(50% 100% at 50% 0%, rgba(0, 0, 0, .06), transparent 70%); }
+  :root[data-theme="light"] .liens a:hover, :root[data-theme="light"] .liens a.active { background: rgba(0, 0, 0, .05); }
+  :root[data-theme="light"] .ico path, :root[data-theme="light"] .ico circle { fill: #7d8187; }
+  :root[data-theme="light"] .ico .clair { fill: #b5b8bc; }
+  .diapo { z-index: 0; }
+  .diapo.active { z-index: 1; }
+
   /* Repères */
   .points button[aria-current="true"]::before { border-radius: var(--rayon-pilule); background: var(--accent-trait); }
 </style>
@@ -515,10 +555,10 @@
   <div class="wrap">
     <a href="#" class="marque">Azarias</a>
     <div class="liens">
-      <a href="#apropos">À propos</a>
-      <a href="#projets">Projets</a>
-      <a href="#parcours">Parcours</a>
-      <a href="#contact">Contact</a>
+      <a href="#apropos"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4.2" class="clair"/><path d="M4 20.5c0-4.2 3.6-7 8-7s8 2.8 8 7v.5H4z"/></svg><span>À propos</span></a>
+      <a href="#projets"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 3.5 7 12 11.5 20.5 7z" class="clair"/><path d="M3.5 8.3 11.3 12.5V21.5L3.5 17.2z"/><path d="M20.5 8.3 12.7 12.5V21.5L20.5 17.2z" class="moyen"/></svg><span>Projets</span></a>
+      <a href="#parcours"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 2.5h1.8v19H5z"/><path d="M6.8 3.5h11.7l-2.6 4.2 2.6 4.3H6.8z" class="clair"/></svg><span>Parcours</span></a>
+      <a href="#contact"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5A2.5 2.5 0 0 1 5.5 3h13A2.5 2.5 0 0 1 21 5.5v9a2.5 2.5 0 0 1-2.5 2.5H10l-4.5 4v-4h0A2.5 2.5 0 0 1 3 14.5z" class="clair"/><circle cx="8.5" cy="10" r="1.3"/><circle cx="12" cy="10" r="1.3"/><circle cx="15.5" cy="10" r="1.3"/></svg><span>Contact</span></a>
     </div>
     <button class="theme" id="theme" type="button" aria-label="Thème : automatique" title="Thème : automatique"></button>
   </div>
