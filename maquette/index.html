@@ -128,15 +128,34 @@
 
   /* Sections et transition entre elles :
      le filet se trace de gauche à droite, puis le contenu monte en place. */
-  section { position: relative; padding: 96px 0; }
-  section::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--filet);
-    transform-origin: left; transition: transform 900ms var(--courbe-sortie);
+  html, body { height: 100%; overflow: hidden; }
+  body { display: flex; flex-direction: column; }
+  nav { flex: none; }
+  .diapos { position: relative; flex: 1; overflow: hidden; }
+  .diapo {
+    position: absolute; inset: 0; overflow-y: auto; overscroll-behavior: contain;
+    display: grid; align-content: safe center; padding-block: 56px; background: var(--page);
+    visibility: hidden; scrollbar-width: thin;
   }
+  .diapo.active { visibility: visible; z-index: 1; }
+  .diapo.entree { visibility: visible; z-index: 2; }
+  .diapo .vitrine { padding-block: 0; }
+  .contact footer { margin-top: 72px; }
+  .points {
+    position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); top: 50%; translate: 0 -50%; z-index: 11;
+    list-style: none; display: grid; gap: 4px;
+  }
+  .points button {
+    display: grid; place-items: center; width: 28px; height: 28px; border: 0; background: transparent; cursor: pointer;
+  }
+  .points button::before {
+    content: ''; width: 6px; height: 6px; border-radius: var(--rayon-pilule); background: var(--texte-discret);
+    transition: height var(--duree-standard) var(--courbe-sortie), background var(--duree-standard);
+  }
+  .points button[aria-current="true"]::before { height: 20px; background: var(--accent-trait); }
   section .tete h2 { transition: opacity 700ms var(--courbe-sortie) 150ms, transform 700ms var(--courbe-sortie) 150ms, clip-path 700ms var(--courbe-sortie) 150ms; }
   section .filigrane { transition: opacity 1200ms var(--courbe-sortie), translate 1400ms var(--courbe-sortie); }
   section .tete ~ :not(.projets, .parcours, .canaux) { transition: opacity 800ms var(--courbe-sortie) 350ms, transform 800ms var(--courbe-sortie) 350ms; }
-  .anime section.attente::before { transform: scaleX(0); }
   .anime section.attente .tete h2 { opacity: 0; transform: translateY(48px); clip-path: inset(0 0 100% 0); }
   .anime section.attente .filigrane { opacity: 0; translate: 120px 0; }
   .anime section.attente .tete ~ :not(.projets, .parcours, .canaux) { opacity: 0; transform: translateY(72px); }
@@ -153,6 +172,7 @@
   }
   .contact .filigrane { left: 0; right: 0; text-align: center; }
   section { overflow-x: clip; }
+  footer { border-top: 1px solid var(--filet); }
   h2 { font-size: clamp(32px, 4.5vw, 48px); line-height: 1.05; font-weight: 700; font-variation-settings: 'wdth' 125; letter-spacing: -.035em; text-wrap: balance; }
   h3 { font-size: var(--taille-titre-bloc); font-weight: 600; }
 
@@ -257,9 +277,8 @@
   .courriel {
     grid-column: 1 / -1; display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: 18px; align-items: center;
     padding: 24px; background: var(--surface); border-radius: var(--rayon-xl);
-    box-shadow: 0 0 0 1px var(--accent), 0 24px 70px -24px var(--accent-survol);
   }
-  .courriel .pastille { width: 52px; height: 52px; background: var(--accent); color: var(--sur-accent); }
+  .courriel .pastille { width: 52px; height: 52px; }
   .courriel-texte { display: grid; gap: 2px; min-width: 0; }
   .adresse { font-size: clamp(20px, 3vw, 30px); font-weight: 700; font-variation-settings: 'wdth' 112; letter-spacing: -.02em; overflow-wrap: anywhere; user-select: all; }
   .courriel-actions { display: flex; gap: 8px; align-items: center; }
@@ -315,6 +334,8 @@
   </div>
 </nav>
 
+<main class="diapos" id="diapos">
+<section id="accueil" class="diapo" aria-label="Accueil">
 <header class="vitrine wrap">
   <div>
     <p class="role">Développeur systèmes et bases de données<span aria-hidden="true">·</span>Data engineer junior</p>
@@ -335,8 +356,9 @@
     </figure>
   </div>
 </header>
+</section>
 
-<section id="apropos">
+<section id="apropos" class="diapo">
   <div class="wrap">
     <div class="tete"><span class="filigrane" aria-hidden="true">Profil</span><h2><span class="barre" aria-hidden="true">/</span>À propos</h2></div>
     <div class="apropos">
@@ -410,7 +432,7 @@
   </dialog>
 </section>
 
-<section id="projets">
+<section id="projets" class="diapo">
   <div class="wrap">
     <div class="tete"><span class="filigrane" aria-hidden="true">Réalisations</span><h2><span class="barre" aria-hidden="true">/</span>Projets</h2></div>
     <div class="projets">
@@ -478,7 +500,7 @@
   </dialog>
 </section>
 
-<section id="parcours">
+<section id="parcours" class="diapo">
   <div class="wrap">
     <div class="tete"><span class="filigrane" aria-hidden="true">Parcours</span><h2><span class="barre" aria-hidden="true">/</span>Parcours</h2></div>
     <div class="parcours">
@@ -498,7 +520,7 @@
   </div>
 </section>
 
-<section id="contact" class="contact">
+<section id="contact" class="diapo contact">
   <div class="wrap">
     <div class="tete"><span class="filigrane" aria-hidden="true">Contact</span><h2><span class="barre" aria-hidden="true">/</span>Envie de collaborer ou d’échanger ?</h2></div>
     <div class="canaux">
@@ -527,14 +549,16 @@
       </a>
     </div>
   </div>
-</section>
-
 <footer>
   <div class="wrap petit">
     <span>© 2026 Azarias Sawadogo</span>
     <span>Logos : Simple Icons</span>
   </div>
 </footer>
+</section>
+</main>
+
+<ol class="points" id="points" aria-label="Sections"></ol>
 
 <script>
   // Thème : suit le système par défaut, choix manuel possible
@@ -574,15 +598,96 @@
     });
   }
 
-  // Transition entre les sections : chacune se révèle quand elle entre à l'écran
-  // (le filet se trace, le titre se dévoile, puis le contenu monte).
-  if (!reduit && 'IntersectionObserver' in window) {
-    const io = new IntersectionObserver(entrees => entrees.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.remove('attente'); io.unobserve(e.target); }
-    }), { threshold: 0, rootMargin: '0px 0px -12% 0px' });
-    document.querySelectorAll('section').forEach(s => { s.classList.add('attente'); io.observe(s); });
-    root.classList.add('anime');
-  }
+  // Navigation par écrans : chaque geste de défilement amène la section suivante
+  const diapos = [...document.querySelectorAll('.diapo')];
+  const points = document.getElementById('points');
+  const liensNav = [...document.querySelectorAll('.liens a')];
+  const nomsEcrans = { accueil: 'Accueil', apropos: 'À propos', projets: 'Projets', parcours: 'Parcours', contact: 'Contact' };
+  diapos.forEach((d, i) => {
+    const li = document.createElement('li'), b = document.createElement('button');
+    b.type = 'button'; b.setAttribute('aria-label', nomsEcrans[d.id]); b.title = nomsEcrans[d.id];
+    b.onclick = () => aller(i); li.append(b); points.append(li);
+  });
+  root.classList.add('anime');
+  let courant = 0, verrou = false;
+  const marquer = () => {
+    [...points.querySelectorAll('button')].forEach((b, i) => b.setAttribute('aria-current', i === courant));
+    liensNav.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + diapos[courant].id));
+    try { history.replaceState(null, '', '#' + diapos[courant].id); } catch (e) {}
+  };
+  const aller = (cible, instantane) => {
+    if (verrou || cible === courant || cible < 0 || cible >= diapos.length) return;
+    const avant = diapos[courant], apres = diapos[cible], sens = cible > courant ? 1 : -1;
+    courant = cible; marquer();
+    apres.scrollTop = sens > 0 ? 0 : apres.scrollHeight;
+    apres.classList.add('attente');
+    if (reduit || instantane) {
+      avant.classList.remove('active'); apres.classList.add('active'); apres.classList.remove('attente');
+      return;
+    }
+    verrou = true;
+    apres.classList.add('entree');
+    const duree = 950, courbe = 'cubic-bezier(.7, 0, .2, 1)';
+    avant.animate([
+      { transform: 'translateY(0) scale(1)', opacity: 1, filter: 'brightness(1)' },
+      { transform: `translateY(${-18 * sens}%) scale(.94)`, opacity: .4, filter: 'brightness(.6)' }
+    ], { duration: duree, easing: courbe });
+    apres.animate([
+      { transform: `translateY(${100 * sens}%)`, borderRadius: sens > 0 ? '26px 26px 0 0' : '0 0 26px 26px' },
+      { transform: 'translateY(0)', borderRadius: '0' }
+    ], { duration: duree, easing: courbe }).onfinish = () => {
+      avant.classList.remove('active'); avant.classList.add('attente');
+      apres.classList.remove('entree'); apres.classList.add('active');
+      setTimeout(() => { verrou = false; }, 250);
+    };
+    setTimeout(() => apres.classList.remove('attente'), duree * .55);
+  };
+  diapos.forEach((d, i) => { if (i) d.classList.add('attente'); });
+  diapos[0].classList.add('active');
+  const depart = diapos.findIndex(d => '#' + d.id === location.hash);
+  if (depart > 0) { aller(depart, true); } else marquer();
+
+  // Molette : défile d'abord le contenu de l'écran, puis change d'écran une fois au bord
+  let cumul = 0, dernierDefilement = 0;
+  diapos.forEach(d => d.addEventListener('scroll', () => { dernierDefilement = performance.now(); }, { passive: true }));
+  const auBord = (d, sens) => sens > 0 ? d.scrollTop + d.clientHeight >= d.scrollHeight - 2 : d.scrollTop <= 1;
+  addEventListener('wheel', e => {
+    if (document.querySelector('dialog[open]')) return;
+    const d = diapos[courant], sens = Math.sign(e.deltaY);
+    if (!sens) return;
+    if (verrou) { e.preventDefault(); return; }
+    if (!auBord(d, sens)) { cumul = 0; return; }
+    e.preventDefault();
+    if (performance.now() - dernierDefilement < 350) return;
+    cumul += e.deltaY;
+    if (Math.abs(cumul) > 40) { cumul = 0; aller(courant + sens); }
+  }, { passive: false });
+
+  // Glissement du doigt
+  let y0 = null;
+  addEventListener('touchstart', e => { y0 = e.touches[0].clientY; }, { passive: true });
+  addEventListener('touchend', e => {
+    if (y0 === null || document.querySelector('dialog[open]')) return;
+    const dy = y0 - e.changedTouches[0].clientY, sens = Math.sign(dy); y0 = null;
+    if (Math.abs(dy) > 60 && auBord(diapos[courant], sens)) aller(courant + sens);
+  }, { passive: true });
+
+  // Clavier
+  addEventListener('keydown', e => {
+    if (document.querySelector('dialog[open]') || /INPUT|TEXTAREA|BUTTON/.test(document.activeElement.tagName) && e.key === ' ') return;
+    const d = diapos[courant];
+    const suiv = ['ArrowDown', 'PageDown', ' '].includes(e.key), prec = ['ArrowUp', 'PageUp'].includes(e.key);
+    if ((suiv && auBord(d, 1)) || (prec && auBord(d, -1))) { e.preventDefault(); aller(courant + (suiv ? 1 : -1)); }
+    else if (e.key === 'Home') { e.preventDefault(); aller(0); }
+    else if (e.key === 'End') { e.preventDefault(); aller(diapos.length - 1); }
+  });
+
+  // Liens internes (menu, boutons) : vont à l'écran correspondant
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    const i = diapos.findIndex(d => '#' + d.id === a.getAttribute('href'));
+    if (i >= 0) a.addEventListener('click', e => { e.preventDefault(); aller(i); });
+  });
+  document.querySelector('.marque').addEventListener('click', e => { e.preventDefault(); aller(0); });
 
   // Fiche d'un outil : description et niveau (Notions, Opérationnel, Avancé)
   const niveaux = ['Notions', 'Opérationnel', 'Avancé'];
@@ -644,17 +749,6 @@
   document.querySelectorAll('.projets, .parcours > div, .outils, .canaux').forEach(liste => {
     [...liste.children].filter(e => !e.matches('h3')).forEach((e, i) => { e.classList.add('cascade'); e.style.setProperty('--i', i); });
   });
-
-  // Mots en filigrane : glissent lentement avec le défilement
-  const filigranes = [...document.querySelectorAll('.filigrane')];
-  if (!reduit) {
-    const glisse = () => filigranes.forEach(f => {
-      const r = f.parentElement.getBoundingClientRect();
-      const t = (r.top + r.height / 2) / innerHeight - .5;
-      f.style.transform = `translate(${t * -160}px, -58%)`;
-    });
-    addEventListener('scroll', glisse, { passive: true }); glisse();
-  }
 
   // Copier l'adresse e-mail
   const copier = document.getElementById('copier'), adresse = document.getElementById('adresse');
