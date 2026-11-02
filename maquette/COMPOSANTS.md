@@ -222,7 +222,7 @@ L'écran Contact a deux blocs, traités comme la barre de navigation : même fon
 |---|---|---|
 | `--barre-fond` | dégradé 180° `#1d1d21` → `#101012` | dégradé 180° `#ffffff` → `#f1f1f3` |
 | `--barre-bord` | `rgba(255,255,255,.08)` | `rgba(0,0,0,.07)` |
-| `--cta-halo` | `rgba(37,120,102,.75)` | `rgba(29,90,78,.24)` |
+| `--cta-halo` | `rgba(37,120,102,.75)` | `rgba(37,120,102,.45)` |
 
 - **Carte d'appel à l'action (`.cta`)** :
   - coins 28 px, padding 52 × 48 px ;
