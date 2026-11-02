@@ -705,6 +705,38 @@
     transition: opacity var(--duree-standard), translate var(--duree-standard) var(--courbe-sortie), visibility 0s;
   }
   @media (max-width: 760px) { .points .etiquette { display: none; } }
+
+  /* Un peu de folie : le nom s'affiche sur l'écran d'un ordinateur, en réponse à « whoami » */
+  .ecran-nom {
+    position: relative; display: inline-block; max-width: 100%;
+    margin: 22px 0 52px; padding: 18px clamp(18px, 2.4vw, 30px) clamp(16px, 2vw, 26px);
+    border-radius: 24px; border: 1.5px solid color-mix(in srgb, var(--texte) 11%, transparent);
+    background:
+      repeating-linear-gradient(180deg, color-mix(in srgb, var(--texte) 2.5%, transparent) 0 1px, transparent 1px 4px),
+      radial-gradient(120% 90% at 30% 20%, color-mix(in srgb, var(--accent-trait) 9%, transparent), transparent 70%);
+    box-shadow: inset 0 0 0 9px color-mix(in srgb, var(--texte) 3%, transparent), inset 0 0 0 10px color-mix(in srgb, var(--texte) 7%, transparent);
+    transition: opacity 1200ms var(--courbe-sortie) 100ms, border-color 1200ms var(--courbe-sortie);
+  }
+  .ecran-nom h1 { margin: 6px 0 0; }
+  .invite-nom {
+    font: 500 clamp(12px, 1.1vw, 14px)/1 ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    color: var(--texte-discret); letter-spacing: .02em; padding-left: 2px;
+  }
+  .invite-nom span { color: var(--accent-trait); }
+  .curseur-nom {
+    display: inline-block; width: .09em; height: .74em; margin-left: .06em; vertical-align: -.02em;
+    border-radius: 2px; background: var(--accent-trait); animation: curseur-nom 1.05s steps(1) infinite;
+  }
+  .pied-ecran {
+    position: absolute; left: 50%; top: 100%; width: 150px; translate: -50% 0; overflow: visible;
+    fill: none; stroke: color-mix(in srgb, var(--texte) 11%, transparent); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .anime section.attente .ecran-nom { border-color: transparent; }
+  .anime section.attente .invite-nom, .anime section.attente .pied-ecran { opacity: 0; }
+  .invite-nom, .pied-ecran { transition: opacity 900ms var(--courbe-sortie) 500ms; }
+  @keyframes curseur-nom { 50% { opacity: 0; } }
+  @media (max-width: 760px) { .ecran-nom { margin-bottom: 44px; } .pied-ecran { width: 110px; } }
+  @media (prefers-reduced-motion: reduce) { .curseur-nom { animation: none; } }
 </style>
 </head>
 <body>
@@ -727,7 +759,9 @@
 <header class="vitrine wrap">
   <div>
     <p class="role">Développeur systèmes et bases de données<span aria-hidden="true">·</span>Data engineer junior</p>
-    <h1><span class="ligne-nom">Azarias</span><span class="ligne-nom">Sawadogo</span></h1>
+    <div class="ecran-nom"><p class="invite-nom" aria-hidden="true"><span>~</span> $ whoami</p>
+    <h1><span class="ligne-nom">Azarias</span><span class="ligne-nom">Sawadogo<i class="curseur-nom" aria-hidden="true"></i></span></h1>
+    <svg class="pied-ecran" viewBox="0 0 200 40" aria-hidden="true" focusable="false"><path d="M84 0 L78 30 H122 L116 0"/><path d="M58 33 H142"/></svg></div>
     <p class="accroche">J’aime ce qui se passe en coulisses : <strong>là où les données naissent, circulent et prennent du sens</strong>.
       Je développe et interconnecte des systèmes sobres et fiables, qu’on peut comprendre, réparer et sur lesquels on peut compter.</p>
     <div class="actions">
