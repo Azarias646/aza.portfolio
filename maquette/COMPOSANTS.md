@@ -1,6 +1,6 @@
 # Composants du portfolio
 
-Référence des composants de la maquette **widgets** (`maquette/widgets.html`), la version retenue à ce stade.
+Référence des composants de la **maquette finale** « Portfolio Azarias widgets » (`maquette/widgets.html`). Les autres fichiers (`flat`, `fondu`, `ecrans-fondu`) ne sont plus que des étapes de génération.
 Toutes les valeurs ci-dessous sont celles du code. Si le code change, ce document change avec lui.
 
 - Design system de base : [`Azarias646/aza-structure`](https://github.com/Azarias646/aza-structure), dossier `design-system/` (v0.2.0).

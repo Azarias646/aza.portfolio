@@ -1,6 +1,6 @@
 # Portfolio v2 — Plan
 
-Branche : `new` · Maquette retenue : [`maquette/widgets.html`](maquette/widgets.html) · **Composants : [`maquette/COMPOSANTS.md`](maquette/COMPOSANTS.md)**
+Branche : `new` · **Maquette finale : [`maquette/widgets.html`](maquette/widgets.html)** (« Portfolio Azarias widgets ») · **Composants : [`maquette/COMPOSANTS.md`](maquette/COMPOSANTS.md)**
 
 ## 1. Ce qui change par rapport à la v1
 
@@ -30,8 +30,8 @@ En résumé : design system `aza-structure` 0.2.0 (vert `#1D5A4E`, Roboto Flex, 
 
 ## 4. Étapes
 
-1. Valider la maquette (couleurs, sections, textes) — en cours ; reste à valider les niveaux de maîtrise des outils.
-2. Monter la structure finale : `index.html`, `css/`, `js/`, `projets/<nom>.html`, `assets/` (images compressées en WebP).
+1. ~~Valider la maquette~~ — **fait** : la maquette widgets est la maquette finale (reste seulement à valider les niveaux de maîtrise des outils).
+2. **Prochaine étape** — monter la structure finale à partir de la maquette widgets : `index.html`, `css/`, `js/`, `projets/<nom>.html`, `assets/` (images compressées en WebP).
 3. Rédiger les études de cas des 4 projets + compléter le parcours.
 4. SEO & partage : balises meta, Open Graph (aperçu LinkedIn/WhatsApp), favicon.
 5. Accessibilité & perf : contrastes, alt des images, score Lighthouse > 90.
