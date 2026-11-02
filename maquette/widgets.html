@@ -678,8 +678,32 @@
   .parcours-panneau { max-width: none; }
   @media (max-width: 760px) { :root { --goutte: 16px; } }
 
-  /* Repères */
-  .points button[aria-current="true"]::before { border-radius: var(--rayon-pilule); background: var(--accent-trait); }
+  /* Repères : points ronds ; l'actif grossit, passe à la couleur du texte et affiche son nom ;
+     au survol des autres, le nom apparaît dans une bulle à pointe */
+  .points { gap: 6px; }
+  .points button { position: relative; width: 30px; height: 30px; }
+  .points button::before {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--accent-trait); opacity: .75;
+    transition: width var(--duree-standard) var(--courbe-sortie), height var(--duree-standard) var(--courbe-sortie), background var(--duree-standard), opacity var(--duree-standard);
+  }
+  .points button:hover::before, .points button:focus-visible::before { opacity: 1; width: 10px; height: 10px; }
+  .points button[aria-current="true"]::before { width: 14px; height: 14px; border-radius: 50%; background: var(--texte); opacity: 1; box-shadow: 0 0 0 5px color-mix(in srgb, var(--texte) 12%, transparent); }
+  .points .etiquette {
+    position: absolute; right: calc(100% + 6px); top: 50%; translate: 6px -50%; white-space: nowrap; pointer-events: none;
+    font-size: 14px; font-weight: 500; line-height: 1; color: var(--texte);
+    padding: 9px 14px; border-radius: var(--rayon-pilule); background: var(--barre-fond); border: 1px solid var(--barre-bord);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
+    opacity: 0; transition: opacity var(--duree-standard), translate var(--duree-standard) var(--courbe-sortie);
+  }
+  .points .etiquette::after {
+    content: ''; position: absolute; right: -5px; top: 50%; width: 9px; height: 9px; translate: 0 -50%; rotate: 45deg;
+    background: inherit; border: inherit; border-left: 0; border-bottom: 0; border-radius: 0 2px 0 0;
+  }
+  .points button:hover .etiquette, .points button:focus-visible .etiquette { opacity: 1; translate: 0 -50%; }
+  /* Section active : son nom reste affiché, en texte simple, sans bulle */
+  .points button[aria-current="true"] .etiquette { opacity: 1; translate: 0 -50%; background: none; border-color: transparent; box-shadow: none; padding-right: 4px; }
+  .points button[aria-current="true"] .etiquette::after { display: none; }
+  @media (max-width: 760px) { .points .etiquette { display: none; } }
 </style>
 </head>
 <body>
@@ -1002,6 +1026,8 @@
   diapos.forEach((d, i) => {
     const li = document.createElement('li'), b = document.createElement('button');
     b.type = 'button'; b.setAttribute('aria-label', nomsEcrans[d.id]); b.title = nomsEcrans[d.id];
+    const etiquette = document.createElement('span'); etiquette.className = 'etiquette'; etiquette.setAttribute('aria-hidden', 'true'); etiquette.textContent = nomsEcrans[d.id];
+    b.removeAttribute('title'); b.append(etiquette);
     b.onclick = () => aller(i); li.append(b); points.append(li);
   });
   root.classList.add('anime');

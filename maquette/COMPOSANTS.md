@@ -97,9 +97,15 @@ Barre flottante en haut de l'écran.
 
 ### 3.3 Repères d'écran — `ol.points`
 
-- Colonne fixe à droite, centrée verticalement. Un `button` de 28 × 28 px par écran.
-- Point de 6 × 6 px en `--texte-discret`. L'écran affiché porte `aria-current="true"` et son repère s'allonge à 20 px en `--accent-trait` (220 ms).
-- Chaque bouton a un `aria-label` (« Accueil », « À propos »…). Un clic va à l'écran.
+- Colonne fixe à droite, centrée verticalement, écart 6 px. Un `button` de 30 × 30 px par écran.
+- Point rond de 8 px en `--accent-trait` (opacité .75). Au survol ou au focus clavier, il passe à 10 px et à pleine opacité.
+- Écran affiché (`aria-current="true"`) : point de 14 px en `--texte` (blanc en sombre, noir en clair), entouré d'un anneau de 5 px à 12 % de `--texte`.
+- Étiquette `span.etiquette` (créée par le script, `aria-hidden`) placée à gauche du point, 14 px, graisse 500 :
+  - écran actif : le nom reste affiché, en texte simple, sans bulle ;
+  - autres écrans : au survol ou au focus, le nom apparaît dans une bulle en pilule (`--barre-fond`, bord `--barre-bord`, ombre douce) avec une pointe vers le point. Elle glisse de 6 px en fondu (220 ms).
+- Sous 760 px, les étiquettes sont masquées.
+- Chaque bouton garde son `aria-label` (« Accueil », « À propos »…) ; l'attribut `title` est retiré pour éviter la double infobulle. Un clic va à l'écran.
+- Généré par `mk_widgets.py` (la base `index.html` garde les repères allongés d'origine).
 
 ### 3.4 Boutons — `.btn`
 
