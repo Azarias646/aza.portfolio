@@ -611,6 +611,57 @@
     .pied-marque { grid-column: 1 / -1; }
   }
 
+  /* Parcours : panneau à onglets, cartes à vignette ; l'étape en cours est entourée d'une lueur verte */
+  .parcours-panneau {
+    padding: 22px; border-radius: var(--rayon-xl); background: var(--barre-fond); border: 1px solid var(--barre-bord);
+    display: grid; gap: 22px; max-width: 980px;
+  }
+  .onglets { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 5px; border-radius: 16px; background: var(--surface-2); }
+  :root:not([data-theme="light"]) .onglets { background: rgba(255, 255, 255, .04); }
+  .onglet {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 46px; border: 0; border-radius: 12px;
+    background: transparent; color: var(--texte-attenue); font: inherit; font-weight: 600; font-size: 15px; cursor: pointer;
+    transition: background var(--duree-standard), color var(--duree-standard);
+  }
+  .onglet:hover { color: var(--texte); }
+  .onglet[aria-selected="true"] { background: var(--carte); color: var(--texte); }
+  .onglet[aria-selected="true"] .ico .clair { fill: var(--accent-trait); }
+  .sous-titre { font-size: 16px; font-weight: 600; color: var(--texte); margin: 0 4px 12px; }
+  .etapes-grille { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .etape-carte {
+    display: grid; gap: 18px; align-content: start; padding: 14px 14px 20px; border-radius: 20px; background: var(--carte);
+    border: 1px solid transparent; transition: border-color var(--duree-standard), transform var(--duree-rapide);
+  }
+  .etape-carte.actuelle {
+    border-color: var(--accent-trait);
+    background: radial-gradient(120% 90% at 50% 0%, var(--cta-halo), transparent 70%), var(--carte);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-trait) 14%, transparent) !important;
+  }
+  .vignette { display: grid; place-items: center; height: 104px; border-radius: 14px; background: var(--page); border: 1px solid var(--filet); }
+  .vignette svg { width: 150px; max-width: 86%; height: auto; }
+  .vignette .v1 { fill: var(--surface-2); }
+  .vignette .v1c { fill: var(--surface-2); stroke: var(--filet); }
+  .vignette .v2 { fill: color-mix(in srgb, var(--texte-discret) 55%, transparent); }
+  .vignette .v3, .vignette .v3c { fill: color-mix(in srgb, var(--texte-discret) 30%, transparent); }
+  .vignette .va { fill: var(--accent); }
+  .vignette .vp { fill: var(--accent-trait); }
+  .vignette .vl { fill: none; stroke: var(--texte-discret); stroke-width: 1.6; stroke-linecap: round; }
+  .etape-texte { display: grid; gap: 4px; padding: 0 6px; }
+  .etape-texte h4 { font-size: 16px; font-weight: 600; line-height: 1.3; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .annee-carte { font-variation-settings: 'wdth' 88; font-variant-numeric: tabular-nums; color: var(--texte-discret); }
+  .badge { font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: var(--rayon-pilule); background: var(--texte); color: var(--page); }
+  .onglets-zone { display: grid; }
+  .onglet-panneau { grid-area: 1 / 1; }
+  .onglet-panneau[hidden] { display: block !important; visibility: hidden; }
+  :root[data-theme="light"] .vignette .v1, :root[data-theme="light"] .vignette .v1c { fill: #dcdde1; }
+  @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .vignette .v1, :root:not([data-theme="dark"]) .vignette .v1c { fill: #dcdde1; } }
+  .onglet-panneau.rejoue .etape-carte { animation: carte-entre 700ms var(--courbe-sortie) backwards; }
+  .onglet-panneau.rejoue .etape-carte:nth-child(2) { animation-delay: 80ms; }
+  .onglet-panneau.rejoue .etape-carte:nth-child(3) { animation-delay: 160ms; }
+  @keyframes carte-entre { from { opacity: 0; transform: translateY(12px); } }
+  @media (max-width: 900px) { .etapes-grille { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 560px) { .etapes-grille { grid-template-columns: 1fr; } .onglet span { font-size: 13px; } }
+
   /* Repères */
   .points button[aria-current="true"]::before { border-radius: var(--rayon-pilule); background: var(--accent-trait); }
 </style>
@@ -808,18 +859,28 @@
 <section id="parcours" class="diapo">
   <div class="wrap">
     <div class="tete"><span class="filigrane" aria-hidden="true">Parcours</span><h2><span class="barre" aria-hidden="true">/</span>Parcours</h2></div>
-    <div class="parcours">
-      <div>
-        <h3 class="colonne">Expérience</h3>
-        <div class="etape"><span class="annee">2026</span><div><h4>Développeur systèmes et bases de données</h4><p>Aïobi et BBS Holding</p></div></div>
-        <div class="etape"><span class="annee">2025 — 2026</span><div><h4>Stagiaire Data / IA</h4><p>Aïobi</p></div></div>
-        <div class="etape"><span class="annee">2025</span><div><h4>Stagiaire développeur mobile</h4><p>Foulisa</p></div></div>
+    <div class="parcours-panneau">
+      <div class="onglets" role="tablist" aria-label="Parcours">
+        <button class="onglet" type="button" role="tab" id="onglet-exp" aria-controls="panneau-exp" aria-selected="true"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4.5h6a1.5 1.5 0 0 1 1.5 1.5v1.5h-9V6A1.5 1.5 0 0 1 9 4.5z"/><rect x="3" y="7.5" width="18" height="12.5" rx="2.5" class="clair"/><rect x="3" y="11.5" width="18" height="2"/></svg><span>Expérience</span></button>
+        <button class="onglet" type="button" role="tab" id="onglet-cur" aria-controls="panneau-cur" aria-selected="false" tabindex="-1"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 1.5 9 12 14l10.5-5z" class="clair"/><path d="M6 11.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5L12 14.4z"/><path d="M21 9.6h1.4v5.4H21z"/></svg><span>Cursus et certifications</span></button>
       </div>
-      <div>
-        <h3 class="colonne">Cursus et certifications</h3>
-        <div class="etape actuelle"><span class="annee">2026 — en cours</span><div><h4>Master Intelligence Artificielle</h4></div></div>
-        <div class="etape"><span class="annee">2026</span><div><h4>IBM Z Xplore — Fundamentals</h4><p>Les bases des mainframes IBM Z</p></div></div>
-        <div class="etape"><span class="annee">2022 — 2025</span><div><h4>Licence Informatique de Gestion</h4><p>Université de l’Unité Africaine (ex IAM)</p></div></div>
+      <div class="onglets-zone">
+      <div class="onglet-panneau" role="tabpanel" id="panneau-exp" aria-labelledby="onglet-exp">
+        <h3 class="sous-titre">Expérience</h3>
+        <div class="etapes-grille">
+          <article class="etape-carte actuelle"><div class="vignette"><svg viewBox="0 0 160 84" aria-hidden="true"><rect class="v2" x="14" y="12" width="56" height="6" rx="3"/><rect class="v3" x="14" y="22" width="36" height="4" rx="2"/><rect class="v1" x="14" y="34" width="40" height="38" rx="6"/><rect class="v1" x="60" y="34" width="40" height="38" rx="6"/><rect class="va" x="106" y="34" width="40" height="38" rx="6"/></svg></div><div class="etape-texte"><h4>Développeur systèmes et bases de données<span class="badge">En cours</span></h4><p class="petit">Aïobi et BBS Holding</p><p class="petit annee-carte">2026</p></div></article>
+          <article class="etape-carte"><div class="vignette"><svg viewBox="0 0 160 84" aria-hidden="true"><rect class="v2" x="14" y="12" width="48" height="6" rx="3"/><rect class="v1" x="14" y="58" width="16" height="14" rx="3"/><rect class="v1" x="36" y="46" width="16" height="26" rx="3"/><rect class="v1" x="58" y="38" width="16" height="34" rx="3"/><rect class="va" x="80" y="26" width="16" height="46" rx="3"/><path class="vl" d="M104 60 C116 56 120 36 146 30"/><circle class="vp" cx="146" cy="30" r="3.5"/></svg></div><div class="etape-texte"><h4>Stagiaire Data / IA</h4><p class="petit">Aïobi</p><p class="petit annee-carte">2025 — 2026</p></div></article>
+          <article class="etape-carte"><div class="vignette"><svg viewBox="0 0 160 84" aria-hidden="true"><rect class="v1" x="58" y="8" width="44" height="70" rx="9"/><rect class="v2" x="66" y="18" width="28" height="5" rx="2.5"/><rect class="va" x="66" y="28" width="28" height="18" rx="4"/><rect class="v3" x="66" y="52" width="20" height="4" rx="2"/><rect class="v3" x="66" y="60" width="26" height="4" rx="2"/><rect class="v2" x="24" y="24" width="24" height="5" rx="2.5"/><rect class="v3" x="24" y="34" width="18" height="4" rx="2"/><rect class="v2" x="112" y="24" width="24" height="5" rx="2.5"/><rect class="v3" x="112" y="34" width="18" height="4" rx="2"/></svg></div><div class="etape-texte"><h4>Stagiaire développeur mobile</h4><p class="petit">Foulisa</p><p class="petit annee-carte">2025</p></div></article>
+        </div>
+      </div>
+      <div class="onglet-panneau" role="tabpanel" id="panneau-cur" aria-labelledby="onglet-cur" hidden>
+        <h3 class="sous-titre">Cursus et certifications</h3>
+        <div class="etapes-grille">
+          <article class="etape-carte actuelle"><div class="vignette"><svg viewBox="0 0 160 84" aria-hidden="true"><path class="vl" d="M40 22 L80 42 L120 22 M40 62 L80 42 L120 62 M40 22 L40 62 M120 22 L120 62"/><circle class="v1c" cx="40" cy="22" r="8"/><circle class="v1c" cx="40" cy="62" r="8"/><circle class="v1c" cx="120" cy="22" r="8"/><circle class="v1c" cx="120" cy="62" r="8"/><circle class="vp" cx="80" cy="42" r="11"/></svg></div><div class="etape-texte"><h4>Master Intelligence Artificielle<span class="badge">En cours</span></h4><p class="petit annee-carte">2026</p></div></article>
+          <article class="etape-carte"><div class="vignette"><svg viewBox="0 0 160 84" aria-hidden="true"><rect class="v1" x="48" y="8" width="64" height="70" rx="6"/><rect class="v2" x="56" y="16" width="48" height="9" rx="2"/><rect class="v2" x="56" y="30" width="48" height="9" rx="2"/><rect class="v2" x="56" y="44" width="48" height="9" rx="2"/><circle class="vp" cx="98" cy="20.5" r="2.4"/><circle class="vp" cx="98" cy="34.5" r="2.4"/><circle class="v3c" cx="98" cy="48.5" r="2.4"/><rect class="v3" x="56" y="62" width="30" height="5" rx="2.5"/></svg></div><div class="etape-texte"><h4>IBM Z Xplore — Fundamentals</h4><p class="petit">Les bases des mainframes IBM Z</p><p class="petit annee-carte">2026</p></div></article>
+          <article class="etape-carte"><div class="vignette"><svg viewBox="0 0 160 84" aria-hidden="true"><rect class="v1" x="32" y="14" width="96" height="58" rx="6"/><rect class="v2" x="44" y="24" width="52" height="6" rx="3"/><rect class="v3" x="44" y="36" width="72" height="4" rx="2"/><rect class="v3" x="44" y="44" width="60" height="4" rx="2"/><circle class="vp" cx="108" cy="58" r="8"/><path class="va" d="M102 64 l-3 12 6-4 3 6 3-12z"/></svg></div><div class="etape-texte"><h4>Licence Informatique de Gestion</h4><p class="petit">Université de l’Unité Africaine (ex IAM)</p><p class="petit annee-carte">2022 — 2025</p></div></article>
+        </div>
+      </div>
       </div>
     </div>
   </div>
@@ -1071,7 +1132,7 @@
   fp.addEventListener('click', e => { if (e.target === fp) fp.close(); });
 
   // Lignes en cascade : chaque élément reçoit son rang
-  document.querySelectorAll('.projets, .parcours > div, .outils, .canaux, .recit, .pied').forEach(liste => {
+  document.querySelectorAll('.projets, .parcours > div, .outils, .canaux, .recit, .pied, .etapes-grille').forEach(liste => {
     [...liste.children].filter(e => !e.matches('h3')).forEach((e, i) => { e.classList.add('cascade'); e.style.setProperty('--i', i); });
   });
 
@@ -1087,6 +1148,25 @@
     b.addEventListener('pointerleave', e => {
       if (e.pointerType === 'touch') return;
       b.style.setProperty('--bx', (cote(e) * 101) + '%'); b.classList.remove('rempli');
+    });
+  });
+
+  // Parcours : onglets (clic, flèches gauche/droite) ; les cartes du panneau choisi réapparaissent en cascade
+  const onglets = [...document.querySelectorAll('.onglet')];
+  const choisir = o => {
+    onglets.forEach(x => {
+      const actif = x === o, panneau = document.getElementById(x.getAttribute('aria-controls'));
+      x.setAttribute('aria-selected', actif); x.tabIndex = actif ? 0 : -1; panneau.hidden = !actif;
+      if (actif && !reduit) {
+        panneau.classList.add('rejoue'); void panneau.offsetWidth; panneau.classList.remove('rejoue');
+      }
+    });
+  };
+  onglets.forEach((o, i) => {
+    o.addEventListener('click', () => choisir(o));
+    o.addEventListener('keydown', e => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault(); const n = onglets[(i + (e.key === 'ArrowRight' ? 1 : onglets.length - 1)) % onglets.length]; n.focus(); choisir(n);
     });
   });
 

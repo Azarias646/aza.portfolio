@@ -191,13 +191,28 @@ Grille de 4 colonnes, écart 12 px. `.outils` est en `display: contents`, pour q
 - **Animation :** les liens se tracent à l'ouverture (`stroke-dashoffset` de 400 à 0, 1,1 s).
 - Zone du schéma : fond `--page`, coins 22 px.
 
-### 3.13 Parcours — `.parcours`, `.etape`
+### 3.13 Parcours — `.parcours-panneau`, `.onglet`, `.etape-carte`
 
-- Deux cartes côte à côte : « Expérience » et « Cursus et certifications » (titre `.colonne`, 17 px, 600).
-- Chaque `.etape` est une grille 136 px + reste : année (17 px, gras), puis intitulé `h4` et lieu.
-- Étapes séparées par un filet 1 px.
-- Étape en cours (`.etape.actuelle`) : année dans une pilule `--accent`, texte `--sur-accent`, sur une seule ligne.
-- Mobile : une seule colonne ; l'année passe au-dessus de l'intitulé.
+Inspiré d'un panneau de sélection de composants : onglets segmentés, puis une grille de cartes à vignette.
+
+- **Panneau** : coins 28 px, padding 22 px, même fond et même bordure que la barre de navigation (`--barre-fond`, `--barre-bord`), largeur max 980 px.
+- **Onglets** (`.onglets`, `role="tablist"`) : contrôle segmenté en 2 parts, rail de 5 px de marge, coins 16 px.
+  - Chaque `button.onglet` (`role="tab"`, 46 px de haut, coins 12 px) a une icône bicolore 22 px (mallette pour Expérience, toque pour Cursus et certifications) et un libellé (15 px, 600).
+  - Onglet actif (`aria-selected="true"`) : fond `--carte`, texte `--texte`, partie claire de l'icône en `--accent-trait`. Inactif : transparent, `--texte-attenue`.
+  - Clavier : ← et → passent d'un onglet à l'autre. Seul l'onglet actif est dans l'ordre de tabulation.
+- **Panneaux** (`role="tabpanel"`) : superposés dans la même case de grille (`.onglets-zone`), pour que la hauteur ne change pas d'un onglet à l'autre. Le panneau inactif est `hidden` mais garde sa place (`visibility: hidden`). À l'affichage, ses cartes réapparaissent en cascade (700 ms, 80 ms d'écart).
+- **Grille** (`.etapes-grille`) : 3 colonnes (2 sous 900 px, 1 sous 560 px), 12 px d'écart. Sous-titre du panneau au-dessus (16 px, 600).
+- **Carte d'étape** (`article.etape-carte`) : coins 20 px, padding 14 × 14 × 20 px, fond `--carte`.
+  - **Vignette** (`.vignette`) : encadré de 104 px de haut, coins 14 px, fond `--page`, filet 1 px. Il contient une petite illustration SVG (`viewBox 0 0 160 84`) faite de blocs gris et d'un seul détail vert :
+    - poste : tableau de bord ;
+    - stage data : barres et courbe ;
+    - stage mobile : téléphone ;
+    - master IA : réseau de nœuds ;
+    - IBM Z : baie de serveur ;
+    - licence : diplôme.
+    Classes : `v1` (bloc), `v1c` (nœud), `v2` / `v3` (lignes de texte), `va` (aplat vert), `vp` (point vert), `vl` (trait).
+  - **Texte** : intitulé `h4` (16 px, 600), lieu (12,5 px, `--texte-attenue`), années (`wdth` 88, chiffres alignés, `--texte-discret`).
+  - **Étape en cours** (`.etape-carte.actuelle`) : bordure 1 px `--accent-trait`, anneau de 4 px de lueur verte (14 %), halo vert en haut de la carte, et badge **« En cours »** (pilule 11,5 px, gras, fond `--texte`, texte `--page`). Une seule par onglet : le poste actuel, et le master.
 
 ### 3.14 Contact — `.cta`, `footer.pied`
 
