@@ -1088,7 +1088,7 @@
   const diapos = [...document.querySelectorAll('.diapo')];
   const points = document.getElementById('points');
   const liensNav = [...document.querySelectorAll('.liens a')];
-  const nomsEcrans = { accueil: 'Accueil', apropos: 'À propos', projets: 'Projets', parcours: 'Parcours', contact: 'Contact' };
+  const nomsEcrans = { accueil: 'Moi', apropos: 'À propos', projets: 'Projets', parcours: 'Parcours', contact: 'Contact' };
   diapos.forEach((d, i) => {
     const li = document.createElement('li'), b = document.createElement('button');
     b.type = 'button'; b.setAttribute('aria-label', nomsEcrans[d.id]); b.title = nomsEcrans[d.id];

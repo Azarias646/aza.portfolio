@@ -102,7 +102,8 @@ Barre flottante en haut de l'écran.
 - Écran affiché (`aria-current="true"`) : point de 11 px dans le vert du site (`--accent`, celui des boutons, opacité .9), entouré d'un anneau discret de 4 px à 13 % de `--accent-trait`.
 - Étiquette `span.etiquette` (créée par le script, `aria-hidden`) : **aucun nom n'est affiché par défaut**, pas même celui de l'écran actif. Au survol ou au focus clavier d'un point, son nom apparaît à gauche **en texte seul, vert** : dans la police de terminal de l'invite `whoami` (monospace système : `ui-monospace`, SF Mono, Menlo, Consolas ; 13 px, graisse 500, interlettrage .02 em), couleur `--accent-trait`, sans fond, sans bord, sans pointe ni icône. Il glisse de 6 px en fondu (220 ms).
 - Sous 760 px, les étiquettes sont masquées.
-- Chaque bouton garde son `aria-label` (« Accueil », « À propos »…) ; l'attribut `title` est retiré pour éviter la double infobulle. Un clic va à l'écran.
+- Noms des écrans : **Moi** (l'accueil), À propos, Projets, Parcours, Contact.
+- Chaque bouton garde son `aria-label` (« Moi », « À propos »…) ; l'attribut `title` est retiré pour éviter la double infobulle. Un clic va à l'écran.
 - Généré par `mk_widgets.py` (la base `index.html` garde les repères allongés d'origine).
 
 ### 3.4 Boutons — `.btn`
