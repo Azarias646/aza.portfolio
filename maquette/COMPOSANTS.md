@@ -100,7 +100,7 @@ Barre flottante en haut de l'écran.
 - Colonne fixe à droite, centrée verticalement, écart 6 px. Un `button` de 30 × 30 px par écran.
 - Point rond de 8 px en `--texte-discret` (opacité .8). Au survol ou au focus clavier, il passe à 10 px et à pleine opacité.
 - Écran affiché (`aria-current="true"`) : point de 11 px dans le vert du site (`--accent`, celui des boutons, opacité .9), entouré d'un anneau discret de 4 px à 13 % de `--accent-trait`.
-- Étiquette `span.etiquette` (créée par le script, `aria-hidden`) : **aucun nom n'est affiché par défaut**, pas même celui de l'écran actif. Au survol ou au focus clavier d'un point, son nom apparaît à gauche **en texte seul** : 14 px, graisse 600, couleur `--texte`, sans fond, sans bord, sans pointe ni icône. Il glisse de 6 px en fondu (220 ms).
+- Étiquette `span.etiquette` (créée par le script, `aria-hidden`) : **aucun nom n'est affiché par défaut**, pas même celui de l'écran actif. Au survol ou au focus clavier d'un point, son nom apparaît à gauche **en texte seul, vert** : même typographie que les liens du pied de page (Roboto Flex, 14 px, graisse 600), couleur `--accent-trait`, sans fond, sans bord, sans pointe ni icône. Il glisse de 6 px en fondu (220 ms).
 - Sous 760 px, les étiquettes sont masquées.
 - Chaque bouton garde son `aria-label` (« Accueil », « À propos »…) ; l'attribut `title` est retiré pour éviter la double infobulle. Un clic va à l'écran.
 - Généré par `mk_widgets.py` (la base `index.html` garde les repères allongés d'origine).
