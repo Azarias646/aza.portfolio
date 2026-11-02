@@ -157,7 +157,7 @@ _nouveau_p = f"""<div class="parcours-panneau">
         <h3 class="sous-titre">Cursus et certifications</h3>
         <div class="etapes-grille quatre">
           {_carte('ia', 'Master Intelligence Artificielle', '', '2026')}
-          {_carte('pipeline', 'Certificat professionnel IBM Data Engineering', 'IBM', '2026')}
+          {_carte('pipeline', 'Certificat professionnel IBM Data Engineering', 'IBM · Coursera', '2026')}
           {_carte('mainframe', 'IBM Z Xplore — Fundamentals', 'Les bases des mainframes IBM Z', '2026')}
           {_carte('diplome', 'Licence Informatique de Gestion', 'Université de l’Unité Africaine (ex IAM)', '2022 — 2025')}
         </div>
