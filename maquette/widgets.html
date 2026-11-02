@@ -766,6 +766,40 @@
   .tour .grille-air { margin-top: auto; width: 70%; height: 38%; background: radial-gradient(circle, var(--points-pc) 1.2px, transparent 1.6px) 0 0 / 7px 7px; }
   @media (max-width: 1320px) { .tour { display: none; } }
   @media (max-width: 760px) { .ecran-nom { margin-bottom: 88px; } }
+
+  /* ===== Passe mobile (760 px et moins) ===== */
+  @media (max-width: 760px) {
+    /* Page qui défile normalement : les écrans s'empilent */
+    html, body { height: auto; overflow: visible; }
+    body { display: block; }
+    .diapos { overflow: visible; padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+    .diapo, .diapo.active, .diapo.entree { position: relative; inset: auto; overflow: visible; visibility: visible; display: block; padding-block: 40px; scroll-margin-top: 76px; }
+    .diapo:not(#accueil), #contact.diapo:not(#accueil) { padding-top: 64px; }
+    #accueil.diapo { padding-top: 8px; }
+    /* Barre du haut collée en haut pendant le défilement */
+    nav:not(.pied-col) { position: sticky; top: 0; background: linear-gradient(180deg, var(--page) 72%, transparent); }
+    /* Onglets du parcours : libellés plus courts en hauteur */
+    .onglet { flex-direction: column; gap: 6px; padding-block: 10px; }
+    .onglet span { font-size: 12.5px; line-height: 1.2; white-space: nowrap; }
+    /* Repères d'écran inutiles sur téléphone */
+    .points { display: none; }
+    /* Barre d'onglets en bas, même composant que la barre du haut */
+    nav .liens {
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px;
+      position: fixed; z-index: 30; left: max(12px, env(safe-area-inset-left, 0px)); right: max(12px, env(safe-area-inset-right, 0px));
+      bottom: max(12px, env(safe-area-inset-bottom, 0px)); padding: 6px;
+      background: var(--barre-fond); border: 1px solid var(--barre-bord); border-radius: 22px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, .28);
+    }
+    nav .liens a { flex-direction: column; gap: 4px; padding: 8px 4px; min-height: 52px; justify-content: center; border-radius: 16px; font-size: 11.5px; }
+    nav .liens a .ico { width: 22px; height: 22px; }
+    /* Zones à toucher d'au moins 44 px */
+    .icone-action { width: 44px; height: 44px; }
+    .theme { width: 44px; height: 44px; }
+    .pied-col a { min-height: 32px; }
+    /* Fenêtres : presque plein écran */
+    dialog.fiche, dialog.fiche-projet { width: calc(100vw - 24px); max-width: none; max-height: calc(100dvh - 24px); }
+  }
   @media (prefers-reduced-motion: reduce) { .curseur-nom { animation: none; } }
 </style>
 </head>
@@ -1097,6 +1131,10 @@
     b.onclick = () => aller(i); li.append(b); points.append(li);
   });
   root.classList.add('anime');
+  // Sur téléphone (760 px et moins) : page qui défile normalement, pas d'écrans plein écran
+  const mobile = matchMedia('(max-width: 760px)');
+  mobile.addEventListener('change', () => location.reload());
+  if (mobile.matches) root.classList.add('mobile');
   let courant = 0, verrou = false;
   const marquer = () => {
     [...points.querySelectorAll('button')].forEach((b, i) => b.setAttribute('aria-current', i === courant));
@@ -1104,6 +1142,12 @@
     try { history.replaceState(null, '', '#' + diapos[courant].id); } catch (e) {}
   };
   const aller = (cible, instantane) => {
+    if (mobile.matches) {
+      if (cible < 0 || cible >= diapos.length) return;
+      diapos[cible].classList.remove('attente');
+      diapos[cible].scrollIntoView({ behavior: reduit || instantane ? 'auto' : 'smooth', block: 'start' });
+      return;
+    }
     if (verrou || cible === courant || cible < 0 || cible >= diapos.length) return;
     const avant = diapos[courant], apres = diapos[cible], sens = cible > courant ? 1 : -1;
     courant = cible; marquer();
@@ -1134,6 +1178,14 @@
   diapos[0].classList.add('active');
   const depart = diapos.findIndex(d => '#' + d.id === location.hash);
   if (depart > 0) { aller(depart, true); } else marquer();
+  if (mobile.matches) {
+    // Chaque section apparaît en fondu quand elle entre à l'écran ; l'onglet actif suit la section au milieu de l'écran
+    diapos.forEach(d => d.classList.add('active'));
+    const entree = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.remove('attente'); entree.unobserve(e.target); } }), { threshold: .12 });
+    diapos.forEach(d => entree.observe(d));
+    const suivi = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { courant = diapos.indexOf(e.target); marquer(); } }), { rootMargin: '-45% 0px -50% 0px' });
+    diapos.forEach(d => suivi.observe(d));
+  }
   addEventListener('hashchange', () => { const i = diapos.findIndex(d => '#' + d.id === location.hash); if (i >= 0) aller(i); });
 
   // Molette : défile d'abord le contenu de l'écran, puis change d'écran une fois au bord
@@ -1141,6 +1193,7 @@
   diapos.forEach(d => d.addEventListener('scroll', () => { dernierDefilement = performance.now(); }, { passive: true }));
   const auBord = (d, sens) => sens > 0 ? d.scrollTop + d.clientHeight >= d.scrollHeight - 2 : d.scrollTop <= 1;
   addEventListener('wheel', e => {
+    if (mobile.matches) return;
     if (document.querySelector('dialog[open]')) return;
     const d = diapos[courant], sens = Math.sign(e.deltaY);
     if (!sens) return;
@@ -1156,6 +1209,7 @@
   let y0 = null;
   addEventListener('touchstart', e => { y0 = e.touches[0].clientY; }, { passive: true });
   addEventListener('touchend', e => {
+    if (mobile.matches) return;
     if (y0 === null || document.querySelector('dialog[open]')) return;
     const dy = y0 - e.changedTouches[0].clientY, sens = Math.sign(dy); y0 = null;
     if (Math.abs(dy) > 60 && auBord(diapos[courant], sens)) aller(courant + sens);
@@ -1163,6 +1217,7 @@
 
   // Clavier
   addEventListener('keydown', e => {
+    if (mobile.matches) return;
     if (document.querySelector('dialog[open]') || /INPUT|TEXTAREA|BUTTON/.test(document.activeElement.tagName) && e.key === ' ') return;
     const d = diapos[courant];
     const suiv = ['ArrowDown', 'PageDown', ' '].includes(e.key), prec = ['ArrowUp', 'PageUp'].includes(e.key);

@@ -325,7 +325,26 @@ Une variante en ordinateur portable (clavier en perspective) a été essayée pu
   - éléments en cascade (`.cascade`, rang `--i` posé par le script) : décalés de 260 ms + 110 ms par rang.
 - **Nom (accueil) :** chaque ligne (`.ligne-nom`) apparaît en fondu, à l'ouverture du site et à chaque retour sur l'accueil (« Sawadogo » 160 ms après « Azarias »).
 
-### 4.3 Accessibilité
+### 4.3 Téléphone (760 px et moins)
+
+Sur téléphone, le site ne fonctionne plus en écrans plein écran : la page défile normalement. Le script ajoute la classe `mobile` sur `<html>` et recharge la page si l'on franchit 760 px (rotation, redimensionnement).
+
+- **Défilement :** les cinq sections s'empilent (`.diapo` en `position: relative`, toutes visibles). Molette, glissement et clavier ne changent plus d'écran : c'est le défilement natif.
+- **Apparition :** chaque section garde le fondu doux du § 4.2. `.attente` est retirée quand 12 % de la section entre à l'écran (`IntersectionObserver`), une seule fois.
+- **Barre d'onglets en bas** (`nav .liens`) : elle remplace les liens de la barre du haut, masqués à cette largeur.
+  - Même composant que la barre du haut : fond `--barre-fond`, bord `--barre-bord`, rayon 22 px, ombre douce.
+  - Fixée en bas, à 12 px des bords (zones sûres respectées).
+  - 4 onglets (À propos, Projets, Parcours, Contact), chacun avec son icône bicolore de 22 px au-dessus du nom en 11,5 px, sur 52 px de haut au moins.
+  - L'onglet de la section au milieu de l'écran est actif : fond léger, partie claire de l'icône en vert.
+  - Toucher un onglet fait défiler en douceur jusqu'à la section (`scroll-margin-top: 76px` pour passer sous la barre du haut). Toucher « Azarias » remonte en haut.
+  - La page a une marge basse de 96 px pour que la barre ne cache pas la fin du pied de page.
+- **Barre du haut :** collée en haut pendant le défilement, sur un fondu de la couleur de la page pour que le contenu ne se voie pas au-dessus d'elle.
+- **Repères d'écran (`ol.points`) :** masqués.
+- **Onglets du Parcours :** icône au-dessus du libellé (12,5 px, sur une ligne).
+- **Zones à toucher :** au moins 44 px pour les icônes copier / écrire et le bouton de thème.
+- **Fenêtres (outil, projet) :** presque plein écran (`100vw − 24 px`, hauteur `100dvh − 24 px` au plus).
+
+### 4.4 Accessibilité
 
 - `prefers-reduced-motion: reduce` coupe toutes les animations et transitions. Le changement d'écran devient instantané.
 - Focus clavier visible : contour 2 px `--accent-trait`.

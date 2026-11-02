@@ -41,5 +41,5 @@ En résumé : design system `aza-structure` 0.2.0 (vert `#1D5A4E`, Roboto Flex, 
 
 - Valider les niveaux de maîtrise des outils (tableau `fiches` de `maquette/index.html`).
 - Nom de l'établissement du master IA (sous-titre du parcours).
-- Version mobile de la barre de navigation (les liens sont masqués sous 760 px).
+- Valider la passe mobile (barre d'onglets en bas, défilement normal, voir § 4.3 de `maquette/COMPOSANTS.md`).
 - Reporter les écarts assumés dans `aza-structure` (voir § 6 de `maquette/COMPOSANTS.md`).
