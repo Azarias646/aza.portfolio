@@ -497,7 +497,7 @@ css = """
     transition: width var(--duree-standard) var(--courbe-sortie), height var(--duree-standard) var(--courbe-sortie), background var(--duree-standard), opacity var(--duree-standard);
   }
   .points button:hover::before, .points button:focus-visible::before { opacity: 1; width: 10px; height: 10px; }
-  .points button[aria-current="true"]::before { width: 14px; height: 14px; border-radius: 50%; background: var(--accent); opacity: 1; box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent-trait) 22%, transparent); }
+  .points button[aria-current="true"]::before { width: 11px; height: 11px; border-radius: 50%; background: var(--accent); opacity: .9; box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-trait) 13%, transparent); }
   .points .etiquette {
     position: absolute; right: calc(100% + 6px); top: 50%; translate: 6px -50%; white-space: nowrap; pointer-events: none;
     font-size: 14px; font-weight: 500; line-height: 1; color: var(--texte);
