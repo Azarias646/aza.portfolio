@@ -143,7 +143,7 @@ Barre flottante en haut de l'écran.
 
 ### 3.8 Liste d'outils — `.groupe`, `button.outil`
 
-- Une carte par groupe : titre `h3` (17 px, 600), puis une grille `auto-fill` de colonnes de 150 px minimum (128 px pour Développement).
+- Une carte par groupe : titre `h3` (17 px, 600), puis une grille `auto-fill` de colonnes de 150 px minimum (118 px pour Développement, pour tenir ses 5 outils sur une ligne).
 - Chaque outil est un `button` : pastille + nom, fond transparent, coins 999 px. Survol : fond `--surface-2`, logo agrandi à 108 %.
 - **Clic :** ouvre la fiche de l'outil (§ 3.10).
 - Groupes : Data, Systèmes, Développement, Renseignement en sources ouvertes.
@@ -157,8 +157,8 @@ Grille de 4 colonnes, écart 12 px. `.outils` est en `display: contents`, pour q
 | Récit (`.recit`) | 1–2 | 1–2 |
 | Data | 3–4 | 1 |
 | Systèmes | 3–4 | 2 |
-| Développement | 1–3 | 3 |
-| Renseignement | 4 | 3 (outils en une colonne) |
+| Développement | 1–2 | 3 |
+| Renseignement | 3–4 | 3 (outils côte à côte, alignés sur la grille de Systèmes) |
 
 - Sous 900 px : 2 colonnes, chaque carte sur toute la largeur. Sous 760 px : une colonne.
 

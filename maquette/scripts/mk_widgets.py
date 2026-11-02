@@ -255,10 +255,9 @@ css = """
   .recit { grid-column: 1 / 3; grid-row: 1 / 3; align-self: stretch; align-content: start; }
   .outils .groupe:nth-child(1) { grid-column: 3 / 5; grid-row: 1; }
   .outils .groupe:nth-child(2) { grid-column: 3 / 5; grid-row: 2; }
-  .outils .groupe:nth-child(3) { grid-column: 1 / 4; grid-row: 3; }
-  .outils .groupe:nth-child(4) { grid-column: 4 / 5; grid-row: 3; }
-  .outils .groupe:nth-child(4) .grille { grid-template-columns: 1fr; }
-  .outils .groupe:nth-child(3) .grille { grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); }
+  .outils .groupe:nth-child(3) { grid-column: 1 / 3; grid-row: 3; }
+  .outils .groupe:nth-child(4) { grid-column: 3 / 5; grid-row: 3; }
+  .outils .groupe:nth-child(3) .grille { grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); }
   @media (max-width: 900px) {
     .apropos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .recit, .outils .groupe:nth-child(n) { grid-column: 1 / -1; grid-row: auto; }
