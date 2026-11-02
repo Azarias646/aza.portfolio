@@ -706,6 +706,13 @@
   }
   @media (max-width: 760px) { .points .etiquette { display: none; } }
 
+  /* Filigranes : « Contact » dépasse derrière le haut de la carte ; « Réalisations », plus long, est réduit pour ne pas être coupé */
+  .contact .wrap { position: relative; }
+  .contact .cta { z-index: 1; }
+  .filigrane.filigrane-contact { left: max(var(--goutte), env(safe-area-inset-left, 0px)); right: auto; top: 0; text-align: left; transform: translateY(-64%); }
+  #projets .filigrane { font-size: clamp(64px, 11.5vw, 168px); transform: translateY(-46%); }
+  #projets .tete { margin-top: 24px; }
+
   /* Un peu de folie : le nom s'affiche sur l'écran d'un ordinateur, en réponse à « whoami » */
   :root { --trait-pc: rgba(255, 255, 255, .13); --filet-pc: rgba(255, 255, 255, .08); --bord-pc: rgba(255, 255, 255, .03); --balayage-pc: rgba(255, 255, 255, .025); --points-pc: rgba(255, 255, 255, .14); --touche-cote: rgba(255, 255, 255, .03); --touche-dessus: rgba(255, 255, 255, .07); }
   :root[data-theme="light"] { --trait-pc: rgba(0, 0, 0, .22); --filet-pc: rgba(0, 0, 0, .15); --bord-pc: rgba(0, 0, 0, .035); --balayage-pc: rgba(0, 0, 0, .045); --points-pc: rgba(0, 0, 0, .2); --touche-cote: rgba(0, 0, 0, .09); --touche-dessus: rgba(255, 255, 255, .9); }
@@ -985,6 +992,7 @@
 
 <section id="contact" class="diapo contact">
   <div class="wrap">
+    <span class="filigrane filigrane-contact" aria-hidden="true">Contact</span>
     <div class="cta">
       <div class="tete"><h2><span class="barre" aria-hidden="true">/</span>Envie de collaborer ou d’échanger ?</h2></div>
       <div class="cta-courriel">

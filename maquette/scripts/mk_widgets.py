@@ -68,6 +68,7 @@ _cv = re.search(r'<a href="([^"]*CV[^"]*)"', s).group(1)
 _nav_liens = '\n        '.join(re.findall(r'<a href="#(?:apropos|projets|parcours)">.*?</a>', re.search(r'<div class="liens">.*?</div>', s, flags=re.S).group(0), flags=re.S))
 _nouveau = f"""<section id="contact" class="diapo contact">
   <div class="wrap">
+    <span class="filigrane filigrane-contact" aria-hidden="true">Contact</span>
     <div class="cta">
       <div class="tete"><h2><span class="barre" aria-hidden="true">/</span>Envie de collaborer ou d’échanger ?</h2></div>
       <div class="cta-courriel">
@@ -515,6 +516,13 @@ css = """
     transition: opacity var(--duree-standard), translate var(--duree-standard) var(--courbe-sortie), visibility 0s;
   }
   @media (max-width: 760px) { .points .etiquette { display: none; } }
+
+  /* Filigranes : « Contact » dépasse derrière le haut de la carte ; « Réalisations », plus long, est réduit pour ne pas être coupé */
+  .contact .wrap { position: relative; }
+  .contact .cta { z-index: 1; }
+  .filigrane.filigrane-contact { left: max(var(--goutte), env(safe-area-inset-left, 0px)); right: auto; top: 0; text-align: left; transform: translateY(-64%); }
+  #projets .filigrane { font-size: clamp(64px, 11.5vw, 168px); transform: translateY(-46%); }
+  #projets .tete { margin-top: 24px; }
 
   /* Un peu de folie : le nom s'affiche sur l'écran d'un ordinateur, en réponse à « whoami » */
   :root { --trait-pc: rgba(255, 255, 255, .13); --filet-pc: rgba(255, 255, 255, .08); --bord-pc: rgba(255, 255, 255, .03); --balayage-pc: rgba(255, 255, 255, .025); --points-pc: rgba(255, 255, 255, .14); --touche-cote: rgba(255, 255, 255, .03); --touche-dessus: rgba(255, 255, 255, .07); }

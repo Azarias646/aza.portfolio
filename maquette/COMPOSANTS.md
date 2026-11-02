@@ -253,6 +253,8 @@ L'écran Contact a deux blocs, traités comme la barre de navigation : même fon
 
 - `h2` (32–48 px, `wdth` 125) précédé d'une barre `/` en `--accent-texte` (`.barre`).
 - Derrière, un **mot en filigrane** `.filigrane` (72–210 px, plein, couleur `--surface`). Mots : Profil, Réalisations, Parcours, Contact.
+  - « Réalisations », plus long, est réduit (64–168 px, `11.5vw`) pour ne jamais être coupé sur la droite (mobile compris). Il est aussi abaissé (`translateY(-46 %)`, titre décalé de 24 px) pour ne pas passer sous la barre de navigation.
+  - « Contact » est placé dans `.wrap`, au-dessus de la carte d'appel `.cta` : il dépasse derrière le haut de la carte (`translateY(-64 %)`), qui le recouvre en partie (`z-index: 1`).
 
 ### 3.16 Portrait — `.scene`, `figure.portrait`
 
