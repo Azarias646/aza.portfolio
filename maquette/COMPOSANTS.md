@@ -261,16 +261,18 @@ L'écran Contact a deux blocs, traités comme la barre de navigation : même fon
 
 ---
 
-### 3.17 Écran du nom — `.ecran-nom`
+### 3.17 PC du nom — `.ecran-nom`
 
-Le nom de l'accueil s'affiche sur l'écran d'un ordinateur, comme la réponse à la commande `whoami` dans un terminal.
+Le nom de l'accueil s'affiche sur l'écran d'un PC de bureau dessiné en traits fins, comme la réponse à la commande `whoami` dans un terminal. Tous les traits sont à 9–11 % de `--texte`, donc ils s'adaptent aux deux thèmes.
 
-- **Cadre :** `div.ecran-nom` en `inline-block`, qui épouse la largeur du nom. Rayon 24 px, bord de 1,5 px à 11 % de `--texte`, et un double filet intérieur (`box-shadow` inset à 9 et 10 px) pour la bordure de l'écran.
-- **Fond :** des lignes de balayage (dégradé répété toutes les 4 px, à 2,5 % de `--texte`) et une lueur verte douce (`--accent-trait` à 9 %) en haut à gauche.
-- **Invite :** `p.invite-nom` au-dessus du nom, en monospace 12 à 14 px, couleur `--texte-discret`, avec le `~` en vert. Elle porte `aria-hidden` : le `h1` reste le seul titre lu.
-- **Curseur :** `i.curseur-nom`, une barre verte après « Sawadogo » (0,09 em × 0,74 em), qui clignote toutes les 1,05 s. Il est figé si l'utilisateur a demandé moins d'animations (`prefers-reduced-motion`).
-- **Pied :** `svg.pied-ecran`, un pied d'écran en traits fins, centré sous le cadre (150 px, 110 px sur mobile).
-- **Apparition :** le bord, l'invite et le pied apparaissent en fondu avec le nom (`.attente`).
+- **Écran :** `div.ecran-nom` en `inline-block`, qui épouse la largeur du nom. Rayon 24 px, bord de 1,5 px, double filet intérieur (`box-shadow` inset à 9 et 10 px) pour la bordure de l'écran.
+- **Fond de l'écran :** des lignes de balayage (toutes les 4 px, à 2,5 %) et une lueur verte douce (`--accent-trait` à 9 %) en haut à gauche.
+- **Invite :** `p.invite-nom` (`~ $ whoami`) au-dessus du nom, en monospace 12 à 14 px, couleur `--texte-discret`, avec le `~` en vert. Elle porte `aria-hidden` : le `h1` reste le seul titre lu.
+- **Curseur :** `i.curseur-nom`, une barre verte après « Sawadogo » (0,09 em × 0,74 em), qui clignote toutes les 1,05 s.
+- **Bureau :** `svg.bureau`, centré sous l'écran (440 px max, 92 % de la largeur de l'écran). Il dessine le pied, le clavier (rangées de touches en pointillés, barre d'espace) et la souris. L'écran a une marge basse de 108 px (84 px sur mobile) pour lui laisser la place.
+- **Tour :** `div.tour`, à 20 px à droite de l'écran (66 px de large), du haut de l'écran jusqu'au niveau du clavier. Elle contient deux baies, un voyant vert qui pulse (2,6 s) et une grille d'aération en points. Elle est masquée sous 1 320 px, faute de place à côté du nom.
+- **Animations :** le curseur et le voyant sont figés si l'utilisateur a demandé moins d'animations (`prefers-reduced-motion`).
+- **Apparition :** le bord de l'écran, l'invite, le bureau et la tour apparaissent en fondu avec le nom (`.attente`).
 - Généré par `mk_widgets.py`.
 
 ## 4. Navigation et animations

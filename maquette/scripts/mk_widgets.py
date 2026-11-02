@@ -519,7 +519,7 @@ css = """
   /* Un peu de folie : le nom s'affiche sur l'écran d'un ordinateur, en réponse à « whoami » */
   .ecran-nom {
     position: relative; display: inline-block; max-width: 100%;
-    margin: 22px 0 52px; padding: 18px clamp(18px, 2.4vw, 30px) clamp(16px, 2vw, 26px);
+    margin: 22px 0 108px; padding: 18px clamp(18px, 2.4vw, 30px) clamp(16px, 2vw, 26px);
     border-radius: 24px; border: 1.5px solid color-mix(in srgb, var(--texte) 11%, transparent);
     background:
       repeating-linear-gradient(180deg, color-mix(in srgb, var(--texte) 2.5%, transparent) 0 1px, transparent 1px 4px),
@@ -537,20 +537,32 @@ css = """
     display: inline-block; width: .09em; height: .74em; margin-left: .06em; vertical-align: -.02em;
     border-radius: 2px; background: var(--accent-trait); animation: curseur-nom 1.05s steps(1) infinite;
   }
-  .pied-ecran {
-    position: absolute; left: 50%; top: 100%; width: 150px; translate: -50% 0; overflow: visible;
+  .bureau {
+    position: absolute; left: 50%; top: 100%; width: min(440px, 92%); translate: -50% 0; overflow: visible;
     fill: none; stroke: color-mix(in srgb, var(--texte) 11%, transparent); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
   }
   .anime section.attente .ecran-nom { border-color: transparent; }
-  .anime section.attente .invite-nom, .anime section.attente .pied-ecran { opacity: 0; }
-  .invite-nom, .pied-ecran { transition: opacity 900ms var(--courbe-sortie) 500ms; }
+  .anime section.attente .invite-nom, .anime section.attente .bureau, .anime section.attente .tour { opacity: 0; }
+  .invite-nom, .bureau, .tour { transition: opacity 900ms var(--courbe-sortie) 500ms; }
   @keyframes curseur-nom { 50% { opacity: 0; } }
-  @media (max-width: 760px) { .ecran-nom { margin-bottom: 44px; } .pied-ecran { width: 110px; } }
-  @media (prefers-reduced-motion: reduce) { .curseur-nom { animation: none; } }
+  .bureau .touches { stroke-dasharray: 9 5; }
+  /* Tour : à droite de l'écran, posée au niveau du clavier */
+  .tour {
+    position: absolute; left: calc(100% + 20px); top: 26px; bottom: -86px; width: 66px;
+    border-radius: 12px; border: 1.5px solid color-mix(in srgb, var(--texte) 11%, transparent);
+    display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px 10px;
+  }
+  .tour .baie { width: 100%; height: 8px; border-radius: 3px; border: 1.5px solid color-mix(in srgb, var(--texte) 9%, transparent); }
+  .tour .voyant { width: 9px; height: 9px; margin-top: 6px; border-radius: 50%; background: var(--accent-trait); opacity: .7; box-shadow: 0 0 10px var(--accent-trait); animation: tour-voyant 2.6s ease-in-out infinite; }
+  .tour .grille-air { margin-top: auto; width: 70%; height: 38%; background: radial-gradient(circle, color-mix(in srgb, var(--texte) 12%, transparent) 1.2px, transparent 1.6px) 0 0 / 7px 7px; }
+  @keyframes tour-voyant { 50% { opacity: .2; box-shadow: 0 0 0 transparent; } }
+  @media (max-width: 1320px) { .tour { display: none; } }
+  @media (max-width: 760px) { .ecran-nom { margin-bottom: 84px; } }
+  @media (prefers-reduced-motion: reduce) { .curseur-nom, .tour .voyant { animation: none; } }
 """
 r("b.onclick = () => aller(i); li.append(b); points.append(li);",
   "const etiquette = document.createElement('span'); etiquette.className = 'etiquette'; etiquette.setAttribute('aria-hidden', 'true'); etiquette.textContent = nomsEcrans[d.id];\n    b.removeAttribute('title'); b.append(etiquette);\n    b.onclick = () => aller(i); li.append(b); points.append(li);")
-r('<h1><span class="ligne-nom">Azarias</span><span class="ligne-nom">Sawadogo</span></h1>', '<div class="ecran-nom"><p class="invite-nom" aria-hidden="true"><span>~</span> $ whoami</p>\n    <h1><span class="ligne-nom">Azarias</span><span class="ligne-nom">Sawadogo<i class="curseur-nom" aria-hidden="true"></i></span></h1>\n    <svg class="pied-ecran" viewBox="0 0 200 40" aria-hidden="true" focusable="false"><path d="M84 0 L78 30 H122 L116 0"/><path d="M58 33 H142"/></svg></div>')
+r('<h1><span class="ligne-nom">Azarias</span><span class="ligne-nom">Sawadogo</span></h1>', '<div class="ecran-nom"><p class="invite-nom" aria-hidden="true"><span>~</span> $ whoami</p>\n    <h1><span class="ligne-nom">Azarias</span><span class="ligne-nom">Sawadogo<i class="curseur-nom" aria-hidden="true"></i></span></h1>\n    <svg class="bureau" viewBox="0 0 440 92" aria-hidden="true" focusable="false"><path d="M202 0 L196 24 H244 L238 0"/><path d="M172 27 H268"/><rect x="70" y="46" width="270" height="34" rx="7"/><path class="touches" d="M84 56 H326 M84 64 H326"/><path d="M150 72 H260"/><rect x="358" y="48" width="24" height="34" rx="12"/><path d="M370 48 V60"/></svg><div class="tour" aria-hidden="true"><i class="baie"></i><i class="baie"></i><i class="voyant"></i><i class="grille-air"></i></div></div>')
 r('</style>', css + '</style>')
 open(os.path.join(MAQ, 'widgets.html'),'w').write(s)
 a=re.sub(r'<!DOCTYPE html>\n<html lang="fr">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport"[^>]*>\n','',s)
