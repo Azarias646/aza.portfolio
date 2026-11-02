@@ -252,9 +252,9 @@ L'écran Contact a deux blocs, traités comme la barre de navigation : même fon
 ### 3.15 Titre de section — `.tete`
 
 - `h2` (32–48 px, `wdth` 125) précédé d'une barre `/` en `--accent-texte` (`.barre`).
-- Derrière, un **mot en filigrane** `.filigrane` (72–210 px, plein, couleur `--surface`). Mots : Profil, Réalisations, Parcours, Contact.
-  - « Réalisations », plus long, est réduit (64–168 px, `11.5vw`) pour ne jamais être coupé sur la droite (mobile compris). Il est aussi abaissé (`translateY(-46 %)`, titre décalé de 24 px) pour ne pas passer sous la barre de navigation.
-  - « Contact » est placé dans `.wrap`, au-dessus de la carte d'appel `.cta` : il dépasse derrière le haut de la carte (`translateY(-64 %)`), qui le recouvre en partie (`z-index: 1`).
+- Derrière, un **mot en filigrane** `.filigrane`, identique sur tous les écrans : plein, couleur `--surface-2`, taille `min(clamp(72px, 15vw, 210px), (100vw − 40px) / 5,8)`. Le plafond en largeur garantit que le mot le plus long, « Réalisations », tient sur un téléphone ; sur ordinateur, tous les mots font 210 px. Mots : Profil, Réalisations, Parcours, Contact.
+  - Chaque écran (sauf l'accueil) a une marge haute de 104 px. Le filigrane ne passe donc jamais sous la barre de navigation, même quand le contenu est plus haut que la fenêtre (vérifié de 1 280 × 720 à 1 920 × 1 080).
+  - « Contact » est placé dans `.wrap`, au-dessus de la carte d'appel `.cta` : il dépasse derrière le haut de la carte (`translateY(-52 %)`), qui le recouvre en partie (`z-index: 1`).
 
 ### 3.16 Portrait — `.scene`, `figure.portrait`
 
