@@ -706,17 +706,17 @@
   }
   @media (max-width: 760px) { .points .etiquette { display: none; } }
 
-  /* Un peu de folie : le nom s'affiche sur l'écran d'un ordinateur portable, en réponse à « whoami » */
-  :root { --trait-pc: rgba(255, 255, 255, .13); --filet-pc: rgba(255, 255, 255, .07); --bord-pc: rgba(255, 255, 255, .03); --balayage-pc: rgba(255, 255, 255, .025); --lueur-pc: rgba(61, 170, 145, .10); --fond-pc: rgba(255, 255, 255, .012); }
-  :root[data-theme="light"] { --trait-pc: rgba(0, 0, 0, .22); --filet-pc: rgba(0, 0, 0, .12); --bord-pc: rgba(0, 0, 0, .035); --balayage-pc: rgba(0, 0, 0, .045); --lueur-pc: rgba(29, 90, 78, .10); --fond-pc: rgba(255, 255, 255, .55); }
-  @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --trait-pc: rgba(0, 0, 0, .22); --filet-pc: rgba(0, 0, 0, .12); --bord-pc: rgba(0, 0, 0, .035); --balayage-pc: rgba(0, 0, 0, .045); --lueur-pc: rgba(29, 90, 78, .10); --fond-pc: rgba(255, 255, 255, .55); } }
+  /* Un peu de folie : le nom s'affiche sur l'écran d'un ordinateur, en réponse à « whoami » */
+  :root { --trait-pc: rgba(255, 255, 255, .13); --filet-pc: rgba(255, 255, 255, .08); --bord-pc: rgba(255, 255, 255, .03); --balayage-pc: rgba(255, 255, 255, .025); --points-pc: rgba(255, 255, 255, .14); }
+  :root[data-theme="light"] { --trait-pc: rgba(0, 0, 0, .22); --filet-pc: rgba(0, 0, 0, .15); --bord-pc: rgba(0, 0, 0, .035); --balayage-pc: rgba(0, 0, 0, .045); --points-pc: rgba(0, 0, 0, .2); }
+  @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --trait-pc: rgba(0, 0, 0, .22); --filet-pc: rgba(0, 0, 0, .15); --bord-pc: rgba(0, 0, 0, .035); --balayage-pc: rgba(0, 0, 0, .045); --points-pc: rgba(0, 0, 0, .2); } }
   .ecran-nom {
-    position: relative; display: block;
-    margin: 0; padding: 18px clamp(18px, 2.4vw, 30px) clamp(16px, 2vw, 26px);
-    border-radius: 22px 22px 6px 6px; border: 1.5px solid var(--trait-pc);
+    position: relative; display: inline-block; max-width: 100%;
+    margin: 22px 0 108px; padding: 18px clamp(18px, 2.4vw, 30px) clamp(16px, 2vw, 26px);
+    border-radius: 24px; border: 1.5px solid var(--trait-pc);
     background:
       repeating-linear-gradient(180deg, var(--balayage-pc) 0 1px, transparent 1px 4px),
-      radial-gradient(120% 90% at 30% 20%, var(--lueur-pc), transparent 70%), var(--fond-pc);
+      radial-gradient(120% 90% at 30% 20%, color-mix(in srgb, var(--accent-trait) 9%, transparent), transparent 70%);
     box-shadow: inset 0 0 0 9px var(--bord-pc), inset 0 0 0 10px var(--filet-pc);
     transition: opacity 1200ms var(--courbe-sortie) 100ms, border-color 1200ms var(--courbe-sortie);
   }
@@ -730,21 +730,28 @@
     display: inline-block; width: .09em; height: .74em; margin-left: .06em; vertical-align: -.02em;
     border-radius: 2px; background: var(--accent-trait); animation: curseur-nom 1.05s steps(1) infinite;
   }
-  .portable { display: inline-block; max-width: 100%; margin: 22px 0 34px; }
-  .socle {
-    display: block; width: 108%; margin: -2px 0 0 -4%; height: auto; overflow: visible;
-    fill: none; stroke: var(--trait-pc); stroke-width: 1.3; stroke-linejoin: round; stroke-linecap: round;
+  .bureau {
+    position: absolute; left: 50%; top: 100%; width: min(440px, 92%); translate: -50% 0; overflow: visible;
+    fill: none; stroke: var(--trait-pc); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
   }
-  .socle .plateau { fill: var(--fond-pc); }
-  .socle .touches { stroke: var(--filet-pc); stroke-width: 1; fill: var(--bord-pc); }
-  .socle .pave { stroke: var(--filet-pc); fill: var(--bord-pc); }
-  .socle .encoche { stroke: var(--filet-pc); }
   .anime section.attente .ecran-nom { border-color: transparent; }
-  .anime section.attente .invite-nom, .anime section.attente .socle { opacity: 0; }
-  .invite-nom, .socle { transition: opacity 900ms var(--courbe-sortie) 500ms; }
+  .anime section.attente .invite-nom, .anime section.attente .bureau, .anime section.attente .tour { opacity: 0; }
+  .invite-nom, .bureau, .tour { transition: opacity 900ms var(--courbe-sortie) 500ms; }
   @keyframes curseur-nom { 50% { opacity: 0; } }
-  @media (max-width: 760px) { .socle { width: 105%; margin-left: -2.5%; } }
-  @media (prefers-reduced-motion: reduce) { .curseur-nom { animation: none; } }
+  .bureau .touches { stroke-dasharray: 9 5; }
+  /* Tour : à droite de l'écran, posée au niveau du clavier */
+  .tour {
+    position: absolute; left: calc(100% + 20px); top: 26px; bottom: -86px; width: 66px;
+    border-radius: 12px; border: 1.5px solid var(--trait-pc);
+    display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px 10px;
+  }
+  .tour .baie { width: 100%; height: 8px; border-radius: 3px; border: 1.5px solid var(--filet-pc); }
+  .tour .voyant { width: 9px; height: 9px; margin-top: 6px; border-radius: 50%; background: var(--accent-trait); opacity: .7; box-shadow: 0 0 10px var(--accent-trait); animation: tour-voyant 2.6s ease-in-out infinite; }
+  .tour .grille-air { margin-top: auto; width: 70%; height: 38%; background: radial-gradient(circle, var(--points-pc) 1.2px, transparent 1.6px) 0 0 / 7px 7px; }
+  @keyframes tour-voyant { 50% { opacity: .2; box-shadow: 0 0 0 transparent; } }
+  @media (max-width: 1320px) { .tour { display: none; } }
+  @media (max-width: 760px) { .ecran-nom { margin-bottom: 84px; } }
+  @media (prefers-reduced-motion: reduce) { .curseur-nom, .tour .voyant { animation: none; } }
 </style>
 </head>
 <body>
@@ -767,9 +774,9 @@
 <header class="vitrine wrap">
   <div>
     <p class="role">Développeur systèmes et bases de données<span aria-hidden="true">·</span>Data engineer junior</p>
-    <div class="portable"><div class="ecran-nom"><p class="invite-nom" aria-hidden="true"><span>~</span> $ whoami</p>
+    <div class="ecran-nom"><p class="invite-nom" aria-hidden="true"><span>~</span> $ whoami</p>
     <h1><span class="ligne-nom">Azarias</span><span class="ligne-nom">Sawadogo<i class="curseur-nom" aria-hidden="true"></i></span></h1>
-    </div><svg class="socle" viewBox="0 0 600 100" aria-hidden="true" focusable="false"><path class="plateau" d="M22 1 H578 L598 84 Q598 88 594 88 H6 Q2 88 2 84 Z"/><path class="levre" d="M6 88 Q8 97 18 97 H582 Q592 97 594 88"/><path class="encoche" d="M262 97 V94 H338 V97"/><path class="touches" d="M65.5 6 H95.9 L94.6 13 H64.1 Z M99.2 6 H129.6 L128.6 13 H98.0 Z M133.0 6 H163.3 L162.5 13 H131.9 Z M166.7 6 H197.1 L196.5 13 H165.9 Z M200.4 6 H230.8 L230.4 13 H199.8 Z M234.2 6 H264.6 L264.4 13 H233.8 Z M267.9 6 H298.3 L298.3 13 H267.7 Z M301.7 6 H332.1 L332.3 13 H301.7 Z M335.4 6 H365.8 L366.2 13 H335.6 Z M369.2 6 H399.6 L400.2 13 H369.6 Z M402.9 6 H433.3 L434.1 13 H403.5 Z M436.7 6 H467.0 L468.1 13 H437.5 Z M470.4 6 H500.8 L502.0 13 H471.4 Z M504.1 6 H534.5 L535.9 13 H505.4 Z M63.4 16 H96.7 L95.5 23 H62.0 Z M100.1 16 H133.4 L132.4 23 H98.9 Z M136.8 16 H170.0 L169.2 23 H135.8 Z M173.4 16 H206.7 L206.1 23 H172.6 Z M210.1 16 H243.3 L243.0 23 H209.5 Z M246.7 16 H280.0 L279.9 23 H246.4 Z M283.4 16 H316.6 L316.7 23 H283.3 Z M320.0 16 H353.3 L353.6 23 H320.1 Z M356.7 16 H389.9 L390.5 23 H357.0 Z M393.3 16 H426.6 L427.4 23 H393.9 Z M430.0 16 H463.2 L464.2 23 H430.8 Z M466.6 16 H499.9 L501.1 23 H467.6 Z M503.3 16 H536.6 L538.0 23 H504.5 Z M61.4 26 H98.1 L96.9 33 H60.0 Z M101.5 26 H138.1 L137.1 33 H100.3 Z M141.5 26 H178.2 L177.4 33 H140.6 Z M181.6 26 H218.2 L217.7 33 H180.9 Z M221.6 26 H258.2 L258.0 33 H221.1 Z M261.7 26 H298.3 L298.3 33 H261.4 Z M301.7 26 H338.3 L338.6 33 H301.7 Z M341.8 26 H378.4 L378.9 33 H342.0 Z M381.8 26 H418.4 L419.1 33 H382.3 Z M421.8 26 H458.5 L459.4 33 H422.6 Z M461.9 26 H498.5 L499.7 33 H462.9 Z M501.9 26 H538.6 L540.0 33 H503.1 Z M59.4 36 H100.0 L98.8 43 H58.0 Z M103.5 36 H144.1 L143.2 43 H102.3 Z M147.5 36 H188.1 L187.5 43 H146.6 Z M191.6 36 H232.2 L231.8 43 H190.9 Z M235.6 36 H364.4 L364.7 43 H235.3 Z M367.8 36 H408.4 L409.1 43 H368.2 Z M411.9 36 H452.5 L453.4 43 H412.5 Z M455.9 36 H496.5 L497.7 43 H456.8 Z M500.0 36 H540.6 L542.0 43 H501.2 Z"/><path class="pave" d="M230.4 50 H369.6 L371.2 78 H228.8 Z"/></svg></div>
+    <svg class="bureau" viewBox="0 0 440 92" aria-hidden="true" focusable="false"><path d="M202 0 L196 24 H244 L238 0"/><path d="M172 27 H268"/><rect x="70" y="46" width="270" height="34" rx="7"/><path class="touches" d="M84 56 H326 M84 64 H326"/><path d="M150 72 H260"/><rect x="358" y="48" width="24" height="34" rx="12"/><path d="M370 48 V60"/></svg><div class="tour" aria-hidden="true"><i class="baie"></i><i class="baie"></i><i class="voyant"></i><i class="grille-air"></i></div></div>
     <p class="accroche">J’aime ce qui se passe en coulisses : <strong>là où les données naissent, circulent et prennent du sens</strong>.
       Je développe et interconnecte des systèmes sobres et fiables, qu’on peut comprendre, réparer et sur lesquels on peut compter.</p>
     <div class="actions">

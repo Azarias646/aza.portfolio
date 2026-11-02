@@ -261,33 +261,28 @@ L'écran Contact a deux blocs, traités comme la barre de navigation : même fon
 
 ---
 
-### 3.17 Portable du nom — `.ecran-nom`
+### 3.17 PC du nom — `.ecran-nom`
 
-Le nom de l'accueil s'affiche sur l'écran d'un ordinateur portable dessiné en traits fins, comme la réponse à la commande `whoami` dans un terminal.
-
-**Jetons propres** (plus marqués en clair, où les traits se voyaient mal) :
+Le nom de l'accueil s'affiche sur l'écran d'un PC de bureau dessiné en traits fins, comme la réponse à la commande `whoami` dans un terminal. Les traits utilisent des jetons propres, plus marqués en clair (où ils se voyaient mal) :
 
 | Jeton | Sombre | Clair | Rôle |
 |---|---|---|---|
-| `--trait-pc` | blanc 13 % | noir 22 % | contour de l'écran et de la base |
-| `--filet-pc` | blanc 7 % | noir 12 % | filet intérieur de l'écran |
+| `--trait-pc` | blanc 13 % | noir 22 % | contours de l'écran, du bureau et de la tour |
+| `--filet-pc` | blanc 8 % | noir 15 % | filet intérieur de l'écran, baies de la tour |
 | `--bord-pc` | blanc 3 % | noir 3,5 % | bordure de l'écran (9 px) |
 | `--balayage-pc` | blanc 2,5 % | noir 4,5 % | lignes de balayage |
-| `--lueur-pc` | vert 10 % | vert 10 % | lueur en haut à gauche |
-| `--fond-pc` | blanc 1,2 % | blanc 55 % | fond de l'écran, de la base et des touches |
+| `--points-pc` | blanc 14 % | noir 20 % | grille d'aération de la tour |
 
-- **Écran :** `div.ecran-nom` en `inline-block`, qui épouse la largeur du nom. Rayon 22 px en haut et 6 px en bas (il se pose sur la base), bord de 1,5 px en `--trait-pc`, double filet intérieur.
-- **Fond de l'écran :** lignes de balayage toutes les 4 px et lueur verte douce.
+Une variante en ordinateur portable (clavier en perspective) a été essayée puis abandonnée ; elle reste dans l'historique (commit `721e893`).
+
+- **Écran :** `div.ecran-nom` en `inline-block`, qui épouse la largeur du nom. Rayon 24 px, bord de 1,5 px, double filet intérieur (`box-shadow` inset à 9 et 10 px) pour la bordure de l'écran.
+- **Fond de l'écran :** des lignes de balayage (toutes les 4 px, à 2,5 %) et une lueur verte douce (`--accent-trait` à 9 %) en haut à gauche.
 - **Invite :** `p.invite-nom` (`~ $ whoami`) au-dessus du nom, en monospace 12 à 14 px, couleur `--texte-discret`, avec le `~` en vert. Elle porte `aria-hidden` : le `h1` reste le seul titre lu.
-- **Curseur :** `i.curseur-nom`, une barre verte après « Sawadogo » (0,09 em × 0,74 em), qui clignote toutes les 1,05 s. Il est figé si l'utilisateur a demandé moins d'animations (`prefers-reduced-motion`).
-- **Structure :** `div.portable` (`inline-block`, marges 22 px / 34 px) contient l'écran puis la base du portable, l'un sous l'autre dans le flux. La hauteur de la base suit donc sa largeur.
-- **Base (clavier) :** `svg.socle`, vue un peu de dessus, en perspective. Elle est plus large que l'écran (108 %, 105 % sur mobile, décalée pour rester centrée) et contient :
-  - le plateau, un trapèze qui s'élargit vers l'avant, rempli en `--fond-pc` ;
-  - 4 rangées de touches (14, 13, 12 et 11 touches, avec une barre d'espace au centre de la dernière), en `--filet-pc` sur `--bord-pc` ;
-  - le pavé tactile au centre ;
-  - le bord avant avec l'encoche d'ouverture.
-  Le dessin est calculé par `mk_widgets.py` : chaque touche est placée par interpolation entre le bord arrière et le bord avant.
-- **Apparition :** le bord de l'écran, l'invite et la base apparaissent en fondu avec le nom (`.attente`).
+- **Curseur :** `i.curseur-nom`, une barre verte après « Sawadogo » (0,09 em × 0,74 em), qui clignote toutes les 1,05 s.
+- **Bureau :** `svg.bureau`, centré sous l'écran (440 px max, 92 % de la largeur de l'écran). Il dessine le pied, le clavier (rangées de touches en pointillés, barre d'espace) et la souris. L'écran a une marge basse de 108 px (84 px sur mobile) pour lui laisser la place.
+- **Tour :** `div.tour`, à 20 px à droite de l'écran (66 px de large), du haut de l'écran jusqu'au niveau du clavier. Elle contient deux baies, un voyant vert qui pulse (2,6 s) et une grille d'aération en points. Elle est masquée sous 1 320 px, faute de place à côté du nom.
+- **Animations :** le curseur et le voyant sont figés si l'utilisateur a demandé moins d'animations (`prefers-reduced-motion`).
+- **Apparition :** le bord de l'écran, l'invite, le bureau et la tour apparaissent en fondu avec le nom (`.attente`).
 - Généré par `mk_widgets.py`.
 
 ## 4. Navigation et animations
