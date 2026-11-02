@@ -520,9 +520,12 @@ css = """
   /* Filigranes : « Contact » dépasse derrière le haut de la carte ; « Réalisations », plus long, est réduit pour ne pas être coupé */
   .contact .wrap { position: relative; }
   .contact .cta { z-index: 1; }
-  .filigrane.filigrane-contact { left: max(var(--goutte), env(safe-area-inset-left, 0px)); right: auto; top: 0; text-align: left; transform: translateY(-52%); }
+  .filigrane.filigrane-contact { position: relative; display: block; left: -.04em; right: auto; top: auto; text-align: left; transform: none; margin: 0 0 -.5em; }
   /* Mêmes filigranes partout : même couleur, même taille (plafonnée pour que le mot le plus long, « Réalisations », tienne en largeur) */
-  .filigrane, #contact .filigrane, #apropos .filigrane, #parcours .filigrane { color: var(--surface-2); font-size: min(clamp(72px, 15vw, 210px), calc((100vw - 40px) / 5.8)); }
+  :root { --filigrane: #1a1a1e; }
+  :root[data-theme="light"] { --filigrane: #f5f5f7; }
+  @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --filigrane: #f5f5f7; } }
+  .filigrane, #contact .filigrane, #apropos .filigrane, #parcours .filigrane { color: var(--filigrane); font-size: min(clamp(72px, 15vw, 210px), calc((100vw - 40px) / 5.8)); }
   /* Assez de place en haut de chaque écran pour que le filigrane ne soit jamais coupé, même quand le contenu dépasse la hauteur */
   .diapo:not(#accueil) { padding-top: 104px; }
 
