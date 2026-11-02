@@ -488,8 +488,8 @@ css = """
   .parcours-panneau { max-width: none; }
   @media (max-width: 760px) { :root { --goutte: 16px; } }
 
-  /* Repères : points ronds ; l'actif grossit, passe à la couleur du texte et affiche son nom ;
-     au survol des autres, le nom apparaît dans une bulle à pointe */
+  /* Repères : points ronds, l'actif grossit et passe à la couleur du texte ;
+     aucun nom affiché, sauf au survol (ou au focus clavier) : bulle à pointe */
   .points { gap: 6px; }
   .points button { position: relative; width: 30px; height: 30px; }
   .points button::before {
@@ -501,18 +501,19 @@ css = """
   .points .etiquette {
     position: absolute; right: calc(100% + 6px); top: 50%; translate: 6px -50%; white-space: nowrap; pointer-events: none;
     font-size: 14px; font-weight: 500; line-height: 1; color: var(--texte);
-    padding: 9px 14px; border-radius: var(--rayon-pilule); background: var(--barre-fond); border: 1px solid var(--barre-bord);
+    padding: 9px 14px; border-radius: var(--rayon-pilule); background: var(--surface); border: 1px solid var(--barre-bord);
     box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
-    opacity: 0; transition: opacity var(--duree-standard), translate var(--duree-standard) var(--courbe-sortie);
+    opacity: 0; visibility: hidden;
+    transition: opacity var(--duree-standard), translate var(--duree-standard) var(--courbe-sortie), visibility 0s var(--duree-standard);
   }
   .points .etiquette::after {
     content: ''; position: absolute; right: -5px; top: 50%; width: 9px; height: 9px; translate: 0 -50%; rotate: 45deg;
     background: inherit; border: inherit; border-left: 0; border-bottom: 0; border-radius: 0 2px 0 0;
   }
-  .points button:hover .etiquette, .points button:focus-visible .etiquette { opacity: 1; translate: 0 -50%; }
-  /* Section active : son nom reste affiché, en texte simple, sans bulle */
-  .points button[aria-current="true"] .etiquette { opacity: 1; translate: 0 -50%; background: none; border-color: transparent; box-shadow: none; padding-right: 4px; }
-  .points button[aria-current="true"] .etiquette::after { display: none; }
+  .points button:is(:hover, :focus-visible) .etiquette {
+    opacity: 1; visibility: visible; translate: 0 -50%;
+    transition: opacity var(--duree-standard), translate var(--duree-standard) var(--courbe-sortie), visibility 0s;
+  }
   @media (max-width: 760px) { .points .etiquette { display: none; } }
 """
 r("b.onclick = () => aller(i); li.append(b); points.append(li);",
