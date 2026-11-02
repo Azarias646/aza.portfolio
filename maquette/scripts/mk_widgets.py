@@ -482,6 +482,13 @@ css = """
   @media (max-width: 900px) { .etapes-grille, .etapes-grille.quatre { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 560px) { .etapes-grille, .etapes-grille.quatre { grid-template-columns: 1fr; } .onglet span { font-size: 13px; } }
 
+  /* Largeur : contenu jusqu’à 1 520 px, marges latérales qui suivent l'écran (20 à 56 px) */
+  :root { --goutte: clamp(20px, 4vw, 56px); }
+  .wrap { max-width: 1520px; padding-left: max(var(--goutte), env(safe-area-inset-left, 0px)); padding-right: max(var(--goutte), env(safe-area-inset-right, 0px)); }
+  nav .wrap::before { inset: 0 max(var(--goutte), env(safe-area-inset-right, 0px)) 0 max(var(--goutte), env(safe-area-inset-left, 0px)); }
+  .parcours-panneau { max-width: none; }
+  @media (max-width: 760px) { :root { --goutte: 16px; } }
+
   /* Repères */
   .points button[aria-current="true"]::before { border-radius: var(--rayon-pilule); background: var(--accent-trait); }
 """

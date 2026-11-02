@@ -73,6 +73,8 @@ Les composants n'utilisent que ces variables, jamais une couleur écrite en dur 
 
 ---
 
+**Largeur :** le contenu (`.wrap`) va jusqu’à 1 520 px. Les marges latérales suivent l'écran : `--goutte` = `clamp(20px, 4vw, 56px)`, 16 px sous 760 px, et jamais moins que la zone de sécurité du téléphone. La barre de navigation suit les mêmes marges.
+
 ## 3. Composants
 
 ### 3.1 Barre de navigation — `nav`
@@ -195,7 +197,7 @@ Grille de 4 colonnes, écart 12 px. `.outils` est en `display: contents`, pour q
 
 Inspiré d'un panneau de sélection de composants : onglets segmentés, puis une grille de cartes à vignette.
 
-- **Panneau** : coins 28 px, padding 22 px, même fond et même bordure que la barre de navigation (`--barre-fond`, `--barre-bord`), largeur max 980 px.
+- **Panneau** : coins 28 px, padding 22 px, même fond et même bordure que la barre de navigation (`--barre-fond`, `--barre-bord`), toute la largeur du contenu.
 - **Onglets** (`.onglets`, `role="tablist"`) : contrôle segmenté en 2 parts, rail de 5 px de marge, coins 16 px.
   - Chaque `button.onglet` (`role="tab"`, 46 px de haut, coins 12 px) a une icône bicolore 22 px (mallette pour Expérience, toque pour Cursus et certifications) et un libellé (15 px, 600).
   - Onglet actif (`aria-selected="true"`) : fond `--carte`, texte `--texte`, partie claire de l'icône en `--accent-trait`. Inactif : transparent, `--texte-attenue`.
