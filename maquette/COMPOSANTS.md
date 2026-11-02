@@ -40,7 +40,7 @@ Les composants n'utilisent que ces variables, jamais une couleur écrite en dur 
 | Jeton | Sombre | Clair | Rôle |
 |---|---|---|---|
 | `--page` / `--fond` | `#0b0b0c` | `#ededef` | Fond des écrans |
-| `--surface` | `#1c1c20` | `#ffffff` | Fond des petits éléments, mot en filigrane |
+| `--surface` | `#1c1c20` | `#ffffff` | Fond des petits éléments |
 | `--surface-2` | `#2a2a30` | `#f1f1f3` | Pilules, survol, fond de jauge |
 | `--filet` | `#2a2a30` | `#e2e2e6` | Séparateurs |
 | `--carte` | dégradé 160° `#24242a` → `#18181c` | dégradé 160° `#ffffff` → `#f6f6f8` | Fond de toutes les cartes |
@@ -52,6 +52,11 @@ Les composants n'utilisent que ces variables, jamais une couleur écrite en dur 
 | `--accent-texte` | `#7ccbb7` | `#256b5e` | Texte et « / » en vert |
 | `--accent-trait` | `#7ccbb7` | `#2e7d6c` | Traits, repère actif, focus |
 | `--sur-accent` | `#e6f4f0` | `#ffffff` | Texte et logo posés sur l'aplat vert |
+| `--filigrane` | `#1a1a1e` | `#f5f5f7` | Mot en filigrane derrière les titres (§ 3.15) |
+| `--barre-fond` / `--barre-bord` | dégradé `#1d1d21` → `#101012`, bord blanc 8 % | dégradé `#ffffff` → `#f1f1f3`, bord noir 7 % | Navbar, carte d'appel, pied de page |
+| `--cta-halo` | vert 75 % | vert 45 % | Halo mouvant de la carte d'appel |
+
+Le PC de l'accueil a ses propres jetons (`--trait-pc`, `--filet-pc`, `--bord-pc`, `--balayage-pc`, `--points-pc`, `--touche-cote`, `--touche-dessus`), décrits au § 3.17.
 
 | Rayon | Valeur | Usage |
 |---|---|---|
@@ -67,7 +72,7 @@ Les composants n'utilisent que ces variables, jamais une couleur écrite en dur 
 | `--duree-standard` | 220 ms (ouverture d'une fenêtre) |
 | `--courbe-sortie` | `cubic-bezier(.2, .8, .2, 1)` |
 
-**Police :** Roboto Flex (repli Manrope). Titres élargis avec `font-variation-settings: 'wdth' 125`. Dans la maquette, chargée depuis Google Fonts. Dans la version finale, elle sera hébergée avec le site.
+**Police :** Roboto Flex (repli Manrope) partout, sauf deux éléments « terminal » en monospace système (`ui-monospace`, SF Mono, Menlo, Consolas) : l'invite `~ $ whoami` (§ 3.17) et les noms des repères d'écran (§ 3.3). Titres élargis avec `font-variation-settings: 'wdth' 125`. Dans la maquette, chargée depuis Google Fonts. Dans la version finale, elle sera hébergée avec le site.
 
 **Thème :** il suit le réglage du système (`prefers-color-scheme`). Le bouton de thème force `data-theme="dark"` ou `"light"` sur `<html>`, et le choix est mémorisé dans `localStorage` (clé `theme`).
 
@@ -300,7 +305,7 @@ Une variante en ordinateur portable (clavier en perspective) a été essayée pu
 
 ### 4.1 Écrans plein écran — `main.diapos > section.diapo`
 
-- 5 écrans superposés : accueil, À propos, Projets, Parcours, Contact. Un seul est visible (`.active`).
+- 5 écrans superposés : accueil (« Moi » dans les repères), À propos, Projets, Parcours, Contact. Un seul est visible (`.active`).
 - Un écran plus haut que la fenêtre défile à l'intérieur. On ne change d'écran qu'une fois arrivé en bas (ou en haut).
 - **Commandes :**
   - molette ou trackpad (cumul de 24 px) ;
@@ -344,5 +349,7 @@ Une variante en ordinateur portable (clavier en perspective) a été essayée pu
 | Aucune section qui glisse ; un seul moment orchestré par écran | Transition entre écrans + apparition en cascade | Demandé |
 | Échelle de rayons 6/8/12/18/26 | 10/16/22/28 | Style widgets, plus arrondi |
 | Couleurs uniquement par jetons | Navbar, carte d'appel et pied de page : dégradé et icônes grises propres (`--barre-fond`, `--barre-bord`, gris d'icônes en dur) | Reproduit les références |
+| Une seule famille de police (Roboto Flex) | Monospace système pour `whoami` et les noms des repères d'écran | Clin d'œil « terminal » demandé |
+| Pas d'illustration décorative | PC de bureau en traits fins autour du nom | Demandé (« un peu de folie ») |
 
 Si ces choix sont confirmés, il faudra les reporter dans `aza-structure` (nouvelle version du design system) plutôt que de les laisser comme exceptions.

@@ -16,17 +16,17 @@ Branche : `new` · Maquette retenue : [`maquette/widgets.html`](maquette/widgets
 
 ## 2. Structure du site
 
-1. **Accueil** — « Développeur systèmes et bases de données · Data engineer junior », nom en grand (fondu ligne par ligne), portrait N&B qui s'incline au pointeur, accroche, boutons *Me contacter* et *Mon CV*.
+1. **Accueil (« Moi »)** — « Développeur systèmes et bases de données · Data engineer junior », nom en grand (fondu ligne par ligne) affiché sur l'écran d'un PC de bureau en traits fins (`~ $ whoami`, curseur, clavier, souris, tour), portrait N&B qui s'incline au pointeur, accroche, boutons *Me contacter* et *Mon CV*.
 2. **À propos** — récit en trois paragraphes + outils avec logos en bento (Data, Systèmes, Développement, Renseignement en sources ouvertes).
 3. **Projets** — ERP de facturation et comptabilité, Lakehouse, Homelab, NutriFaso, Automatisation IA.
-4. **Parcours** — Expérience (poste actuel, stages Aïobi et Foulisa) et Cursus et certifications (master IA en cours, IBM Z Xplore, licence UUA), années seulement.
+4. **Parcours** — onglets Expérience (poste actuel, stages) et Cursus et certifications (master IA, certificat IBM Data Engineering sur Coursera, IBM Z Xplore, licence UUA), années seulement.
 5. **Contact** — « Envie de collaborer ou d'échanger ? », e-mail avec icônes copier / écrire, puis pied de page (navigation, réseaux, CV).
 
 ## 3. Design
 
 Tout le détail (jetons, composants, animations, accessibilité, écarts au design system) est dans [`maquette/COMPOSANTS.md`](maquette/COMPOSANTS.md).
 
-En résumé : design system `aza-structure` 0.2.0 (vert `#1D5A4E`, Roboto Flex, neutres sans teinte) habillé en style « widgets » (cartes sombres arrondies, pastilles rondes, pilules, bento), navigation plein écran avec transition par poussée et contenu qui apparaît en fondu doux.
+En résumé : design system `aza-structure` 0.2.0 (vert `#1D5A4E`, Roboto Flex, neutres sans teinte) habillé en style « widgets » (cartes sombres arrondies, pastilles rondes, pilules, bento), navigation plein écran avec transition par poussée et contenu qui apparaît en fondu doux, repères d'écran à droite (nom au survol, en vert, police terminal), filigranes discrets derrière les titres.
 
 ## 4. Étapes
 
@@ -37,8 +37,9 @@ En résumé : design system `aza-structure` 0.2.0 (vert `#1D5A4E`, Roboto Flex, 
 5. Accessibilité & perf : contrastes, alt des images, score Lighthouse > 90.
 6. Déploiement sur GitHub Pages, puis remplacer la v1 (merge `new` → `main`).
 
-## 5. À fournir
+## 5. Reste à décider
 
-- Nom de l'école, années, stages/expériences pour le parcours.
-- Captures d'écran des projets (ou je réutilise celles de `media/`).
-- Choix : garder le vert citron ou une autre couleur d'accent ?
+- Valider les niveaux de maîtrise des outils (tableau `fiches` de `maquette/index.html`).
+- Nom de l'établissement du master IA (sous-titre du parcours).
+- Version mobile de la barre de navigation (les liens sont masqués sous 760 px).
+- Reporter les écarts assumés dans `aza-structure` (voir § 6 de `maquette/COMPOSANTS.md`).
