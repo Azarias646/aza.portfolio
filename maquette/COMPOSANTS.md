@@ -100,7 +100,11 @@ Barre flottante en haut de l'écran.
 - Colonne fixe à droite, centrée verticalement, écart 6 px. Un `button` de 30 × 30 px par écran.
 - Point rond de 8 px en `--texte-discret` (opacité .8). Au survol ou au focus clavier, il passe à 10 px et à pleine opacité.
 - Écran affiché (`aria-current="true"`) : point de 11 px dans le vert du site (`--accent`, celui des boutons, opacité .9), entouré d'un anneau discret de 4 px à 13 % de `--accent-trait`.
-- Étiquette `span.etiquette` (créée par le script, `aria-hidden`) : **aucun nom n'est affiché par défaut**, pas même celui de l'écran actif. Au survol ou au focus clavier d'un point, son nom apparaît à gauche dans une bulle en pilule (`--surface`, bord `--barre-bord`, ombre douce, 14 px, graisse 500) avec une pointe vers le point. Elle glisse de 6 px en fondu (220 ms).
+- Étiquette `span.etiquette` (créée par le script, `aria-hidden`) : **aucun nom n'est affiché par défaut**, pas même celui de l'écran actif. Au survol ou au focus clavier d'un point, une infobulle apparaît à gauche avec une pointe vers le point. Elle glisse de 6 px en fondu (220 ms).
+- L'infobulle reprend les **composants de la barre de navigation** :
+  - fond `--barre-fond` (dégradé de la navbar) et bord `--barre-bord`, rayon 14 px, ombre douce ;
+  - l'icône bicolore de la section, en 20 px, clonée depuis le lien de la navbar (`svg.ico`), avec sa partie claire en vert (`--accent-trait`). Accueil, absent de la navbar, a sa propre icône de maison dans le même style ;
+  - le texte en 14 px, graisse 600, couleur `--texte`, comme les liens de la navbar.
 - Sous 760 px, les étiquettes sont masquées.
 - Chaque bouton garde son `aria-label` (« Accueil », « À propos »…) ; l'attribut `title` est retiré pour éviter la double infobulle. Un clic va à l'écran.
 - Généré par `mk_widgets.py` (la base `index.html` garde les repères allongés d'origine).
@@ -252,9 +256,9 @@ L'écran Contact a deux blocs, traités comme la barre de navigation : même fon
 ### 3.15 Titre de section — `.tete`
 
 - `h2` (32–48 px, `wdth` 125) précédé d'une barre `/` en `--accent-texte` (`.barre`).
-- Derrière, un **mot en filigrane** `.filigrane`, identique sur tous les écrans : plein et discret, couleur `--filigrane` (`#1a1a1e` en sombre sur un fond `#0b0b0c`, `#f5f5f7` en clair sur `#ededef` : à peine plus que le fond), taille `min(clamp(72px, 15vw, 210px), (100vw − 40px) / 5,8)`. Le plafond en largeur garantit que le mot le plus long, « Réalisations », tient sur un téléphone ; sur ordinateur, tous les mots font 210 px. Mots : Profil, Réalisations, Parcours, Contact.
+- Derrière, un **mot en filigrane** `.filigrane`, identique sur tous les écrans : plein et discret, couleur `--filigrane` (`#1a1a1e` en sombre sur un fond `#0b0b0c`, `#f5f5f7` en clair sur `#ededef` : à peine plus que le fond), taille `min(clamp(60px, 11vw, 150px), (100vw − 40px) / 5,8)`. Le plafond en largeur garantit que le mot le plus long, « Réalisations », tient sur un téléphone ; sur ordinateur, tous les mots font 150 px (réduits de 210 px pour que « Contact » tienne au-dessus de sa carte sans trop descendre le contenu). Mots : Profil, Réalisations, Parcours, Contact.
   - Chaque écran (sauf l'accueil) a une marge haute de 104 px. Le filigrane ne passe donc jamais sous la barre de navigation, même quand le contenu est plus haut que la fenêtre (vérifié de 1 280 × 720 à 1 920 × 1 080).
-  - « Contact » est placé en absolu dans `.wrap`, au-dessus de la carte d'appel `.cta`, sans prendre de place dans la mise en page (le contenu reste à sa hauteur) : il dépasse au-dessus de la carte (`translateY(-60 %)`), qui ne cache que le bas des lettres (`z-index: 1`). L'écran Contact a une marge haute de 124 px pour que le haut du mot ne passe jamais sous la barre de navigation.
+  - « Contact » est placé dans le flux de `.wrap`, **entièrement visible au-dessus** de la carte d'appel `.cta` (jamais derrière). Sa marge basse négative (`−0,24 em − 44 px`) annule l'écart de 56 px de la grille et le vide sous les lettres : la carte commence juste sous le mot. Le mot étant dans le flux, l'écran Contact garde la marge haute normale (56 px) au lieu des 104 px des autres écrans.
 
 ### 3.16 Portrait — `.scene`, `figure.portrait`
 
