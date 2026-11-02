@@ -279,7 +279,10 @@ Une variante en ordinateur portable (clavier en perspective) a été essayée pu
 - **Fond de l'écran :** des lignes de balayage (toutes les 4 px, à 2,5 %) et une lueur verte douce (`--accent-trait` à 9 %) en haut à gauche.
 - **Invite :** `p.invite-nom` (`~ $ whoami`) au-dessus du nom, en monospace 12 à 14 px, couleur `--texte-discret`, avec le `~` en vert. Elle porte `aria-hidden` : le `h1` reste le seul titre lu.
 - **Curseur :** `i.curseur-nom`, une barre verte après « Sawadogo » (0,09 em × 0,74 em), qui clignote toutes les 1,05 s.
-- **Bureau :** `svg.bureau`, centré sous l'écran (440 px max, 92 % de la largeur de l'écran). Il dessine le pied, le clavier (rangées de touches en pointillés, barre d'espace) et la souris. L'écran a une marge basse de 108 px (84 px sur mobile) pour lui laisser la place.
+- **Bureau :** `svg.bureau`, centré sous l'écran (440 px max, 92 % de la largeur de l'écran). L'écran a une marge basse de 118 px (88 px sur mobile) pour lui laisser la place. Il dessine :
+  - le pied de l'écran ;
+  - un clavier réaliste, généré par `mk_widgets.py` : boîtier arrondi (`.boitier`) et 5 rangées de touches individuelles (`.touches rect`), en disposition standard sur 15 unités (Retour arrière, Tab, Verr. maj., Entrée, deux Maj., rangée du bas avec modificateurs et barre d'espace de 6,25 unités). Touches en `--filet-pc` sur `--bord-pc` ;
+  - une souris avec ses deux boutons, une molette verte (`.molette`) et un câble qui part vers le pied (`.cable`).
 - **Tour :** `div.tour`, à 20 px à droite de l'écran (66 px de large), du haut de l'écran jusqu'au niveau du clavier. Elle contient deux baies, un voyant vert qui pulse (2,6 s) et une grille d'aération en points. Elle est masquée sous 1 320 px, faute de place à côté du nom.
 - **Animations :** le curseur et le voyant sont figés si l'utilisateur a demandé moins d'animations (`prefers-reduced-motion`).
 - **Apparition :** le bord de l'écran, l'invite, le bureau et la tour apparaissent en fondu avec le nom (`.attente`).
