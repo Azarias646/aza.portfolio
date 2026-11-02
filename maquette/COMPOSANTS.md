@@ -325,7 +325,7 @@ Une variante en ordinateur portable (clavier en perspective) a été essayée pu
   - éléments en cascade (`.cascade`, rang `--i` posé par le script) : décalés de 260 ms + 110 ms par rang.
 - **Nom (accueil) :** chaque ligne (`.ligne-nom`) apparaît en fondu, à l'ouverture du site et à chaque retour sur l'accueil (« Sawadogo » 160 ms après « Azarias »).
 
-### 4.3 Téléphone (760 px et moins)
+### 4.3 Téléphone (760 px et moins) — validé
 
 Sur téléphone, le site ne fonctionne plus en écrans plein écran : la page défile normalement. Le script ajoute la classe `mobile` sur `<html>` et recharge la page si l'on franchit 760 px (rotation, redimensionnement).
 

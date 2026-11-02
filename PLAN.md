@@ -30,7 +30,7 @@ En résumé : design system `aza-structure` 0.2.0 (vert `#1D5A4E`, Roboto Flex, 
 
 ## 4. Étapes
 
-1. ~~Valider la maquette~~ — **fait** : la maquette widgets est la maquette finale (reste seulement à valider les niveaux de maîtrise des outils).
+1. ~~Valider la maquette~~ — **fait** : la maquette widgets est la maquette finale, version téléphone comprise (passe mobile validée : défilement normal, barre d'onglets en bas, voir § 4.3 de `maquette/COMPOSANTS.md`). Reste seulement à valider les niveaux de maîtrise des outils.
 2. **Prochaine étape** — monter la structure finale à partir de la maquette widgets : `index.html`, `css/`, `js/`, `projets/<nom>.html`, `assets/` (images compressées en WebP).
 3. Rédiger les études de cas des 4 projets + compléter le parcours.
 4. SEO & partage : balises meta, Open Graph (aperçu LinkedIn/WhatsApp), favicon.
@@ -41,5 +41,4 @@ En résumé : design system `aza-structure` 0.2.0 (vert `#1D5A4E`, Roboto Flex, 
 
 - Valider les niveaux de maîtrise des outils (tableau `fiches` de `maquette/index.html`).
 - Nom de l'établissement du master IA (sous-titre du parcours).
-- Valider la passe mobile (barre d'onglets en bas, défilement normal, voir § 4.3 de `maquette/COMPOSANTS.md`).
 - Reporter les écarts assumés dans `aza-structure` (voir § 6 de `maquette/COMPOSANTS.md`).
