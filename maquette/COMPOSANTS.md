@@ -222,11 +222,11 @@ L'écran Contact a deux blocs, traités comme la barre de navigation : même fon
 |---|---|---|
 | `--barre-fond` | dégradé 180° `#1d1d21` → `#101012` | dégradé 180° `#ffffff` → `#f1f1f3` |
 | `--barre-bord` | `rgba(255,255,255,.08)` | `rgba(0,0,0,.07)` |
-| `--cta-halo` | `rgba(29,90,78,.55)` | `rgba(29,90,78,.16)` |
+| `--cta-halo` | `rgba(37,120,102,.75)` | `rgba(29,90,78,.24)` |
 
 - **Carte d'appel à l'action (`.cta`)** :
   - coins 28 px, padding 52 × 48 px ;
-  - halo vert (`--cta-halo`) en haut à droite, par-dessus `--barre-fond` ;
+  - **halo vert en mouvement permanent** (`.cta::before`) : disque flou de 78 % de la largeur, dégradé radial `--cta-halo`. Il dérive lentement dans la carte (boucle de 16 s, `ease-in-out`), en se déplaçant et en grossissant légèrement. Il s'arrête quand les animations sont réduites ;
   - deux colonnes : à gauche, le titre « / Envie de collaborer ou d'échanger ? » (30–48 px) ; à droite, l'adresse e-mail en grand (sélectionnable), suivie de deux icônes d'action discrètes ;
   - **pas de libellé ni de surbrillance** sur l'e-mail (choix validés) ;
   - **icônes d'action (`.icone-action`)** : ronds de 40 px sans fond, icône au trait de 19 px en `--texte-discret`. Au survol, fond `--surface-2` et icône `--texte`. À l'appui, `scale(.94)` ;

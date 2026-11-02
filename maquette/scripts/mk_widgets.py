@@ -373,13 +373,27 @@ css = """
   .cta {
     display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 40px; align-items: end;
     padding: 52px 48px; border-radius: var(--rayon-xl);
-    background: radial-gradient(90% 130% at 100% 0%, var(--cta-halo), transparent 70%), var(--barre-fond);
+    background: var(--barre-fond);
     border: 1px solid var(--barre-bord);
+    position: relative; overflow: hidden; isolation: isolate;
+  }
+  /* Halo vert qui dérive lentement et en permanence dans la carte */
+  .cta::before {
+    content: ''; position: absolute; z-index: -1; pointer-events: none;
+    width: 78%; aspect-ratio: 1; top: -60%; right: -20%; border-radius: 50%;
+    background: radial-gradient(closest-side, var(--cta-halo), transparent);
+    animation: halo-derive 16s ease-in-out infinite;
+  }
+  @keyframes halo-derive {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(-28%, 22%) scale(1.12); }
+    50% { transform: translate(-62%, 8%) scale(.94); }
+    75% { transform: translate(-30%, 34%) scale(1.06); }
   }
   /* Fond et bordure partagés par la barre de navigation, la carte d'appel et le pied de page */
-  :root { --cta-halo: rgba(29, 90, 78, .55); --barre-fond: linear-gradient(180deg, #1d1d21 0%, #101012 100%); --barre-bord: rgba(255, 255, 255, .08); }
-  :root[data-theme="light"] { --cta-halo: rgba(29, 90, 78, .16); --barre-fond: linear-gradient(180deg, #ffffff 0%, #f1f1f3 100%); --barre-bord: rgba(0, 0, 0, .07); }
-  @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --cta-halo: rgba(29, 90, 78, .16); --barre-fond: linear-gradient(180deg, #ffffff 0%, #f1f1f3 100%); --barre-bord: rgba(0, 0, 0, .07); } }
+  :root { --cta-halo: rgba(37, 120, 102, .75); --barre-fond: linear-gradient(180deg, #1d1d21 0%, #101012 100%); --barre-bord: rgba(255, 255, 255, .08); }
+  :root[data-theme="light"] { --cta-halo: rgba(29, 90, 78, .24); --barre-fond: linear-gradient(180deg, #ffffff 0%, #f1f1f3 100%); --barre-bord: rgba(0, 0, 0, .07); }
+  @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --cta-halo: rgba(29, 90, 78, .24); --barre-fond: linear-gradient(180deg, #ffffff 0%, #f1f1f3 100%); --barre-bord: rgba(0, 0, 0, .07); } }
   .contact .cta .tete { text-align: left; margin: 0; }
   .cta h2 { font-size: clamp(30px, 4vw, 48px); }
   .cta-courriel { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; min-width: 0; justify-content: flex-end; }
