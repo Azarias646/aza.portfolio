@@ -520,7 +520,8 @@ css = """
   /* Filigranes : « Contact » dépasse derrière le haut de la carte ; « Réalisations », plus long, est réduit pour ne pas être coupé */
   .contact .wrap { position: relative; }
   .contact .cta { z-index: 1; }
-  .filigrane.filigrane-contact { position: relative; display: block; left: -.04em; right: auto; top: auto; text-align: left; transform: none; margin: 0 0 -.5em; }
+  .filigrane.filigrane-contact { left: max(var(--goutte), env(safe-area-inset-left, 0px)); right: auto; top: 0; text-align: left; transform: translateY(-60%); }
+  #contact.diapo:not(#accueil) { padding-top: 124px; }
   /* Mêmes filigranes partout : même couleur, même taille (plafonnée pour que le mot le plus long, « Réalisations », tienne en largeur) */
   :root { --filigrane: #1a1a1e; }
   :root[data-theme="light"] { --filigrane: #f5f5f7; }
