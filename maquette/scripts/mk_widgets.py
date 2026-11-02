@@ -521,8 +521,8 @@ css = """
   :root[data-theme="light"] { --trait-pc: rgba(0, 0, 0, .22); --filet-pc: rgba(0, 0, 0, .12); --bord-pc: rgba(0, 0, 0, .035); --balayage-pc: rgba(0, 0, 0, .045); --lueur-pc: rgba(29, 90, 78, .10); --fond-pc: rgba(255, 255, 255, .55); }
   @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --trait-pc: rgba(0, 0, 0, .22); --filet-pc: rgba(0, 0, 0, .12); --bord-pc: rgba(0, 0, 0, .035); --balayage-pc: rgba(0, 0, 0, .045); --lueur-pc: rgba(29, 90, 78, .10); --fond-pc: rgba(255, 255, 255, .55); } }
   .ecran-nom {
-    position: relative; display: inline-block; max-width: 100%;
-    margin: 22px 0 58px; padding: 18px clamp(18px, 2.4vw, 30px) clamp(16px, 2vw, 26px);
+    position: relative; display: block;
+    margin: 0; padding: 18px clamp(18px, 2.4vw, 30px) clamp(16px, 2vw, 26px);
     border-radius: 22px 22px 6px 6px; border: 1.5px solid var(--trait-pc);
     background:
       repeating-linear-gradient(180deg, var(--balayage-pc) 0 1px, transparent 1px 4px),
@@ -540,21 +540,25 @@ css = """
     display: inline-block; width: .09em; height: .74em; margin-left: .06em; vertical-align: -.02em;
     border-radius: 2px; background: var(--accent-trait); animation: curseur-nom 1.05s steps(1) infinite;
   }
+  .portable { display: inline-block; max-width: 100%; margin: 22px 0 34px; }
   .socle {
-    position: absolute; left: -4%; top: calc(100% - 3px); width: 108%; height: 26px; overflow: visible;
-    stroke: var(--trait-pc); stroke-width: 1.5; stroke-linejoin: round; fill: none;
+    display: block; width: 108%; margin: -2px 0 0 -4%; height: auto; overflow: visible;
+    fill: none; stroke: var(--trait-pc); stroke-width: 1.3; stroke-linejoin: round; stroke-linecap: round;
   }
   .socle .plateau { fill: var(--fond-pc); }
+  .socle .touches { stroke: var(--filet-pc); stroke-width: 1; fill: var(--bord-pc); }
+  .socle .pave { stroke: var(--filet-pc); fill: var(--bord-pc); }
+  .socle .encoche { stroke: var(--filet-pc); }
   .anime section.attente .ecran-nom { border-color: transparent; }
   .anime section.attente .invite-nom, .anime section.attente .socle { opacity: 0; }
   .invite-nom, .socle { transition: opacity 900ms var(--courbe-sortie) 500ms; }
   @keyframes curseur-nom { 50% { opacity: 0; } }
-  @media (max-width: 760px) { .socle { left: -2.5%; width: 105%; } }
+  @media (max-width: 760px) { .socle { width: 105%; margin-left: -2.5%; } }
   @media (prefers-reduced-motion: reduce) { .curseur-nom { animation: none; } }
 """
 r("b.onclick = () => aller(i); li.append(b); points.append(li);",
   "const etiquette = document.createElement('span'); etiquette.className = 'etiquette'; etiquette.setAttribute('aria-hidden', 'true'); etiquette.textContent = nomsEcrans[d.id];\n    b.removeAttribute('title'); b.append(etiquette);\n    b.onclick = () => aller(i); li.append(b); points.append(li);")
-r('<h1><span class="ligne-nom">Azarias</span><span class="ligne-nom">Sawadogo</span></h1>', '<div class="ecran-nom"><p class="invite-nom" aria-hidden="true"><span>~</span> $ whoami</p>\n    <h1><span class="ligne-nom">Azarias</span><span class="ligne-nom">Sawadogo<i class="curseur-nom" aria-hidden="true"></i></span></h1>\n    <svg class="socle" viewBox="0 0 600 30" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path class="plateau" vector-effect="non-scaling-stroke" d="M6 1 H594 Q599 1 598 6 L591 22 Q588 29 580 29 H20 Q12 29 9 22 L2 6 Q1 1 6 1 Z"/><path vector-effect="non-scaling-stroke" d="M262 1 V4 Q262 8 267 8 H333 Q338 8 338 4 V1"/></svg></div>')
+r('<h1><span class="ligne-nom">Azarias</span><span class="ligne-nom">Sawadogo</span></h1>', '<div class="portable"><div class="ecran-nom"><p class="invite-nom" aria-hidden="true"><span>~</span> $ whoami</p>\n    <h1><span class="ligne-nom">Azarias</span><span class="ligne-nom">Sawadogo<i class="curseur-nom" aria-hidden="true"></i></span></h1>\n    </div><svg class="socle" viewBox="0 0 600 100" aria-hidden="true" focusable="false"><path class="plateau" d="M22 1 H578 L598 84 Q598 88 594 88 H6 Q2 88 2 84 Z"/><path class="levre" d="M6 88 Q8 97 18 97 H582 Q592 97 594 88"/><path class="encoche" d="M262 97 V94 H338 V97"/><path class="touches" d="M65.5 6 H95.9 L94.6 13 H64.1 Z M99.2 6 H129.6 L128.6 13 H98.0 Z M133.0 6 H163.3 L162.5 13 H131.9 Z M166.7 6 H197.1 L196.5 13 H165.9 Z M200.4 6 H230.8 L230.4 13 H199.8 Z M234.2 6 H264.6 L264.4 13 H233.8 Z M267.9 6 H298.3 L298.3 13 H267.7 Z M301.7 6 H332.1 L332.3 13 H301.7 Z M335.4 6 H365.8 L366.2 13 H335.6 Z M369.2 6 H399.6 L400.2 13 H369.6 Z M402.9 6 H433.3 L434.1 13 H403.5 Z M436.7 6 H467.0 L468.1 13 H437.5 Z M470.4 6 H500.8 L502.0 13 H471.4 Z M504.1 6 H534.5 L535.9 13 H505.4 Z M63.4 16 H96.7 L95.5 23 H62.0 Z M100.1 16 H133.4 L132.4 23 H98.9 Z M136.8 16 H170.0 L169.2 23 H135.8 Z M173.4 16 H206.7 L206.1 23 H172.6 Z M210.1 16 H243.3 L243.0 23 H209.5 Z M246.7 16 H280.0 L279.9 23 H246.4 Z M283.4 16 H316.6 L316.7 23 H283.3 Z M320.0 16 H353.3 L353.6 23 H320.1 Z M356.7 16 H389.9 L390.5 23 H357.0 Z M393.3 16 H426.6 L427.4 23 H393.9 Z M430.0 16 H463.2 L464.2 23 H430.8 Z M466.6 16 H499.9 L501.1 23 H467.6 Z M503.3 16 H536.6 L538.0 23 H504.5 Z M61.4 26 H98.1 L96.9 33 H60.0 Z M101.5 26 H138.1 L137.1 33 H100.3 Z M141.5 26 H178.2 L177.4 33 H140.6 Z M181.6 26 H218.2 L217.7 33 H180.9 Z M221.6 26 H258.2 L258.0 33 H221.1 Z M261.7 26 H298.3 L298.3 33 H261.4 Z M301.7 26 H338.3 L338.6 33 H301.7 Z M341.8 26 H378.4 L378.9 33 H342.0 Z M381.8 26 H418.4 L419.1 33 H382.3 Z M421.8 26 H458.5 L459.4 33 H422.6 Z M461.9 26 H498.5 L499.7 33 H462.9 Z M501.9 26 H538.6 L540.0 33 H503.1 Z M59.4 36 H100.0 L98.8 43 H58.0 Z M103.5 36 H144.1 L143.2 43 H102.3 Z M147.5 36 H188.1 L187.5 43 H146.6 Z M191.6 36 H232.2 L231.8 43 H190.9 Z M235.6 36 H364.4 L364.7 43 H235.3 Z M367.8 36 H408.4 L409.1 43 H368.2 Z M411.9 36 H452.5 L453.4 43 H412.5 Z M455.9 36 H496.5 L497.7 43 H456.8 Z M500.0 36 H540.6 L542.0 43 H501.2 Z"/><path class="pave" d="M230.4 50 H369.6 L371.2 78 H228.8 Z"/></svg></div>')
 r('</style>', css + '</style>')
 open(os.path.join(MAQ, 'widgets.html'),'w').write(s)
 a=re.sub(r'<!DOCTYPE html>\n<html lang="fr">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport"[^>]*>\n','',s)

@@ -269,19 +269,25 @@ Le nom de l'accueil s'affiche sur l'écran d'un ordinateur portable dessiné en 
 
 | Jeton | Sombre | Clair | Rôle |
 |---|---|---|---|
-| `--trait-pc` | blanc 13 % | noir 22 % | contour de l'écran et du socle |
+| `--trait-pc` | blanc 13 % | noir 22 % | contour de l'écran et de la base |
 | `--filet-pc` | blanc 7 % | noir 12 % | filet intérieur de l'écran |
 | `--bord-pc` | blanc 3 % | noir 3,5 % | bordure de l'écran (9 px) |
 | `--balayage-pc` | blanc 2,5 % | noir 4,5 % | lignes de balayage |
 | `--lueur-pc` | vert 10 % | vert 10 % | lueur en haut à gauche |
-| `--fond-pc` | blanc 1,2 % | blanc 55 % | fond de l'écran et du socle |
+| `--fond-pc` | blanc 1,2 % | blanc 55 % | fond de l'écran, de la base et des touches |
 
-- **Écran :** `div.ecran-nom` en `inline-block`, qui épouse la largeur du nom. Rayon 22 px en haut et 6 px en bas (il se pose sur le socle), bord de 1,5 px en `--trait-pc`, double filet intérieur.
+- **Écran :** `div.ecran-nom` en `inline-block`, qui épouse la largeur du nom. Rayon 22 px en haut et 6 px en bas (il se pose sur la base), bord de 1,5 px en `--trait-pc`, double filet intérieur.
 - **Fond de l'écran :** lignes de balayage toutes les 4 px et lueur verte douce.
 - **Invite :** `p.invite-nom` (`~ $ whoami`) au-dessus du nom, en monospace 12 à 14 px, couleur `--texte-discret`, avec le `~` en vert. Elle porte `aria-hidden` : le `h1` reste le seul titre lu.
 - **Curseur :** `i.curseur-nom`, une barre verte après « Sawadogo » (0,09 em × 0,74 em), qui clignote toutes les 1,05 s. Il est figé si l'utilisateur a demandé moins d'animations (`prefers-reduced-motion`).
-- **Socle :** `svg.socle`, le bas du portable : un plateau aux bords biseautés, plus large que l'écran (108 %, 105 % sur mobile), avec l'encoche d'ouverture au centre. Traits en `vector-effect: non-scaling-stroke` pour garder 1,5 px à toutes les largeurs. Marge basse de l'écran : 58 px.
-- **Apparition :** le bord de l'écran, l'invite et le socle apparaissent en fondu avec le nom (`.attente`).
+- **Structure :** `div.portable` (`inline-block`, marges 22 px / 34 px) contient l'écran puis la base du portable, l'un sous l'autre dans le flux. La hauteur de la base suit donc sa largeur.
+- **Base (clavier) :** `svg.socle`, vue un peu de dessus, en perspective. Elle est plus large que l'écran (108 %, 105 % sur mobile, décalée pour rester centrée) et contient :
+  - le plateau, un trapèze qui s'élargit vers l'avant, rempli en `--fond-pc` ;
+  - 4 rangées de touches (14, 13, 12 et 11 touches, avec une barre d'espace au centre de la dernière), en `--filet-pc` sur `--bord-pc` ;
+  - le pavé tactile au centre ;
+  - le bord avant avec l'encoche d'ouverture.
+  Le dessin est calculé par `mk_widgets.py` : chaque touche est placée par interpolation entre le bord arrière et le bord avant.
+- **Apparition :** le bord de l'écran, l'invite et la base apparaissent en fondu avec le nom (`.attente`).
 - Généré par `mk_widgets.py`.
 
 ## 4. Navigation et animations
