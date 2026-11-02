@@ -688,21 +688,12 @@
   }
   .points button:hover::before, .points button:focus-visible::before { opacity: 1; width: 10px; height: 10px; }
   .points button[aria-current="true"]::before { width: 11px; height: 11px; border-radius: 50%; background: var(--accent); opacity: .9; box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-trait) 13%, transparent); }
-  /* Infobulle = composant de la barre de navigation : même fond, même bord, icône bicolore, même typographie */
+  /* Infobulle : juste le nom, en texte seul (ni fond, ni bord, ni icône) */
   .points .etiquette {
-    position: absolute; right: calc(100% + 8px); top: 50%; translate: 6px -50%; white-space: nowrap; pointer-events: none;
-    display: inline-flex; align-items: center; gap: 8px;
+    position: absolute; right: calc(100% + 6px); top: 50%; translate: 6px -50%; white-space: nowrap; pointer-events: none;
     font-size: 14px; font-weight: 600; line-height: 1; color: var(--texte);
-    padding: 8px 14px 8px 10px; border-radius: 14px; background: var(--barre-fond); border: 1px solid var(--barre-bord);
-    box-shadow: 0 10px 28px rgba(0, 0, 0, .22);
     opacity: 0; visibility: hidden;
     transition: opacity var(--duree-standard), translate var(--duree-standard) var(--courbe-sortie), visibility 0s var(--duree-standard);
-  }
-  .points .etiquette .ico { width: 20px; height: 20px; }
-  .points .etiquette .ico .clair { fill: var(--accent-trait); }
-  .points .etiquette::after {
-    content: ''; position: absolute; right: -5px; top: 50%; width: 9px; height: 9px; translate: 0 -50%; rotate: 45deg;
-    background: var(--barre-fond); border: 1px solid var(--barre-bord); border-left: 0; border-bottom: 0; border-radius: 0 2px 0 0;
   }
   .points button:is(:hover, :focus-visible) .etiquette {
     opacity: 1; visibility: visible; translate: 0 -50%;
@@ -1102,9 +1093,6 @@
     const li = document.createElement('li'), b = document.createElement('button');
     b.type = 'button'; b.setAttribute('aria-label', nomsEcrans[d.id]); b.title = nomsEcrans[d.id];
     const etiquette = document.createElement('span'); etiquette.className = 'etiquette'; etiquette.setAttribute('aria-hidden', 'true'); etiquette.textContent = nomsEcrans[d.id];
-    const icoNav = document.querySelector('.liens a[href="#' + d.id + '"] svg.ico');
-    if (icoNav) etiquette.prepend(icoNav.cloneNode(true));
-    else etiquette.insertAdjacentHTML('afterbegin', '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.2 12 3.5l9 7.7V20a1.5 1.5 0 0 1-1.5 1.5H4.5A1.5 1.5 0 0 1 3 20z"/><path class="clair" d="M9.5 21.5v-6.5h5v6.5z"/></svg>');
     b.removeAttribute('title'); b.append(etiquette);
     b.onclick = () => aller(i); li.append(b); points.append(li);
   });
