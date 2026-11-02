@@ -130,6 +130,7 @@ _v = {
  'mobile': _vignette('<rect class="v1" x="58" y="8" width="44" height="70" rx="9"/><rect class="v2" x="66" y="18" width="28" height="5" rx="2.5"/><rect class="va" x="66" y="28" width="28" height="18" rx="4"/><rect class="v3" x="66" y="52" width="20" height="4" rx="2"/><rect class="v3" x="66" y="60" width="26" height="4" rx="2"/><rect class="v2" x="24" y="24" width="24" height="5" rx="2.5"/><rect class="v3" x="24" y="34" width="18" height="4" rx="2"/><rect class="v2" x="112" y="24" width="24" height="5" rx="2.5"/><rect class="v3" x="112" y="34" width="18" height="4" rx="2"/>'),
  'ia': _vignette('<path class="vl" d="M40 22 L80 42 L120 22 M40 62 L80 42 L120 62 M40 22 L40 62 M120 22 L120 62"/><circle class="v1c" cx="40" cy="22" r="8"/><circle class="v1c" cx="40" cy="62" r="8"/><circle class="v1c" cx="120" cy="22" r="8"/><circle class="v1c" cx="120" cy="62" r="8"/><circle class="vp" cx="80" cy="42" r="11"/>'),
  'mainframe': _vignette('<rect class="v1" x="48" y="8" width="64" height="70" rx="6"/><rect class="v2" x="56" y="16" width="48" height="9" rx="2"/><rect class="v2" x="56" y="30" width="48" height="9" rx="2"/><rect class="v2" x="56" y="44" width="48" height="9" rx="2"/><circle class="vp" cx="98" cy="20.5" r="2.4"/><circle class="vp" cx="98" cy="34.5" r="2.4"/><circle class="v3c" cx="98" cy="48.5" r="2.4"/><rect class="v3" x="56" y="62" width="30" height="5" rx="2.5"/>'),
+ 'pipeline': _vignette('<ellipse class="v1" cx="30" cy="26" rx="14" ry="5"/><rect class="v1" x="16" y="26" width="28" height="30"/><ellipse class="v2" cx="30" cy="56" rx="14" ry="5"/><path class="vl" d="M50 41 H74"/><rect class="va" x="76" y="28" width="30" height="26" rx="6"/><path class="vl" d="M110 41 H128"/><rect class="v1" x="130" y="22" width="20" height="10" rx="3"/><rect class="v1" x="130" y="36" width="20" height="10" rx="3"/><rect class="v1" x="130" y="50" width="20" height="10" rx="3"/><circle class="vp" cx="74" cy="41" r="2.6"/>'),
  'diplome': _vignette('<rect class="v1" x="32" y="14" width="96" height="58" rx="6"/><rect class="v2" x="44" y="24" width="52" height="6" rx="3"/><rect class="v3" x="44" y="36" width="72" height="4" rx="2"/><rect class="v3" x="44" y="44" width="60" height="4" rx="2"/><circle class="vp" cx="108" cy="58" r="8"/><path class="va" d="M102 64 l-3 12 6-4 3 6 3-12z"/>'),
 }
 def _carte(vig, titre, sous, annee, actuel=False):
@@ -154,8 +155,9 @@ _nouveau_p = f"""<div class="parcours-panneau">
       </div>
       <div class="onglet-panneau" role="tabpanel" id="panneau-cur" aria-labelledby="onglet-cur" hidden>
         <h3 class="sous-titre">Cursus et certifications</h3>
-        <div class="etapes-grille">
+        <div class="etapes-grille quatre">
           {_carte('ia', 'Master Intelligence Artificielle', '', '2026')}
+          {_carte('pipeline', 'Certificat professionnel IBM Data Engineering', 'IBM', '2026')}
           {_carte('mainframe', 'IBM Z Xplore — Fundamentals', 'Les bases des mainframes IBM Z', '2026')}
           {_carte('diplome', 'Licence Informatique de Gestion', 'Université de l’Unité Africaine (ex IAM)', '2022 — 2025')}
         </div>
@@ -460,9 +462,11 @@ css = """
   .onglet-panneau.rejoue .etape-carte { animation: carte-entre 700ms var(--courbe-sortie) backwards; }
   .onglet-panneau.rejoue .etape-carte:nth-child(2) { animation-delay: 80ms; }
   .onglet-panneau.rejoue .etape-carte:nth-child(3) { animation-delay: 160ms; }
+  .onglet-panneau.rejoue .etape-carte:nth-child(4) { animation-delay: 240ms; }
   @keyframes carte-entre { from { opacity: 0; transform: translateY(12px); } }
-  @media (max-width: 900px) { .etapes-grille { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (max-width: 560px) { .etapes-grille { grid-template-columns: 1fr; } .onglet span { font-size: 13px; } }
+  .etapes-grille.quatre { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  @media (max-width: 900px) { .etapes-grille, .etapes-grille.quatre { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 560px) { .etapes-grille, .etapes-grille.quatre { grid-template-columns: 1fr; } .onglet span { font-size: 13px; } }
 
   /* Repères */
   .points button[aria-current="true"]::before { border-radius: var(--rayon-pilule); background: var(--accent-trait); }

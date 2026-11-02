@@ -201,13 +201,14 @@ Inspiré d'un panneau de sélection de composants : onglets segmentés, puis une
   - Onglet actif (`aria-selected="true"`) : fond `--carte`, texte `--texte`, partie claire de l'icône en `--accent-trait`. Inactif : transparent, `--texte-attenue`.
   - Clavier : ← et → passent d'un onglet à l'autre. Seul l'onglet actif est dans l'ordre de tabulation.
 - **Panneaux** (`role="tabpanel"`) : superposés dans la même case de grille (`.onglets-zone`), pour que la hauteur ne change pas d'un onglet à l'autre. Le panneau inactif est `hidden` mais garde sa place (`visibility: hidden`). À l'affichage, ses cartes réapparaissent en cascade (700 ms, 80 ms d'écart).
-- **Grille** (`.etapes-grille`) : 3 colonnes (2 sous 900 px, 1 sous 560 px), 12 px d'écart. Sous-titre du panneau au-dessus (16 px, 600).
+- **Grille** (`.etapes-grille`) : 3 colonnes, 4 pour Cursus et certifications (`.quatre`) ; 2 sous 900 px, 1 sous 560 px ; 12 px d'écart. Sous-titre du panneau au-dessus (16 px, 600).
 - **Carte d'étape** (`article.etape-carte`) : coins 20 px, padding 14 × 14 × 20 px, fond `--carte`.
   - **Vignette** (`.vignette`) : encadré de 104 px de haut, coins 14 px, fond `--page`, filet 1 px. Il contient une petite illustration SVG (`viewBox 0 0 160 84`) faite de blocs gris et d'un seul détail vert :
     - poste : tableau de bord ;
     - stage data : barres et courbe ;
     - stage mobile : téléphone ;
     - master IA : réseau de nœuds ;
+    - certificat IBM Data Engineering : pipeline (base → traitement → tables) ;
     - IBM Z : baie de serveur ;
     - licence : diplôme.
     Classes : `v1` (bloc), `v1c` (nœud), `v2` / `v3` (lignes de texte), `va` (aplat vert), `vp` (point vert), `vl` (trait).
