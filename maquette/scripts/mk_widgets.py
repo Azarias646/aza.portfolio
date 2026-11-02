@@ -147,7 +147,7 @@ _nouveau_p = f"""<div class="parcours-panneau">
       <div class="onglet-panneau" role="tabpanel" id="panneau-exp" aria-labelledby="onglet-exp">
         <h3 class="sous-titre">Expérience</h3>
         <div class="etapes-grille">
-          {_carte('poste', 'Développeur systèmes et bases de données', 'Aïobi et BBS Holding', '2026', True)}
+          {_carte('poste', 'Développeur systèmes et bases de données', 'Aïobi', '2026')}
           {_carte('data', 'Stagiaire Data / IA', 'Aïobi', '2025 — 2026')}
           {_carte('mobile', 'Stagiaire développeur mobile', 'Foulisa', '2025')}
         </div>
@@ -155,7 +155,7 @@ _nouveau_p = f"""<div class="parcours-panneau">
       <div class="onglet-panneau" role="tabpanel" id="panneau-cur" aria-labelledby="onglet-cur" hidden>
         <h3 class="sous-titre">Cursus et certifications</h3>
         <div class="etapes-grille">
-          {_carte('ia', 'Master Intelligence Artificielle', '', '2026', True)}
+          {_carte('ia', 'Master Intelligence Artificielle', '', '2026')}
           {_carte('mainframe', 'IBM Z Xplore — Fundamentals', 'Les bases des mainframes IBM Z', '2026')}
           {_carte('diplome', 'Licence Informatique de Gestion', 'Université de l’Unité Africaine (ex IAM)', '2022 — 2025')}
         </div>
@@ -419,7 +419,7 @@ css = """
     .pied-marque { grid-column: 1 / -1; }
   }
 
-  /* Parcours : panneau à onglets, cartes à vignette ; l'étape en cours est entourée d'une lueur verte */
+  /* Parcours : panneau à onglets, cartes à vignette */
   .parcours-panneau {
     padding: 22px; border-radius: var(--rayon-xl); background: var(--barre-fond); border: 1px solid var(--barre-bord);
     display: grid; gap: 22px; max-width: 980px;
@@ -440,11 +440,6 @@ css = """
     display: grid; gap: 18px; align-content: start; padding: 14px 14px 20px; border-radius: 20px; background: var(--carte);
     border: 1px solid transparent; transition: border-color var(--duree-standard), transform var(--duree-rapide);
   }
-  .etape-carte.actuelle {
-    border-color: var(--accent-trait);
-    background: radial-gradient(120% 90% at 50% 0%, var(--cta-halo), transparent 70%), var(--carte);
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-trait) 14%, transparent) !important;
-  }
   .vignette { display: grid; place-items: center; height: 104px; border-radius: 14px; background: var(--page); border: 1px solid var(--filet); }
   .vignette svg { width: 150px; max-width: 86%; height: auto; }
   .vignette .v1 { fill: var(--surface-2); }
@@ -457,7 +452,6 @@ css = """
   .etape-texte { display: grid; gap: 4px; padding: 0 6px; }
   .etape-texte h4 { font-size: 16px; font-weight: 600; line-height: 1.3; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
   .annee-carte { font-variation-settings: 'wdth' 88; font-variant-numeric: tabular-nums; color: var(--texte-discret); }
-  .badge { font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: var(--rayon-pilule); background: var(--texte); color: var(--page); }
   .onglets-zone { display: grid; }
   .onglet-panneau { grid-area: 1 / 1; }
   .onglet-panneau[hidden] { display: block !important; visibility: hidden; }

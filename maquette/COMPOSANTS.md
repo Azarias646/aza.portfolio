@@ -212,7 +212,6 @@ Inspiré d'un panneau de sélection de composants : onglets segmentés, puis une
     - licence : diplôme.
     Classes : `v1` (bloc), `v1c` (nœud), `v2` / `v3` (lignes de texte), `va` (aplat vert), `vp` (point vert), `vl` (trait).
   - **Texte** : intitulé `h4` (16 px, 600), lieu (12,5 px, `--texte-attenue`), années (`wdth` 88, chiffres alignés, `--texte-discret`).
-  - **Étape en cours** (`.etape-carte.actuelle`) : bordure 1 px `--accent-trait`, anneau de 4 px de lueur verte (14 %), halo vert en haut de la carte, et badge **« En cours »** (pilule 11,5 px, gras, fond `--texte`, texte `--page`). Une seule par onglet : le poste actuel, et le master.
 
 ### 3.14 Contact — `.cta`, `footer.pied`
 
