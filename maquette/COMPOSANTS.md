@@ -153,7 +153,7 @@ Barre flottante en haut de l'écran.
 
 ### 3.8 Liste d'outils — `.groupe`, `button.outil`
 
-- Une carte par groupe : titre `h3` (17 px, 600), puis une grille `auto-fill` de colonnes de 150 px minimum (118 px pour Développement, pour tenir ses 5 outils sur une ligne).
+- Une carte par groupe : titre `h3` (17 px, 600), puis une grille `auto-fill` de colonnes de 150 px minimum (118 px pour Développement, pour tenir ses outils sur une ligne).
 - Chaque outil est un `button` : pastille + nom, fond transparent, coins 999 px. Survol : fond `--surface-2`, logo agrandi à 108 %.
 - **Clic :** ouvre la fiche de l'outil (§ 3.10).
 - Groupes : Data, Systèmes, Développement, Renseignement en sources ouvertes.
@@ -358,7 +358,8 @@ Sur téléphone, le site ne fonctionne plus en écrans plein écran : la page d�
 - Niveaux de maîtrise : tableau `fiches` dans le script de `index.html` (texte + niveau 1 Notions, 2 Opérationnel, 3 Avancé). **Validés** :
   - Opérationnel : Python, PostgreSQL, MySQL, MongoDB, Spark, Airflow, MinIO, Docker, Linux, Debian, Ubuntu, Tailscale, Git, Django ;
   - Notions : Caddy, Flutter, JavaScript, n8n ;
-  - encore à confirmer (valeurs actuelles) : Jinja (Opérationnel), OSINT (Opérationnel), GEOINT (Notions).
+  - Renseignement : OSINT (Opérationnel), GEOINT (Notions).
+  - Jinja a été retiré des outils d'À propos (il reste dans les technologies du projet ERP).
 - Schémas des projets : un SVG par projet, dans le `<template class="schema-src">` de chaque carte projet de `index.html`. Classes : `n` (bloc), `n a` (bloc principal), `l` (lien), `l a` (lien principal), `pointille`.
 
 ---
