@@ -3,7 +3,8 @@ titre: ERP de facturation et comptabilité
 categorie: Professionnel
 resume: >-
   Un ERP partagé par plusieurs filiales : facturation, comptabilité par société, formats de documents,
-  rapports et tableau de bord comptable. Chaque modification est d’abord testée sur une copie de la production.
+  rapports et tableau de bord comptable. Chaque modification est d’abord testée sur une copie de la
+  production.
 outils: [Django, PostgreSQL, Docker, Jinja]
 ordre: 1
 schema:

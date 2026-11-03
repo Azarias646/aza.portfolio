@@ -21,6 +21,11 @@ const { schema, titre } = Astro.props;
       </text>
     </g>
   ))}
+  {schema.etiquettes.map((e) => (
+    <text x={e.x} y={e.y}>
+      {e.texte}
+    </text>
+  ))}
 </svg>
 
 <style>

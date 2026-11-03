@@ -1,0 +1,78 @@
+# Outils affichés dans « À propos » : un groupe par entrée, outils dans l'ordre d'affichage.
+# niveau : 1 Notions, 2 Opérationnel, 3 Avancé. Le nom de l'outil choisit son logo (src/data/logos.ts).
+- id: Data
+  ordre: 1
+  outils:
+    - {
+        nom: Python,
+        niveau: 2,
+        description: 'Langage polyvalent, très utilisé pour les données, l’automatisation et le web.',
+      }
+    - {
+        nom: PostgreSQL,
+        niveau: 2,
+        description: 'Base de données relationnelle open source, robuste et très complète.',
+      }
+    - { nom: MySQL, niveau: 2, description: 'Base de données relationnelle répandue, notamment pour le web.' }
+    - { nom: MongoDB, niveau: 2, description: 'Base de données orientée documents, sans schéma fixe.' }
+    - {
+        nom: Spark,
+        niveau: 2,
+        description: 'Moteur de calcul distribué pour traiter de gros volumes de données.',
+      }
+    - {
+        nom: Airflow,
+        niveau: 2,
+        description: 'Orchestrateur qui planifie et enchaîne les traitements de données.',
+      }
+    - {
+        nom: MinIO,
+        niveau: 2,
+        description: 'Stockage objet compatible S3, auto-hébergeable, base d’un lakehouse.',
+      }
+- id: Systèmes
+  ordre: 2
+  outils:
+    - {
+        nom: Docker,
+        niveau: 2,
+        description: 'Conteneurs : empaqueter une application et la lancer partout à l’identique.',
+      }
+    - { nom: Linux, niveau: 2, description: 'Le système d’exploitation des serveurs.' }
+    - { nom: Debian, niveau: 2, description: 'Distribution Linux stable, souvent choisie pour les serveurs.' }
+    - {
+        nom: Ubuntu,
+        niveau: 2,
+        description: 'Distribution Linux dérivée de Debian, pour serveurs et postes de travail.',
+      }
+    - {
+        nom: Tailscale,
+        niveau: 2,
+        description: 'Réseau privé chiffré entre ses machines, sans ouvrir de ports.',
+      }
+    - { nom: Caddy, niveau: 1, description: 'Serveur web et reverse proxy avec HTTPS automatique.' }
+    - { nom: Git, niveau: 2, description: 'Gestion de versions : suivre et partager l’historique du code.' }
+- id: Développement
+  ordre: 3
+  outils:
+    - { nom: Django, niveau: 2, description: 'Framework web Python, complet et structuré.' }
+    - {
+        nom: Flutter,
+        niveau: 1,
+        description: 'Framework de Google pour créer des applications mobiles multiplateformes.',
+      }
+    - { nom: JavaScript, niveau: 1, description: 'Le langage du navigateur, aussi utilisé côté serveur.' }
+    - { nom: n8n, niveau: 1, description: 'Outil d’automatisation de workflows, auto-hébergeable.' }
+- id: Renseignement en sources ouvertes
+  ordre: 4
+  outils:
+    - {
+        nom: OSINT,
+        niveau: 2,
+        description: 'Renseignement en sources ouvertes : trouver et recouper des informations publiques.',
+      }
+    - {
+        nom: GEOINT,
+        niveau: 1,
+        description: 'Renseignement géospatial : localiser et analyser à partir d’images et de cartes.',
+      }

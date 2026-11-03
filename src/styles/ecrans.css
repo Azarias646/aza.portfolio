@@ -89,3 +89,14 @@ body {
     padding-top: 8px;
   }
 }
+
+/* Bloc qui apparaît d'un seul tenant, après le titre */
+.apparait {
+  transition:
+    opacity 1100ms var(--courbe-fondu) 300ms,
+    transform 1300ms var(--courbe-sortie) 300ms;
+}
+.anime .attente .apparait {
+  opacity: 0;
+  transform: translateY(14px);
+}

@@ -1,0 +1,335 @@
+---
+/**
+ * Écran « À propos » : récit et outils par groupe, en bento (§ 3.8 et 3.9).
+ * Un clic sur un outil ouvre sa fiche (§ 3.10) : description et niveau sur une jauge en demi-cercle.
+ * Outils lus dans src/content/outils.yaml.
+ */
+import { getCollection } from 'astro:content';
+import Logo from './Logo.astro';
+import TeteSection from './TeteSection.astro';
+
+const groupes = (await getCollection('outils')).map((g) => g.data).sort((a, b) => a.ordre - b.ordre);
+const niveaux = ['Notions', 'Opérationnel', 'Avancé'] as const;
+---
+
+<section id="apropos" class="ecran" aria-labelledby="titre-apropos">
+  <div class="wrap">
+    <TeteSection id="titre-apropos" titre="À propos" filigrane="Profil" />
+    <div class="bento">
+      <div class="recit">
+        <p class="cascade" style="--i: 0">
+          Savoir comment fonctionnent les choses, que ce soit les applications, les infrastructures ou même
+          les métiers, est un besoin chez moi. Un protocole qu’on ne connaît pas, un fichier au format fermé,
+          une base de données que personne n’a documentée : c’est là que j’interviens.
+        </p>
+        <p class="cascade" style="--i: 1">
+          Je crois aux systèmes simples, bien rangés et qu’on peut expliquer. Avant de toucher à quoi que ce
+          soit, je sauvegarde, je compare, je note. Une donnée fiable vaut mieux qu’un joli graphique.
+        </p>
+        <p class="cascade" style="--i: 2">
+          À mes heures perdues, je fais tourner mon propre homelab, je m’initie aux mainframes IBM Z, je
+          pratique l’OSINT et le GEOINT (chercher, recouper, localiser), et j’explore et teste des
+          applications prometteuses.
+        </p>
+      </div>
+      {groupes.map((g, i) => (
+        <div class="groupe cascade" style={`--i: ${i}`}>
+          <h3>{g.id}</h3>
+          <ul class="grille">
+            {g.outils.map((o) => (
+              <li>
+                <button
+                  class="outil"
+                  type="button"
+                  aria-haspopup="dialog"
+                  aria-controls="fiche-outil"
+                  data-outil={o.nom}
+                  data-description={o.description}
+                  data-niveau={o.niveau}
+                  data-libelle={niveaux[o.niveau - 1]}
+                  data-umami-event="outil-ouverture"
+                  data-umami-event-outil={o.nom}
+                >
+                  <Logo nom={o.nom} />
+                  {o.nom}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <dialog class="fiche" id="fiche-outil" aria-labelledby="fiche-outil-nom">
+    <div class="corps">
+      <div class="entete">
+        <span class="pastille" data-fiche-logo></span>
+        <h3 id="fiche-outil-nom" data-fiche-nom></h3>
+        <button class="fermer" type="button" aria-label="Fermer" data-fermer>
+          ×
+        </button>
+      </div>
+      <p class="texte" data-fiche-texte></p>
+      <div class="jauge">
+        <svg viewBox="0 0 220 142" aria-hidden="true">
+          <path class="jauge-fond" d="M22 110 A88 88 0 0 1 198 110"></path>
+          <path class="jauge-valeur" d="M22 110 A88 88 0 0 1 198 110" data-jauge-valeur></path>
+          <line class="jauge-aiguille" x1="110" y1="110" x2="110" y2="42" data-jauge-aiguille></line>
+          <circle class="jauge-axe" cx="110" cy="110" r="7"></circle>
+          <text class="jauge-borne" x="22" y="138">
+            Notions
+          </text>
+          <text class="jauge-borne" x="198" y="138">
+            Avancé
+          </text>
+        </svg>
+        <p class="jauge-texte">
+          <span class="petit">Mon niveau</span>
+          <strong data-fiche-niveau></strong>
+        </p>
+      </div>
+    </div>
+  </dialog>
+</section>
+
+<style>
+  /* Bento : le récit en grand à gauche, les groupes d'outils autour */
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 12px;
+  }
+  .recit,
+  .groupe {
+    border-radius: var(--rayon-xl);
+    background: var(--carte);
+  }
+  .recit {
+    grid-column: 1 / 3;
+    grid-row: 1 / 3;
+    display: grid;
+    align-content: start;
+    gap: 18px;
+    padding: 28px;
+    font-size: 18px;
+    line-height: 1.6;
+  }
+  .recit p + p {
+    color: var(--texte-attenue);
+    font-size: 16px;
+  }
+  .groupe {
+    padding: 22px;
+  }
+  .groupe:nth-child(2) {
+    grid-column: 3 / 5;
+    grid-row: 1;
+  }
+  .groupe:nth-child(3) {
+    grid-column: 3 / 5;
+    grid-row: 2;
+  }
+  .groupe:nth-child(4) {
+    grid-column: 1 / 3;
+    grid-row: 3;
+  }
+  .groupe:nth-child(5) {
+    grid-column: 3 / 5;
+    grid-row: 3;
+  }
+  .groupe h3 {
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    font-size: 17px;
+  }
+  .grille {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 4px;
+    list-style: none;
+  }
+  .groupe:nth-child(4) .grille {
+    grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  }
+
+  /* Outil : pastille ronde verte + nom, en pilule au survol */
+  .outil {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 6px 8px;
+    border: 0;
+    border-radius: var(--rayon-pilule);
+    background: transparent;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      background var(--duree-rapide),
+      transform var(--duree-rapide);
+  }
+  .outil:hover {
+    background: var(--surface-2);
+  }
+  .outil:active {
+    transform: scale(0.98);
+  }
+  .outil :global(svg.logo),
+  .pastille :global(svg.logo) {
+    flex: none;
+    border-radius: 50%;
+    background: var(--accent);
+    fill: var(--sur-accent);
+  }
+  .outil :global(svg.logo) {
+    width: 34px;
+    height: 34px;
+    padding: 8px;
+    transition: transform var(--duree-rapide) var(--courbe-sortie);
+  }
+  .outil:hover :global(svg.logo) {
+    transform: scale(1.08);
+  }
+  .outil :global(svg.logo.trace),
+  .pastille :global(svg.logo.trace) {
+    fill: none;
+    stroke: var(--sur-accent);
+  }
+
+  @media (max-width: 900px) {
+    .bento {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .recit,
+    .groupe:nth-child(n) {
+      grid-column: 1 / -1;
+      grid-row: auto;
+    }
+  }
+
+  /* Fiche d'un outil */
+  .fiche {
+    width: min(440px, calc(100% - 32px));
+    margin: auto;
+    padding: 0;
+    border: 0;
+    border-radius: var(--rayon-xl);
+    background: var(--carte);
+    color: var(--texte);
+  }
+  .fiche[open] {
+    animation: fiche var(--duree-standard) var(--courbe-sortie);
+  }
+  .fiche::backdrop {
+    background: rgba(0, 0, 0, 0.55);
+  }
+  .fiche:focus {
+    outline: none;
+  }
+  @keyframes fiche {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.98);
+    }
+  }
+  .corps {
+    display: grid;
+    gap: 18px;
+    padding: 24px;
+  }
+  .entete {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr) 36px;
+    align-items: center;
+    gap: 14px;
+  }
+  .pastille :global(svg.logo) {
+    width: 48px;
+    height: 48px;
+    padding: 12px;
+  }
+  .entete h3 {
+    font-size: 20px;
+    font-weight: 700;
+    font-variation-settings: 'wdth' 112;
+  }
+  .fermer {
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: var(--rayon-sm);
+    background: transparent;
+    color: var(--texte-discret);
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .fermer:hover {
+    background: var(--surface-2);
+    color: var(--texte);
+  }
+  .texte {
+    color: var(--texte-attenue);
+  }
+
+  /* Jauge en demi-cercle : l'arc (277 de long) et l'aiguille sont réglés par le script */
+  .jauge {
+    display: grid;
+    justify-items: center;
+    padding-top: 4px;
+  }
+  .jauge svg {
+    width: min(260px, 100%);
+    height: auto;
+    overflow: visible;
+  }
+  .jauge-fond,
+  .jauge-valeur {
+    fill: none;
+    stroke-width: 26;
+    stroke-linecap: butt;
+  }
+  .jauge-fond {
+    stroke: var(--surface-2);
+  }
+  .jauge-valeur {
+    stroke: var(--accent);
+    stroke-dasharray: 277;
+    stroke-dashoffset: 277;
+    transition: stroke-dashoffset 900ms var(--courbe-sortie) 120ms;
+  }
+  .jauge-aiguille {
+    stroke: var(--texte);
+    stroke-width: 5;
+    stroke-linecap: round;
+    transform-origin: 110px 110px;
+    transform: rotate(-90deg);
+    transition: transform 900ms var(--courbe-sortie) 120ms;
+  }
+  .jauge-axe {
+    fill: var(--texte);
+  }
+  .jauge-borne {
+    fill: var(--texte-attenue);
+    font: 500 11px var(--police);
+    text-anchor: middle;
+  }
+  .jauge-texte {
+    display: grid;
+    justify-items: center;
+    margin-top: 6px;
+  }
+  .jauge-texte strong {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  @media (max-width: 760px) {
+    .fiche {
+      width: calc(100vw - 24px);
+      max-height: calc(100dvh - 24px);
+    }
+  }
+</style>

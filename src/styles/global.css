@@ -90,7 +90,7 @@ svg.logo.trace {
   height: 22px;
   flex: none;
 }
-.ico :is(path, circle) {
+.ico :is(path, circle, rect) {
   fill: var(--ico-fonce);
 }
 .ico .moyen {

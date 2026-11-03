@@ -1,0 +1,429 @@
+---
+/**
+ * Écran Contact (§ 3.14) : carte d'appel à l'action (halo vert qui dérive, e-mail, icônes copier / écrire),
+ * puis pied de page en colonnes, sur le même fond que la barre de navigation.
+ */
+import Icone from './Icone.astro';
+import Logo from './Logo.astro';
+import { ecrans, site } from '../data/site';
+import type { NomIcone } from '../data/icones';
+
+const liensPlan = ecrans.filter((e) => e.id !== 'accueil' && e.id !== 'contact') as ReadonlyArray<{
+  id: NomIcone;
+  nom: string;
+}>;
+const annee = new Date().getFullYear();
+---
+
+<section id="contact" class="ecran" aria-labelledby="titre-contact">
+  <div class="wrap">
+    <span class="filigrane" aria-hidden="true">
+      Contact
+    </span>
+    <div class="cta">
+      <h2 id="titre-contact">
+        <span class="barre" aria-hidden="true">
+          /
+        </span>
+        Envie de collaborer ou d’échanger ?
+      </h2>
+      <div class="courriel apparait">
+        <span class="adresse" id="adresse">
+          {site.email}
+        </span>
+        <div class="actions">
+          <button
+            class="icone-action"
+            id="copier"
+            type="button"
+            aria-label="Copier l’adresse"
+            title="Copier l’adresse"
+            data-umami-event="email-copie"
+          >
+            <svg class="i-copier" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="8.5" y="8.5" width="12" height="12" rx="3"></rect>
+              <path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"></path>
+            </svg>
+            <svg class="i-ok" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 12.5l4.5 4.5L19 7.5"></path>
+            </svg>
+          </button>
+          <a
+            class="icone-action"
+            href={`mailto:${site.email}`}
+            aria-label="Écrire un e-mail"
+            title="Écrire un e-mail"
+            data-umami-event="email-ecrire"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 17 17 7M9 7h8v8"></path>
+            </svg>
+          </a>
+        </div>
+        <p class="statut" role="status" aria-live="polite" data-statut></p>
+      </div>
+    </div>
+
+    <footer class="pied">
+      <div class="pied-marque cascade" style="--i: 0">
+        <span class="marque">{site.nom}</span>
+        <p class="petit">{site.roles.join(' · ')}</p>
+      </div>
+      <nav class="pied-col cascade" style="--i: 1" aria-label="Plan du site">
+        <h3>Navigation</h3>
+        {liensPlan.map((l) => (
+          <a href={`#${l.id}`}>
+            <Icone nom={l.id} />
+            <span>{l.nom}</span>
+          </a>
+        ))}
+      </nav>
+      <div class="pied-col cascade" style="--i: 2">
+        <h3>Réseaux</h3>
+        {site.reseaux.map((r) => (
+          <a
+            href={r.url}
+            target="_blank"
+            rel="noopener"
+            data-umami-event="reseau-clic"
+            data-umami-event-reseau={r.nom.toLowerCase()}
+            data-umami-event-endroit="pied"
+          >
+            <Logo nom={r.nom} />
+            {r.nom}
+          </a>
+        ))}
+      </div>
+      <div class="pied-col cascade" style="--i: 3">
+        <h3>Documents</h3>
+        <a
+          href={site.cv}
+          target="_blank"
+          rel="noopener"
+          data-umami-event="cv-telechargement"
+          data-umami-event-endroit="pied"
+        >
+          <svg class="trait" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path>
+            <path d="M14 3v5h5M9 13h6M9 17h6"></path>
+          </svg>
+          Mon CV
+        </a>
+      </div>
+      <div class="pied-bas cascade" style="--i: 4">
+        <span class="petit">
+          © {annee} {site.nom}
+        </span>
+        <div class="sociaux">
+          {site.reseaux.map((r) => (
+            <a
+              href={r.url}
+              target="_blank"
+              rel="noopener"
+              aria-label={r.nom}
+              data-umami-event="reseau-clic"
+              data-umami-event-reseau={r.nom.toLowerCase()}
+              data-umami-event-endroit="pied-bas"
+            >
+              <Logo nom={r.nom} />
+            </a>
+          ))}
+        </div>
+      </div>
+    </footer>
+  </div>
+</section>
+
+<style>
+  .wrap {
+    position: relative;
+    display: grid;
+    gap: 56px;
+  }
+  #contact.ecran {
+    padding-top: 56px;
+  }
+  /* « Contact » : entièrement visible au-dessus de la carte ; la marge négative annule l'écart de la grille */
+  .filigrane {
+    display: block;
+    margin: 0 0 calc(-0.24em - 44px) -0.04em;
+    color: var(--filigrane);
+    font-size: min(clamp(60px, 11vw, 150px), calc((100vw - 40px) / 5.8));
+    line-height: 1;
+    font-weight: 700;
+    font-variation-settings: 'wdth' 125;
+    letter-spacing: -0.04em;
+    white-space: nowrap;
+    pointer-events: none;
+    transition: opacity 1800ms var(--courbe-fondu);
+  }
+  :global(.anime .attente) .filigrane {
+    opacity: 0;
+  }
+
+  .cta {
+    position: relative;
+    z-index: 1;
+    isolation: isolate;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    align-items: end;
+    gap: 40px;
+    padding: 52px 48px;
+    border: 1px solid var(--barre-bord);
+    border-radius: var(--rayon-xl);
+    background: var(--barre-fond);
+  }
+  /* Halo vert qui dérive lentement et en permanence dans la carte */
+  .cta::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: -60%;
+    right: -20%;
+    width: 78%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(
+      closest-side,
+      light-dark(rgba(37, 120, 102, 0.45), rgba(37, 120, 102, 0.75)),
+      transparent
+    );
+    pointer-events: none;
+    animation: halo-derive 16s ease-in-out infinite;
+  }
+  @keyframes halo-derive {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    25% {
+      transform: translate(-28%, 22%) scale(1.12);
+    }
+    50% {
+      transform: translate(-62%, 8%) scale(0.94);
+    }
+    75% {
+      transform: translate(-30%, 34%) scale(1.06);
+    }
+  }
+  .cta h2 {
+    font-size: clamp(30px, 4vw, 48px);
+    transition:
+      opacity 1100ms var(--courbe-fondu) 120ms,
+      transform 1300ms var(--courbe-sortie) 120ms;
+  }
+  :global(.anime .attente) .cta h2 {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  .barre {
+    margin-right: 0.12em;
+    color: var(--accent-texte);
+    font-weight: 500;
+  }
+  .courriel {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px 14px;
+    min-width: 0;
+  }
+  .adresse {
+    overflow-wrap: anywhere;
+    font-size: clamp(20px, 3vw, 30px);
+    font-weight: 700;
+    font-variation-settings: 'wdth' 112;
+    letter-spacing: -0.02em;
+    user-select: all;
+  }
+  .actions {
+    display: flex;
+    gap: 4px;
+  }
+  .icone-action {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--texte-discret);
+    cursor: pointer;
+    transition:
+      background var(--duree-rapide),
+      color var(--duree-rapide),
+      transform var(--duree-rapide);
+  }
+  .icone-action:hover {
+    background: var(--surface-2);
+    color: var(--texte);
+  }
+  .icone-action:active {
+    transform: scale(0.94);
+  }
+  .icone-action svg {
+    grid-area: 1 / 1;
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition:
+      opacity var(--duree-standard),
+      transform var(--duree-standard) var(--courbe-sortie);
+  }
+  .i-ok {
+    color: var(--accent-trait);
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  .icone-action:global(.copie) .i-copier {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  .icone-action:global(.copie) .i-ok {
+    opacity: 1;
+    transform: none;
+  }
+  /* Message lu par les lecteurs d'écran après une copie */
+  .statut {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* Pied de page : même fond que la barre de navigation */
+  .pied {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
+    gap: 32px 24px;
+    padding: 36px 40px 22px;
+    border: 1px solid var(--barre-bord);
+    border-radius: var(--rayon-xl);
+    background: var(--barre-fond);
+  }
+  .marque {
+    font-size: 18px;
+    font-weight: 700;
+    font-variation-settings: 'wdth' 125;
+    letter-spacing: -0.02em;
+  }
+  .pied-marque p {
+    max-width: 32ch;
+    margin-top: 8px;
+  }
+  .pied-col {
+    display: grid;
+    align-content: start;
+    gap: 10px;
+  }
+  .pied-col h3 {
+    margin-bottom: 4px;
+    font-size: 13px;
+  }
+  .pied-col a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    color: var(--texte-attenue);
+    font-size: 14px;
+    font-weight: 600;
+    transition: color var(--duree-rapide);
+  }
+  .pied-col a:hover {
+    color: var(--texte);
+  }
+  .pied-col :global(:is(.ico, svg.logo)),
+  .trait {
+    width: 20px;
+    height: 20px;
+    flex: none;
+  }
+  .pied-col :global(svg.logo) {
+    padding: 1px;
+    fill: var(--ico-fonce);
+  }
+  .trait {
+    fill: none;
+    stroke: var(--ico-fonce);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .pied-col a:hover :global(svg.logo) {
+    fill: var(--accent-trait);
+  }
+  .pied-col a:hover .trait {
+    stroke: var(--accent-trait);
+  }
+  .pied-col a:hover :global(.ico .clair) {
+    fill: var(--accent-trait);
+  }
+  .pied-bas {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 8px;
+    padding-top: 20px;
+    border-top: 1px solid var(--filet);
+  }
+  .sociaux {
+    display: flex;
+    gap: 4px;
+  }
+  .sociaux a {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: var(--texte-attenue);
+    transition:
+      background var(--duree-rapide),
+      color var(--duree-rapide);
+  }
+  .sociaux a:hover {
+    background: var(--surface-2);
+    color: var(--texte);
+  }
+  .sociaux :global(svg.logo) {
+    width: 18px;
+    height: 18px;
+  }
+
+  @media (max-width: 760px) {
+    #contact.ecran {
+      padding-top: 64px;
+    }
+    .cta {
+      grid-template-columns: minmax(0, 1fr);
+      padding: 32px 24px;
+    }
+    .pied {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .pied-marque {
+      grid-column: 1 / -1;
+    }
+    .icone-action {
+      width: 44px;
+      height: 44px;
+    }
+    .pied-col a {
+      min-height: 32px;
+    }
+  }
+</style>

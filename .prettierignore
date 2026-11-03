@@ -8,3 +8,4 @@ maquette/
 public/
 src/data/logos.ts
 *.md
+src/data/vignettes.ts

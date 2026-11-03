@@ -1,0 +1,237 @@
+---
+/**
+ * Écran Parcours (§ 3.13) : panneau à deux onglets (Expérience / Cursus et certifications),
+ * cartes illustrées. Étapes lues dans src/content/parcours/. Onglets ARIA gérés par onglets.ts.
+ */
+import { getCollection } from 'astro:content';
+import Icone from './Icone.astro';
+import TeteSection from './TeteSection.astro';
+import { vignettes } from '../data/vignettes';
+
+const etapes = (await getCollection('parcours', ({ data }) => !data.brouillon)).sort(
+  (a, b) => a.data.ordre - b.data.ordre,
+);
+const panneaux = [
+  { id: 'experience', titre: 'Expérience', etapes: etapes.filter((e) => e.data.type === 'experience') },
+  { id: 'cursus', titre: 'Cursus et certifications', etapes: etapes.filter((e) => e.data.type === 'cursus') },
+] as const;
+---
+
+<section id="parcours" class="ecran" aria-labelledby="titre-parcours">
+  <div class="wrap">
+    <TeteSection id="titre-parcours" titre="Parcours" filigrane="Parcours" />
+    <div class="panneau apparait">
+      <div class="onglets" role="tablist" aria-label="Parcours">
+        {panneaux.map((p, i) => (
+          <button
+            class="onglet"
+            type="button"
+            role="tab"
+            id={`onglet-${p.id}`}
+            aria-controls={`panneau-${p.id}`}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            tabindex={i === 0 ? 0 : -1}
+            data-onglet={p.id}
+          >
+            <Icone nom={p.id} />
+            <span>{p.titre}</span>
+          </button>
+        ))}
+      </div>
+      <div class="zone">
+        {panneaux.map((p, i) => (
+          <div
+            class="onglet-panneau"
+            role="tabpanel"
+            id={`panneau-${p.id}`}
+            aria-labelledby={`onglet-${p.id}`}
+            hidden={i !== 0}
+          >
+            <h3 class="sous-titre">{p.titre}</h3>
+            <ul class:list={['cartes', { quatre: p.etapes.length >= 4 }]}>
+              {p.etapes.map(({ data }, j) => (
+                <li class="carte cascade" style={`--i: ${j}`}>
+                  <div class="vignette">
+                    <svg viewBox="0 0 160 84" aria-hidden="true" set:html={vignettes[data.illustration]} />
+                  </div>
+                  <div class="carte-texte">
+                    <h4>{data.titre}</h4>
+                    {data.lieu && <p class="petit">{data.lieu}</p>}
+                    <p class="petit annees">{data.annees}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .panneau {
+    display: grid;
+    gap: 22px;
+    padding: 22px;
+    border: 1px solid var(--barre-bord);
+    border-radius: var(--rayon-xl);
+    background: var(--barre-fond);
+  }
+  .onglets {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    padding: 5px;
+    border-radius: 16px;
+    background: light-dark(var(--surface-2), rgba(255, 255, 255, 0.04));
+  }
+  .onglet {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 46px;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    color: var(--texte-attenue);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      background var(--duree-standard),
+      color var(--duree-standard);
+  }
+  .onglet:hover {
+    color: var(--texte);
+  }
+  .onglet[aria-selected='true'] {
+    background: var(--carte);
+    color: var(--texte);
+  }
+  .onglet[aria-selected='true'] :global(.ico .clair) {
+    fill: var(--accent-trait);
+  }
+  /* Les deux panneaux occupent la même case : la hauteur ne saute pas d'un onglet à l'autre */
+  .zone {
+    display: grid;
+  }
+  .onglet-panneau {
+    grid-area: 1 / 1;
+  }
+  .onglet-panneau[hidden] {
+    display: block !important;
+    visibility: hidden;
+  }
+  .sous-titre {
+    margin: 0 4px 12px;
+    font-size: 16px;
+  }
+  .cartes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    list-style: none;
+  }
+  .cartes.quatre {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .carte {
+    display: grid;
+    align-content: start;
+    gap: 18px;
+    padding: 14px 14px 20px;
+    border-radius: 20px;
+    background: var(--carte);
+  }
+  .onglet-panneau:global(.rejoue) .carte {
+    animation: carte-entre 700ms var(--courbe-sortie) backwards;
+    animation-delay: calc(var(--i, 0) * 80ms);
+  }
+  @keyframes carte-entre {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  }
+  .vignette {
+    display: grid;
+    place-items: center;
+    height: 104px;
+    border: 1px solid var(--filet);
+    border-radius: 14px;
+    background: var(--page);
+  }
+  .vignette svg {
+    width: 150px;
+    max-width: 86%;
+    height: auto;
+  }
+  .vignette :global(.v1),
+  .vignette :global(.v1c) {
+    fill: light-dark(#dcdde1, var(--surface-2));
+  }
+  .vignette :global(.v1c) {
+    stroke: var(--filet);
+  }
+  .vignette :global(.v2) {
+    fill: color-mix(in srgb, var(--texte-discret) 55%, transparent);
+  }
+  .vignette :global(:is(.v3, .v3c)) {
+    fill: color-mix(in srgb, var(--texte-discret) 30%, transparent);
+  }
+  .vignette :global(.va) {
+    fill: var(--accent);
+  }
+  .vignette :global(.vp) {
+    fill: var(--accent-trait);
+  }
+  .vignette :global(.vl) {
+    fill: none;
+    stroke: var(--texte-discret);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+  }
+  .carte-texte {
+    display: grid;
+    gap: 4px;
+    padding: 0 6px;
+  }
+  h4 {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .annees {
+    color: var(--texte-discret);
+    font-variation-settings: 'wdth' 88;
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 900px) {
+    .cartes,
+    .cartes.quatre {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 760px) {
+    .onglet {
+      flex-direction: column;
+      gap: 6px;
+      padding-block: 10px;
+      height: auto;
+    }
+    .onglet span {
+      font-size: 12.5px;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+  }
+  @media (max-width: 560px) {
+    .cartes,
+    .cartes.quatre {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

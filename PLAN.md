@@ -50,8 +50,9 @@ En résumé : design system `aza-structure` 0.2.0 (vert `#1D5A4E`, Roboto Flex, 
 1. ~~Valider la maquette~~ — **fait** : la maquette widgets est la maquette finale, version téléphone comprise (passe mobile validée : défilement normal, barre d'onglets en bas, voir § 4.3 de `maquette/COMPOSANTS.md`). Niveaux de maîtrise des outils validés.
 2. ~~Choisir la stack~~ — **fait** : Astro (voir § 4).
 3. **En cours** — initialiser le projet Astro sur la branche `new` et reprendre la maquette widgets en composants, avec les projets et le parcours en fichiers Markdown. Les composants sont **marqués dès cette étape pour l'analytics** (attributs d'événement sur les boutons, liens et fiches), pour qu'aucun suivi ne soit à rajouter après coup.
-   - **Tranche 1 (à valider)** : base du projet (Astro, TypeScript strict, Prettier, CI GitHub), mise en page, barre de navigation, repères, thème, accueil avec le PC, écran Projets avec le projet ERP (fiche et schéma), version téléphone, analytics branché. Ancien site rangé dans `archive/v1/`.
-   - Tranche 2 : les autres projets, À propos (bento, fiches des outils), Parcours, Contact et pied de page.
+   - **Tranche 1 (validée)** : base du projet (Astro, TypeScript strict, Prettier, CI GitHub), mise en page, barre de navigation, repères, thème, accueil avec le PC, écran Projets avec le projet ERP (fiche et schéma), version téléphone, analytics branché. Ancien site rangé dans `archive/v1/`.
+   - **Tranche 2 (à valider)** : les cinq projets, À propos (bento, fiche des outils avec jauge), Parcours (onglets, cartes illustrées), Contact (carte d'appel, copie de l'e-mail) et pied de page. Outils en YAML, étapes du parcours en Markdown. Tous les événements d'analytics prévus sont posés.
+   - À faire à part : copier `docs/ci-github-actions.yml` dans `.github/workflows/ci.yml` (la session n'a pas le droit de créer ce fichier).
 4. Rédiger les études de cas des 4 projets + compléter le parcours.
 5. SEO & partage : balises meta, Open Graph (aperçu LinkedIn/WhatsApp), favicon.
 6. Accessibilité & perf : contrastes, alt des images, score Lighthouse > 90.

@@ -34,9 +34,11 @@ Node.js 22.22 ou plus (voir `.nvmrc`).
 ```
 src/
 ├── content/projets/     un fichier Markdown par projet (voir ci-dessous)
+├── content/parcours/    un fichier Markdown par étape du parcours
+├── content/outils.yaml  outils d'« À propos » par groupe, avec description et niveau
 ├── content.config.ts    schéma des contenus : un champ manquant ou faux bloque la construction
-├── data/                infos du site (site.ts), logos des outils, icônes
-├── components/          Accueil, PcNom, Projets, Schema, Nav, Points, Bouton…
+├── data/                infos du site et réseaux (site.ts), logos, icônes, illustrations du parcours
+├── components/          Accueil, PcNom, APropos, Projets, Schema, Parcours, Contact, Nav, Points…
 ├── layouts/Base.astro   <head> (SEO, partage, thème, analytics), barre, écrans
 ├── scripts/             navigation par écrans, thème, fiches, boutons, analytics
 └── styles/              jetons (tokens.css), base (global.css), écrans (ecrans.css)
@@ -69,6 +71,28 @@ Texte de l'étude de cas (à venir).
 ```
 
 Pour **retirer** un projet : supprimer le fichier, ou mettre `brouillon: true`.
+Le schéma accepte aussi des `etiquettes` (texte libre sans bloc : `{ texte, x, y }`) et des liens `pointille: true`.
+
+## Parcours
+
+Chaque étape est un fichier `src/content/parcours/<nom>.md` :
+
+```markdown
+---
+type: cursus # experience ou cursus (l'onglet où elle apparaît)
+titre: Master Intelligence Artificielle
+lieu: Nom de l'établissement # facultatif
+annees: '2026' # texte libre : '2026', 2025 — 2026…
+illustration: ia # poste, data, mobile, ia, pipeline, mainframe ou diplome
+ordre: 1
+---
+```
+
+## Outils (« À propos »)
+
+Dans `src/content/outils.yaml`, chaque groupe liste ses outils dans l'ordre d'affichage :
+`{ nom: Python, niveau: 2, description: '…' }`, avec `niveau` 1 (Notions), 2 (Opérationnel) ou 3 (Avancé).
+Le nom doit exister dans `src/data/logos.ts`, qui fournit le logo.
 Après un push sur `main`, Cloudflare Pages reconstruit et publie le site.
 
 ## Analytics
