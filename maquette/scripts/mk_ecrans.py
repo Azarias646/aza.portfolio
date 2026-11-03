@@ -33,7 +33,7 @@ a=re.sub(r'<!DOCTYPE html>\n<html lang="fr">\n<head>\n<meta charset="UTF-8">\n<m
 a=a.replace('<title>Azarias Sawadogo — écrans et fondu</title>','<title>Portfolio Azarias écrans fondu</title>\n<meta name="claude:viewport-fit-sides" content="cover">')
 a=a.replace('</style>\n</head>\n<body>','</style>').replace('</body>\n</html>\n','')
 a=a.replace('  nav { position: sticky;','  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--page); }\n  nav { position: sticky;',1)
-a=a.replace('../media/azarias.jpg','azarias.jpg').replace('../document/CV-Azarias-Sawadogo-2026.pdf','cv.pdf')
+a=a.replace('../src/assets/azarias.jpg','azarias.jpg').replace('../public/CV-Azarias-Sawadogo-2026.pdf','cv.pdf')
 assert '<head>' not in a
 open(os.path.join(APERCU, 'portfolio-ecrans-fondu.html'),'w').write(a)
 print('ok')

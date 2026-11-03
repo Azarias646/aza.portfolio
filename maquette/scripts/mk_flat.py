@@ -72,7 +72,7 @@ import re
 a=re.sub(r'<!DOCTYPE html>\n<html lang="fr">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport"[^>]*>\n','',s)
 a=a.replace('<title>Azarias Sawadogo — flat</title>','<title>Portfolio Azarias flat</title>\n<meta name="claude:viewport-fit-sides" content="cover">')
 a=a.replace('</style>\n</head>\n<body>','</style>').replace('</body>\n</html>\n','')
-a=a.replace('../media/azarias.jpg','azarias.jpg').replace('../document/CV-Azarias-Sawadogo-2026.pdf','cv.pdf')
+a=a.replace('../src/assets/azarias.jpg','azarias.jpg').replace('../public/CV-Azarias-Sawadogo-2026.pdf','cv.pdf')
 assert '<head>' not in a
 open(os.path.join(APERCU, 'portfolio-flat.html'),'w').write(a)
 print('ok')
