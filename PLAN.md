@@ -99,5 +99,5 @@ Sans cookies, sans adresse IP conservée, sans contenu saisi. Chaque bouton port
 
 ## 6. Reste à décider
 
-- Nom de l'établissement du master IA (sous-titre du parcours).
+- À compléter plus tard, sans bloquer : nom exact du master IA et établissement (fichier `src/content/parcours/master-ia.md`, champs `titre` et `lieu`).
 - Reporter les écarts assumés dans `aza-structure` (voir § 6 de `maquette/COMPOSANTS.md`).
