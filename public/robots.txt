@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://azarias-sawadogo.me/sitemap-index.xml

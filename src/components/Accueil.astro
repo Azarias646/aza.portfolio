@@ -1,0 +1,137 @@
+---
+/** Écran d'accueil (« Moi ») : rôle, nom sur le PC, accroche, boutons et portrait. */
+import { Picture } from 'astro:assets';
+import Bouton from './Bouton.astro';
+import PcNom from './PcNom.astro';
+import portrait from '../assets/azarias.jpg';
+import { site } from '../data/site';
+---
+
+<section id="accueil" class="ecran" aria-label="Accueil">
+  <div class="vitrine wrap">
+    <div>
+      <p class="role">
+        {site.roles[0]}
+        <span aria-hidden="true">·</span>
+        {site.roles[1]}
+      </p>
+      <PcNom />
+      <p class="accroche">
+        J’aime ce qui se passe en coulisses :{' '}
+        <strong>là où les données naissent, circulent et prennent du sens</strong>. Je développe et
+        interconnecte des systèmes sobres et fiables, qu’on peut comprendre, réparer et sur lesquels on peut
+        compter.
+      </p>
+      <div class="actions">
+        <Bouton href="#contact" variante="principal" data-umami-event="contact-clic">
+          Me contacter
+        </Bouton>
+        <Bouton
+          href={site.cv}
+          variante="second"
+          target="_blank"
+          rel="noopener"
+          data-umami-event="cv-telechargement"
+          data-umami-event-endroit="accueil"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path>
+            <path d="M14 3v5h5M9 13h6M9 17h6"></path>
+          </svg>
+          Mon CV
+        </Bouton>
+      </div>
+    </div>
+    <div class="scene">
+      <figure class="portrait" id="portrait">
+        <Picture
+          src={portrait}
+          formats={['avif', 'webp']}
+          widths={[320, 480, 640, 960]}
+          sizes="(max-width: 760px) 320px, 40vw"
+          alt="Portrait d’Azarias Sawadogo"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </figure>
+    </div>
+  </div>
+</section>
+
+<style>
+  .vitrine {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 56px;
+  }
+  .role {
+    color: var(--texte-attenue);
+    font-size: 15px;
+  }
+  .role span {
+    padding: 0 8px;
+    color: var(--texte-discret);
+  }
+  .accroche {
+    max-width: 540px;
+    color: var(--texte-attenue);
+    font-size: clamp(16px, 1.8vw, 19px);
+    text-wrap: pretty;
+  }
+  .accroche strong {
+    color: var(--texte);
+    font-weight: 600;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-top: 36px;
+  }
+
+  /* Portrait N&B posé sur un aplat vert décalé ; il s'incline vers le pointeur (portrait.ts) */
+  .scene {
+    position: relative;
+    perspective: 900px;
+  }
+  .scene::before {
+    content: '';
+    position: absolute;
+    inset: 24px -24px -24px 24px;
+    border-radius: var(--rayon-xl);
+    background: var(--accent);
+  }
+  .portrait {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform var(--duree-standard) var(--courbe-sortie);
+    animation: arrivee var(--duree-lente) var(--courbe-sortie) both;
+  }
+  @keyframes arrivee {
+    from {
+      opacity: 0;
+      transform: translateY(24px) scale(0.97);
+    }
+  }
+  .portrait :global(img) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--rayon-xl);
+    filter: grayscale(1) contrast(1.05);
+  }
+
+  @media (max-width: 760px) {
+    .vitrine {
+      grid-template-columns: 1fr;
+      gap: 48px;
+      padding-top: 48px;
+    }
+    .scene {
+      max-width: 320px;
+    }
+  }
+</style>

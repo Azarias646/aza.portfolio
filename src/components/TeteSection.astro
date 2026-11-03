@@ -1,0 +1,64 @@
+---
+/** Titre d'écran (§ 3.15) : barre « / » verte, titre h2 et mot en filigrane discret derrière. */
+interface Props {
+  titre: string;
+  filigrane: string;
+  id?: string;
+}
+const { titre, filigrane, id } = Astro.props;
+---
+
+<div class="tete">
+  <span class="filigrane" aria-hidden="true">
+    {filigrane}
+  </span>
+  <h2 id={id}>
+    <span class="barre" aria-hidden="true">
+      /
+    </span>
+    {titre}
+  </h2>
+</div>
+
+<style>
+  .tete {
+    position: relative;
+    margin-bottom: 40px;
+  }
+  h2 {
+    position: relative;
+    z-index: 1;
+    transition:
+      opacity 1100ms var(--courbe-fondu) 120ms,
+      transform 1300ms var(--courbe-sortie) 120ms;
+  }
+  .barre {
+    margin-right: 0.12em;
+    color: var(--accent-texte);
+    font-weight: 500;
+  }
+  /* Même filigrane partout ; taille plafonnée pour que le mot le plus long tienne en largeur */
+  .filigrane {
+    position: absolute;
+    left: -0.04em;
+    top: 50%;
+    z-index: 0;
+    transform: translateY(-58%);
+    color: var(--filigrane);
+    font-size: min(clamp(60px, 11vw, 150px), calc((100vw - 40px) / 5.8));
+    line-height: 1;
+    font-weight: 700;
+    font-variation-settings: 'wdth' 125;
+    letter-spacing: -0.04em;
+    white-space: nowrap;
+    pointer-events: none;
+    transition: opacity 1800ms var(--courbe-fondu);
+  }
+  :global(.anime .attente) h2 {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  :global(.anime .attente) .filigrane {
+    opacity: 0;
+  }
+</style>

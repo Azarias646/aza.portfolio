@@ -1,6 +1,8 @@
 # Composants du portfolio
 
 Référence des composants de la **maquette finale** « Portfolio Azarias widgets » (`maquette/widgets.html`). Les autres fichiers (`flat`, `fondu`, `ecrans-fondu`) ne sont plus que des étapes de génération.
+
+> **Site Astro :** les composants sont repris dans `src/` (voir le [README](../README.md)). Les valeurs restent celles de ce document ; quelques noms changent dans le code : `.diapo` → `.ecran`, `main.diapos` → `main.ecrans`, `.ecran-nom` est enveloppé dans `.pc`. Les ombres (`box-shadow`) que la maquette neutralisait ne sont pas reprises.
 Toutes les valeurs ci-dessous sont celles du code. Si le code change, ce document change avec lui.
 
 - Design system de base : [`Azarias646/aza-structure`](https://github.com/Azarias646/aza-structure), dossier `design-system/` (v0.2.0).

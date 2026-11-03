@@ -1,0 +1,11 @@
+---
+/** Icône bicolore décorative (navigation, onglets). */
+import { icones, type NomIcone } from '../data/icones';
+
+interface Props {
+  nom: NomIcone;
+}
+const { nom } = Astro.props;
+---
+
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false" set:html={icones[nom]} />

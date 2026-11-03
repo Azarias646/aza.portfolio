@@ -1,0 +1,196 @@
+---
+/**
+ * Barre de navigation flottante (§ 3.1) et bouton de thème (§ 3.2).
+ * Sur téléphone, les liens deviennent une barre d'onglets fixée en bas de l'écran (§ 4.3).
+ */
+import Icone from './Icone.astro';
+import { ecrans, site } from '../data/site';
+import type { NomIcone } from '../data/icones';
+
+const liens = ecrans.filter((e) => e.id !== 'accueil') as ReadonlyArray<{ id: NomIcone; nom: string }>;
+---
+
+<nav class="barre" aria-label="Navigation principale">
+  <div class="wrap">
+    <a href="#accueil" class="marque">
+      {site.prenom}
+    </a>
+    <div class="liens">
+      {liens.map((l) => (
+        <a href={`#${l.id}`}>
+          <Icone nom={l.id} />
+          <span>{l.nom}</span>
+        </a>
+      ))}
+    </div>
+    <button
+      class="theme"
+      id="theme"
+      type="button"
+      aria-label="Thème : automatique"
+      title="Thème : automatique"
+    >
+      <svg class="auto" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="8"></circle>
+        <path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"></path>
+      </svg>
+      <svg class="sombre" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"></path>
+      </svg>
+      <svg class="clair" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"></path>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<style>
+  .barre {
+    position: relative;
+    z-index: 12;
+    flex: none;
+    padding: 12px 0 6px;
+  }
+  /* Halo de lumière sous la barre */
+  .barre::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: calc(100% - 6px);
+    z-index: -1;
+    width: min(900px, 90%);
+    height: 120px;
+    translate: -50% 0;
+    background: radial-gradient(50% 100% at 50% 0%, var(--barre-halo), transparent 70%);
+    pointer-events: none;
+  }
+  .wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-block: 8px;
+  }
+  .wrap::before {
+    content: '';
+    position: absolute;
+    inset: 0 max(var(--goutte), env(safe-area-inset-right, 0px)) 0
+      max(var(--goutte), env(safe-area-inset-left, 0px));
+    z-index: -1;
+    border: 1px solid var(--barre-bord);
+    border-bottom-color: var(--barre-bord-bas);
+    border-radius: 18px;
+    background: var(--barre-fond);
+  }
+  .marque {
+    padding-left: 22px;
+    font-size: 16px;
+    font-weight: 700;
+    font-variation-settings: 'wdth' 125;
+    letter-spacing: -0.02em;
+  }
+  .liens {
+    display: flex;
+    gap: 6px;
+  }
+  .liens a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border-radius: 12px;
+    color: var(--texte-attenue);
+    font-size: 15px;
+    font-weight: 600;
+    transition:
+      background var(--duree-rapide),
+      color var(--duree-rapide);
+  }
+  .liens a:hover {
+    background: var(--lien-survol);
+    color: var(--texte);
+  }
+  .liens a:global(.active) {
+    background: var(--lien-actif);
+    color: var(--texte);
+  }
+  .liens a:global(.active) :global(.ico .clair) {
+    fill: var(--accent-trait);
+  }
+
+  /* Bouton de thème : discret, il cycle automatique → sombre → clair */
+  .theme {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    margin-right: 14px;
+    border: 0;
+    border-radius: var(--rayon-sm);
+    background: transparent;
+    color: var(--texte-discret);
+    cursor: pointer;
+    transition:
+      background var(--duree-rapide),
+      color var(--duree-rapide);
+  }
+  .theme:hover {
+    background: var(--surface);
+    color: var(--texte);
+  }
+  .theme svg {
+    display: none;
+    grid-area: 1 / 1;
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  :global(:root:not([data-theme])) .theme .auto,
+  :global(:root[data-theme='dark']) .theme .sombre,
+  :global(:root[data-theme='light']) .theme .clair {
+    display: block;
+  }
+
+  /* Téléphone : barre du haut collée, liens en barre d'onglets fixée en bas */
+  @media (max-width: 760px) {
+    .barre {
+      position: sticky;
+      top: 0;
+      background: linear-gradient(180deg, var(--page) 72%, transparent);
+    }
+    .liens {
+      position: fixed;
+      z-index: 30;
+      left: max(12px, env(safe-area-inset-left, 0px));
+      right: max(12px, env(safe-area-inset-right, 0px));
+      bottom: max(12px, env(safe-area-inset-bottom, 0px));
+      display: grid;
+      grid-auto-columns: minmax(0, 1fr);
+      grid-auto-flow: column;
+      gap: 4px;
+      padding: 6px;
+      border: 1px solid var(--barre-bord);
+      border-radius: 22px;
+      background: var(--barre-fond);
+    }
+    .liens a {
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+      min-height: 52px;
+      padding: 8px 4px;
+      border-radius: 16px;
+      font-size: 11.5px;
+    }
+    .theme {
+      width: 44px;
+      height: 44px;
+    }
+  }
+</style>

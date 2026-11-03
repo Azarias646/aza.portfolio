@@ -1,0 +1,19 @@
+---
+/** Logo d'un outil (Simple Icons) ou icône au trait, décoratif : le nom de l'outil est toujours écrit à côté. */
+import { logos, type NomLogo } from '../data/logos';
+
+interface Props {
+  nom: NomLogo;
+  class?: string;
+}
+const { nom, class: classe } = Astro.props;
+const logo = logos[nom];
+---
+
+<svg
+  class:list={['logo', { trace: logo.trace }, classe]}
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+  focusable="false"
+  set:html={logo.svg}
+/>

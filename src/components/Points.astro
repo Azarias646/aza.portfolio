@@ -1,0 +1,97 @@
+---
+/** Repères d'écran à droite (§ 3.3) : un point par écran, nom au survol en police de terminal. Masqués sur téléphone. */
+import { ecrans } from '../data/site';
+---
+
+<nav class="reperes" aria-label="Écrans">
+  <ol class="points">
+    {ecrans.map((e) => (
+      <li>
+        <button type="button" data-ecran={e.id} aria-label={e.nom}>
+          <span class="etiquette" aria-hidden="true">
+            {e.nom}
+          </span>
+        </button>
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .points {
+    position: fixed;
+    z-index: 11;
+    right: max(16px, env(safe-area-inset-right, 0px));
+    top: 50%;
+    translate: 0 -50%;
+    display: grid;
+    gap: 6px;
+    list-style: none;
+  }
+  button {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+  button::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--texte-discret);
+    opacity: 0.8;
+    transition:
+      width var(--duree-standard) var(--courbe-sortie),
+      height var(--duree-standard) var(--courbe-sortie),
+      background var(--duree-standard),
+      opacity var(--duree-standard);
+  }
+  button:is(:hover, :focus-visible)::before {
+    width: 10px;
+    height: 10px;
+    opacity: 1;
+  }
+  button[aria-current='true']::before {
+    width: 11px;
+    height: 11px;
+    background: var(--accent);
+    opacity: 0.9;
+  }
+  /* Nom au survol seulement : texte seul, vert, police de terminal */
+  .etiquette {
+    position: absolute;
+    right: calc(100% + 6px);
+    top: 50%;
+    translate: 6px -50%;
+    color: var(--accent-trait);
+    font: 500 13px / 1 var(--police-terminal);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity var(--duree-standard),
+      translate var(--duree-standard) var(--courbe-sortie),
+      visibility 0s var(--duree-standard);
+  }
+  button:is(:hover, :focus-visible) .etiquette {
+    translate: 0 -50%;
+    opacity: 1;
+    visibility: visible;
+    transition:
+      opacity var(--duree-standard),
+      translate var(--duree-standard) var(--courbe-sortie),
+      visibility 0s;
+  }
+  @media (max-width: 760px) {
+    .reperes {
+      display: none;
+    }
+  }
+</style>

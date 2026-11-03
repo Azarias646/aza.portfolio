@@ -1,0 +1,84 @@
+# Portfolio — Azarias Sawadogo
+
+Site personnel : développeur systèmes et bases de données, data engineer junior.
+En ligne (bientôt) sur **https://azarias-sawadogo.me**.
+
+- Plan, décisions et étapes : [`PLAN.md`](PLAN.md)
+- Composants et design (référence de la maquette) : [`maquette/COMPOSANTS.md`](maquette/COMPOSANTS.md)
+
+## Stack
+
+[Astro](https://astro.build) (site statique), CSS natif, TypeScript strict, JavaScript natif sans dépendance.
+Police Roboto Flex auto-hébergée. Mise en ligne sur Cloudflare Pages ; analytics Umami (auto-hébergé) et
+Cloudflare Web Analytics.
+
+## Commandes
+
+Node.js 22.22 ou plus (voir `.nvmrc`).
+
+| Commande               | Rôle                                                       |
+| ---------------------- | ---------------------------------------------------------- |
+| `npm ci`               | Installer les dépendances (versions figées)                |
+| `npm run dev`          | Serveur local avec rechargement : http://localhost:4321    |
+| `npm run build`        | Vérifier les types (`astro check`) puis construire `dist/` |
+| `npm run preview`      | Servir `dist/` en local                                    |
+| `npm run format`       | Formater le code (Prettier)                                |
+| `npm run format:check` | Vérifier le formatage (utilisé par la CI)                  |
+
+**CI GitHub (à activer)** : le fichier est prêt dans [`docs/ci-github-actions.yml`](docs/ci-github-actions.yml)
+(formatage, types, construction à chaque push). Pour l'activer, le copier tel quel dans
+`.github/workflows/ci.yml` depuis github.com (« Add file → Create new file »).
+
+## Organisation
+
+```
+src/
+├── content/projets/     un fichier Markdown par projet (voir ci-dessous)
+├── content.config.ts    schéma des contenus : un champ manquant ou faux bloque la construction
+├── data/                infos du site (site.ts), logos des outils, icônes
+├── components/          Accueil, PcNom, Projets, Schema, Nav, Points, Bouton…
+├── layouts/Base.astro   <head> (SEO, partage, thème, analytics), barre, écrans
+├── scripts/             navigation par écrans, thème, fiches, boutons, analytics
+└── styles/              jetons (tokens.css), base (global.css), écrans (ecrans.css)
+public/                  fichiers servis tels quels (CV, favicon, robots.txt)
+maquette/                maquette validée et sa documentation (référence, non publiée)
+archive/v1/              ancien portfolio, conservé pour mémoire
+```
+
+## Ajouter, modifier ou retirer un projet
+
+Chaque projet est un fichier `src/content/projets/<nom>.md` :
+
+```markdown
+---
+titre: Lakehouse
+categorie: Ingénierie des données # Professionnel, Ingénierie des données, Personnel ou En équipe
+resume: Un socle de données commun…
+outils: [MinIO, Spark, Airflow, PySpark] # noms définis dans src/data/logos.ts
+ordre: 2 # position dans la liste
+brouillon: false # true pour cacher le projet sans le supprimer
+schema: # schéma de la fiche (viewBox 360 × 170)
+  noeuds:
+    - { texte: GPS, x: 12, y: 22, largeur: 74, hauteur: 28 }
+    - { texte: MinIO, x: 206, y: 62, largeur: 70, hauteur: 44, principal: true }
+  liens:
+    - { trace: 'M86 36 C104 36 104 84 118 84' }
+---
+
+Texte de l'étude de cas (à venir).
+```
+
+Pour **retirer** un projet : supprimer le fichier, ou mettre `brouillon: true`.
+Après un push sur `main`, Cloudflare Pages reconstruit et publie le site.
+
+## Analytics
+
+Aucun cookie, donc aucun bandeau de consentement. Les scripts ne sont chargés qu'en production et seulement si
+les variables sont définies (Cloudflare Pages → Settings → Variables) ; voir `.env.example` :
+
+- `PUBLIC_UMAMI_SRC`, `PUBLIC_UMAMI_WEBSITE_ID` : Umami sur le homelab (`stats.azarias-sawadogo.me`) ;
+- `PUBLIC_CF_BEACON_TOKEN` : Cloudflare Web Analytics, pour comparer.
+
+Les clics sont mesurés par l'attribut `data-umami-event="…"` (et `data-umami-event-<détail>`) posé dans les
+composants ; les sections vues et les durées sont envoyées par `src/scripts/analytics.ts`.
+Liste complète des mesures : [`PLAN.md`](PLAN.md), § 5 bis.

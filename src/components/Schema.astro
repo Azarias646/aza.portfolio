@@ -1,0 +1,66 @@
+---
+/** Schéma de fonctionnement d'un projet (§ 3.12) : blocs et liens, qui se tracent à l'ouverture de la fiche. */
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  schema: CollectionEntry<'projets'>['data']['schema'];
+  titre: string;
+}
+const { schema, titre } = Astro.props;
+---
+
+<svg class="schema" viewBox="0 0 360 170" role="img" aria-label={`Schéma de fonctionnement : ${titre}`}>
+  {schema.liens.map((l) => (
+    <path class:list={['lien', { principal: l.principal, pointille: l.pointille }]} d={l.trace} />
+  ))}
+  {schema.noeuds.map((n) => (
+    <g class:list={['noeud', { principal: n.principal }]}>
+      <rect x={n.x} y={n.y} width={n.largeur} height={n.hauteur} rx="14" />
+      <text x={n.x + n.largeur / 2} y={n.y + n.hauteur / 2 + 4}>
+        {n.texte}
+      </text>
+    </g>
+  ))}
+</svg>
+
+<style>
+  .schema {
+    width: 100%;
+    max-width: 560px;
+    height: auto;
+  }
+  rect {
+    fill: var(--surface-2);
+  }
+  text {
+    fill: var(--texte-attenue);
+    font: 500 11px var(--police);
+    text-anchor: middle;
+  }
+  .noeud.principal rect {
+    fill: var(--accent);
+  }
+  .noeud.principal text {
+    fill: var(--sur-accent);
+    font-weight: 600;
+  }
+  .lien {
+    fill: none;
+    stroke: var(--texte-discret);
+    stroke-width: 1.2;
+    stroke-dasharray: 400;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1.1s var(--courbe-sortie) 0.15s;
+  }
+  .lien.principal {
+    stroke: var(--accent-trait);
+    stroke-width: 1.6;
+  }
+  .lien.pointille {
+    stroke-dasharray: 3 4;
+  }
+  /* État de départ de l'animation : les liens pleins sont « effacés », puis se tracent */
+  .schema:global(.trace) .lien:not(.pointille) {
+    stroke-dashoffset: 400;
+  }
+</style>

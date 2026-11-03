@@ -1,0 +1,209 @@
+---
+/**
+ * Écran Projets : une carte par projet (§ 3.11). Toute la carte ouvre la fiche du projet (§ 3.12),
+ * une vraie <dialog> par projet, rendue côté serveur. Projets lus dans src/content/projets/.
+ */
+import { getCollection } from 'astro:content';
+import TeteSection from './TeteSection.astro';
+import Pile from './Pile.astro';
+import Schema from './Schema.astro';
+
+const projets = (await getCollection('projets', ({ data }) => !data.brouillon)).sort(
+  (a, b) => a.data.ordre - b.data.ordre,
+);
+---
+
+<section id="projets" class="ecran" aria-labelledby="titre-projets">
+  <div class="wrap">
+    <TeteSection id="titre-projets" titre="Projets" filigrane="Réalisations" />
+    <ul class="projets">
+      {projets.map(({ id, data }, i) => (
+        <li class="projet cascade" style={`--i: ${i}`}>
+          <div>
+            <span class="petit">{data.categorie}</span>
+            <h3>
+              <button
+                class="ouvrir"
+                type="button"
+                aria-haspopup="dialog"
+                aria-controls={`fiche-${id}`}
+                data-fiche={`fiche-${id}`}
+                data-umami-event="projet-ouverture"
+                data-umami-event-projet={id}
+              >
+                {data.titre}
+              </button>
+            </h3>
+            <p>{data.resume}</p>
+            <Pile outils={data.outils} />
+          </div>
+          <span class="fleche" aria-hidden="true">
+            +
+          </span>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  {projets.map(({ id, data }) => (
+    <dialog class="fiche-projet" id={`fiche-${id}`} aria-labelledby={`fiche-${id}-titre`} data-projet={id}>
+      <div class="corps">
+        <div class="entete">
+          <div>
+            <span class="petit">{data.categorie}</span>
+            <h3 id={`fiche-${id}-titre`}>{data.titre}</h3>
+          </div>
+          <button class="fermer" type="button" aria-label="Fermer" data-fermer>
+            ×
+          </button>
+        </div>
+        <div class="zone-schema">
+          <Schema schema={data.schema} titre={data.titre} />
+        </div>
+        <p class="texte">{data.resume}</p>
+        <Pile outils={data.outils} />
+      </div>
+    </dialog>
+  ))}
+</section>
+
+<style>
+  .projets {
+    display: grid;
+    gap: 12px;
+    list-style: none;
+  }
+  .projet {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 24px;
+    padding: 26px 28px;
+    border-radius: var(--rayon-xl);
+    background: var(--carte);
+  }
+  .projet:hover {
+    outline: 1px solid var(--surface-2);
+  }
+  .projet:has(.ouvrir:focus-visible) {
+    outline: 2px solid var(--accent-trait);
+    outline-offset: 3px;
+  }
+  h3 {
+    margin: 4px 0 8px;
+    font-size: clamp(22px, 2.6vw, 30px);
+    line-height: 1.15;
+    font-weight: 700;
+    font-variation-settings: 'wdth' 112;
+    letter-spacing: -0.02em;
+  }
+  /* Le bouton du titre couvre toute la carte : un seul élément focusable par projet */
+  .ouvrir {
+    all: unset;
+    cursor: pointer;
+  }
+  .ouvrir::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+  .ouvrir:focus-visible {
+    outline: none;
+  }
+  .projet p {
+    max-width: 72ch;
+    color: var(--texte-attenue);
+  }
+  .projet :global(.pile) {
+    margin-top: 16px;
+  }
+  .fleche {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--rayon-pilule);
+    background: var(--accent);
+    color: var(--sur-accent);
+    font-size: 20px;
+    transition: background var(--duree-rapide);
+  }
+  .projet:hover .fleche {
+    background: var(--accent-survol);
+  }
+
+  /* Fiche d'un projet */
+  .fiche-projet {
+    width: min(720px, calc(100% - 32px));
+    max-height: calc(100% - 32px);
+    margin: auto;
+    padding: 0;
+    border: 0;
+    border-radius: var(--rayon-xl);
+    background: var(--carte);
+    color: var(--texte);
+  }
+  .fiche-projet[open] {
+    animation: fiche var(--duree-standard) var(--courbe-sortie);
+  }
+  .fiche-projet::backdrop {
+    background: rgba(0, 0, 0, 0.55);
+  }
+  .fiche-projet:focus {
+    outline: none;
+  }
+  @keyframes fiche {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.98);
+    }
+  }
+  .corps {
+    display: grid;
+    gap: 16px;
+    padding: 24px;
+  }
+  .entete {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 36px;
+    align-items: start;
+    gap: 12px;
+  }
+  .entete h3 {
+    margin: 2px 0 0;
+    font-size: clamp(22px, 3vw, 30px);
+  }
+  .fermer {
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: var(--rayon-sm);
+    background: transparent;
+    color: var(--texte-discret);
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .fermer:hover {
+    background: var(--surface-2);
+    color: var(--texte);
+  }
+  .zone-schema {
+    display: grid;
+    place-items: center;
+    padding: 24px 16px;
+    border-radius: var(--rayon-lg);
+    background: var(--page);
+  }
+  .texte {
+    color: var(--texte-attenue);
+  }
+
+  @media (max-width: 760px) {
+    .fiche-projet {
+      width: calc(100vw - 24px);
+      max-height: calc(100dvh - 24px);
+    }
+  }
+</style>

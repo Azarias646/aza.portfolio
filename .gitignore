@@ -1,2 +1,14 @@
+# Dépendances et constructions
+node_modules/
+dist/
+.astro/
+
+# Variables d'environnement locales
+.env
+.env.*
+!.env.example
+
+# Divers
+.DS_Store
 maquette/apercu/
-maquette/scripts/__pycache__/
+__pycache__/

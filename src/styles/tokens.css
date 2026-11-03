@@ -1,0 +1,86 @@
+/*
+ * Jetons du portfolio : design system aza-structure (v0.2.0) habillé en style « widgets ».
+ * Référence complète : maquette/COMPOSANTS.md, § 2.
+ *
+ * Chaque couleur est écrite une fois : light-dark(<clair>, <sombre>).
+ * Le thème suit le système (color-scheme: light dark) ; le bouton de thème force
+ * data-theme="light" ou "dark" sur <html>, ce qui fixe color-scheme.
+ */
+:root {
+  color-scheme: dark light;
+
+  /* Couleurs */
+  --page: light-dark(#ededef, #0b0b0c);
+  --surface: light-dark(#ffffff, #1c1c20);
+  --surface-2: light-dark(#f1f1f3, #2a2a30);
+  --filet: light-dark(#e2e2e6, #2a2a30);
+  --carte: linear-gradient(160deg, light-dark(#ffffff, #24242a) 0%, light-dark(#f6f6f8, #18181c) 100%);
+  --texte: light-dark(#141516, #f2f3f3);
+  --texte-attenue: light-dark(#5a5f63, #a3a6ab);
+  --texte-discret: light-dark(#6b7075, #8b8f95);
+  --accent: #1d5a4e;
+  --accent-survol: #256b5e;
+  --accent-texte: light-dark(#256b5e, #7ccbb7);
+  --accent-trait: light-dark(#2e7d6c, #7ccbb7);
+  --sur-accent: light-dark(#ffffff, #e6f4f0);
+  --filigrane: light-dark(#f5f5f7, #1a1a1e);
+
+  /* Barre de navigation, carte d'appel, pied de page */
+  --barre-fond: linear-gradient(180deg, light-dark(#ffffff, #1d1d21) 0%, light-dark(#f1f1f3, #101012) 100%);
+  --barre-bord: light-dark(rgba(0, 0, 0, 0.07), rgba(255, 255, 255, 0.08));
+  --barre-bord-bas: light-dark(rgba(0, 0, 0, 0.07), rgba(255, 255, 255, 0.03));
+  --barre-halo: light-dark(rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.07));
+  --lien-survol: light-dark(rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05));
+  --lien-actif: light-dark(rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.06));
+  --ico-fonce: light-dark(#7d8187, #8d9096);
+  --ico-moyen: #b8bbbf;
+  --ico-clair: light-dark(#b5b8bc, #d9dbdd);
+
+  /* PC de l'accueil (§ 3.17) */
+  --trait-pc: light-dark(rgba(0, 0, 0, 0.22), rgba(255, 255, 255, 0.13));
+  --filet-pc: light-dark(rgba(0, 0, 0, 0.15), rgba(255, 255, 255, 0.08));
+  --bord-pc: light-dark(rgba(0, 0, 0, 0.035), rgba(255, 255, 255, 0.03));
+  --balayage-pc: light-dark(rgba(0, 0, 0, 0.045), rgba(255, 255, 255, 0.025));
+  --points-pc: light-dark(rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.14));
+  --touche-cote: light-dark(rgba(0, 0, 0, 0.09), rgba(255, 255, 255, 0.03));
+  --touche-dessus: light-dark(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.07));
+
+  /* Rayons */
+  --rayon-sm: 10px;
+  --rayon-md: 16px;
+  --rayon-lg: 22px;
+  --rayon-xl: 28px;
+  --rayon-pilule: 999px;
+
+  /* Typographie */
+  --police: 'Roboto Flex Variable', 'Manrope', system-ui, sans-serif;
+  --police-terminal: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --taille-petit: 12.5px;
+  --taille-texte: 14.5px;
+
+  /* Mouvement */
+  --duree-rapide: 120ms;
+  --duree-standard: 220ms;
+  --duree-lente: 600ms;
+  --courbe-sortie: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --courbe-fondu: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --courbe-poussee: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Mise en page : contenu jusqu'à 1 520 px, marges qui suivent l'écran */
+  --largeur-max: 1520px;
+  --goutte: clamp(20px, 4vw, 56px);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+@media (max-width: 760px) {
+  :root {
+    --goutte: 16px;
+  }
+}

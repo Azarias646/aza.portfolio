@@ -1,0 +1,91 @@
+/*
+ * Navigation par écrans (§ 4.1 à 4.3 de maquette/COMPOSANTS.md).
+ * Ordinateur : un écran plein écran à la fois, poussée verticale entre deux écrans (script ecrans.ts).
+ * Téléphone (760 px et moins) : les écrans s'empilent et la page défile normalement.
+ * `.attente` masque le contenu d'un écran pas encore affiché ; le retirer le fait apparaître en fondu.
+ */
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.ecrans {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+}
+
+.ecran {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: grid;
+  align-content: safe center;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-block: 104px 56px;
+  background: var(--page);
+  visibility: hidden;
+  scrollbar-width: thin;
+}
+.ecran > * {
+  width: 100%;
+}
+.ecran.active {
+  z-index: 1;
+  visibility: visible;
+}
+.ecran.entree {
+  z-index: 2;
+  visibility: visible;
+}
+#accueil.ecran {
+  padding-top: 56px;
+}
+
+/* Apparition en fondu doux, élément par élément */
+.cascade {
+  transition:
+    opacity 1100ms var(--courbe-fondu),
+    transform 1300ms var(--courbe-sortie);
+  transition-delay: calc(260ms + var(--i, 0) * 110ms);
+}
+.anime .attente .cascade {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+@media (max-width: 760px) {
+  html,
+  body {
+    height: auto;
+    overflow: visible;
+  }
+  body {
+    display: block;
+  }
+  .ecrans {
+    overflow: visible;
+    padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+  }
+  .ecran,
+  .ecran.active,
+  .ecran.entree {
+    position: relative;
+    inset: auto;
+    display: block;
+    overflow: visible;
+    visibility: visible;
+    padding-block: 64px 40px;
+    scroll-margin-top: 76px;
+  }
+  #accueil.ecran {
+    padding-top: 8px;
+  }
+}

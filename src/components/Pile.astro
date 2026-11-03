@@ -1,0 +1,41 @@
+---
+/** Pilules des technologies d'un projet (§ 3.7) : logo et nom. */
+import Logo from './Logo.astro';
+import type { NomLogo } from '../data/logos';
+
+interface Props {
+  outils: readonly NomLogo[];
+}
+const { outils } = Astro.props;
+---
+
+<ul class="pile" aria-label="Technologies">
+  {outils.map((nom) => (
+    <li>
+      <Logo nom={nom} />
+      {nom}
+    </li>
+  ))}
+</ul>
+
+<style>
+  .pile {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    list-style: none;
+  }
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px 7px 10px;
+    border-radius: var(--rayon-pilule);
+    background: var(--surface-2);
+    font-size: var(--taille-petit);
+  }
+  li :global(svg.logo) {
+    width: 14px;
+    height: 14px;
+  }
+</style>

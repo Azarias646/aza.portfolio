@@ -1,0 +1,74 @@
+---
+/**
+ * Mise en page commune : <head> (SEO, partage, thème, analytics), barre de navigation,
+ * conteneur des écrans et repères. Les scripts du site sont chargés une seule fois, en module.
+ */
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Points from '../components/Points.astro';
+import { site } from '../data/site';
+import { PUBLIC_CF_BEACON_TOKEN, PUBLIC_UMAMI_SRC, PUBLIC_UMAMI_WEBSITE_ID } from 'astro:env/client';
+
+interface Props {
+  titre?: string;
+  description?: string;
+}
+const { titre = `${site.nom} — ${site.roles.join(' · ')}`, description = site.description } = Astro.props;
+const canonique = new URL(Astro.url.pathname, Astro.site);
+const mesurer = import.meta.env.PROD;
+---
+
+<!doctype html>
+<html lang={site.langue}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{titre}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonique} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b0b0c" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ededef" />
+
+    <!-- Partage (LinkedIn, WhatsApp…) ; l'image d'aperçu viendra à l'étape SEO -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:title" content={titre} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonique} />
+    <meta name="twitter:card" content="summary" />
+
+    <!-- Thème choisi appliqué avant l'affichage, pour éviter un flash de l'autre thème -->
+    <script is:inline>
+      try {
+        const t = localStorage.getItem('theme');
+        if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+      } catch {}
+    </script>
+    {mesurer && PUBLIC_UMAMI_SRC && PUBLIC_UMAMI_WEBSITE_ID && (
+      <script is:inline defer src={PUBLIC_UMAMI_SRC} data-website-id={PUBLIC_UMAMI_WEBSITE_ID} />
+    )}
+    {mesurer && PUBLIC_CF_BEACON_TOKEN && (
+      <script
+        is:inline
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={JSON.stringify({ token: PUBLIC_CF_BEACON_TOKEN })}
+      />
+    )}
+  </head>
+  <body>
+    <a class="aller-contenu" href="#contenu">
+      Aller au contenu
+    </a>
+    <Nav />
+    <main class="ecrans" id="contenu" tabindex="-1">
+      <slot />
+    </main>
+    <Points />
+    <script>
+      import '../scripts/main.ts';
+    </script>
+  </body>
+</html>

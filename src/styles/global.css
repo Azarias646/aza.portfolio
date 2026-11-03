@@ -1,0 +1,124 @@
+/* Base commune : remise à zéro, typographie, utilitaires partagés par plusieurs composants. */
+@import '@fontsource-variable/roboto-flex/wdth.css';
+@import './tokens.css';
+@import './ecrans.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--page);
+  color: var(--texte);
+  font-family: var(--police);
+  font-size: var(--taille-texte);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+img,
+svg {
+  display: block;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-trait);
+  outline-offset: 3px;
+  border-radius: var(--rayon-sm);
+}
+
+/* Lien d'évitement : visible seulement au clavier */
+.aller-contenu {
+  position: absolute;
+  left: 12px;
+  top: -100px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: var(--rayon-pilule);
+  background: var(--accent);
+  color: var(--sur-accent);
+  font-weight: 600;
+}
+.aller-contenu:focus-visible {
+  top: 12px;
+}
+
+.wrap {
+  max-width: var(--largeur-max);
+  margin: 0 auto;
+  padding-left: max(var(--goutte), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--goutte), env(safe-area-inset-right, 0px));
+}
+
+.petit {
+  font-size: var(--taille-petit);
+  color: var(--texte-attenue);
+}
+
+/* Logos (Simple Icons) : en aplat, ou au trait pour les icônes dessinées */
+svg.logo {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  fill: currentColor;
+}
+svg.logo.trace {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Icônes bicolores de la navigation */
+.ico {
+  width: 22px;
+  height: 22px;
+  flex: none;
+}
+.ico :is(path, circle) {
+  fill: var(--ico-fonce);
+}
+.ico .moyen {
+  fill: var(--ico-moyen);
+}
+.ico .clair {
+  fill: var(--ico-clair);
+}
+
+h2 {
+  font-size: clamp(32px, 4.5vw, 48px);
+  line-height: 1.05;
+  font-weight: 700;
+  font-variation-settings: 'wdth' 125;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
