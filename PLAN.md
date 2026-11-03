@@ -42,8 +42,8 @@ En résumé : design system `aza-structure` 0.2.0 (vert `#1D5A4E`, Roboto Flex, 
 | JavaScript | Natif, sans jQuery (navigation par écrans, version mobile, fenêtres, thème) |
 | SEO | Sitemap + balises Open Graph |
 | Qualité | Prettier + Lighthouse CI (objectif > 90) |
-| Mise en ligne | **Cloudflare (validé)** : Cloudflare Pages (gratuit) + domaine propre acheté chez Cloudflare Registrar (~10–20 €/an, seul coût) + DNS Cloudflare. HTTPS automatique, redirection `www`, reconstruction à chaque push sur `main`, aperçu de chaque branche. E-mail au nom du domaine possible via Cloudflare Email Routing (renvoi vers Gmail) |
-| Analytics | **Fait partie de la mise en ligne** (actif dès le premier jour). Sans cookies, donc sans bandeau de consentement. Outil à choisir : Cloudflare Web Analytics (visites, gratuit, rien à héberger) et/ou Umami auto-hébergé (événements détaillés, données dans PostgreSQL) |
+| Mise en ligne | **Cloudflare (validé)** : Cloudflare Pages (gratuit) + domaine **`azarias-sawadogo.me`** (disponibilité vérifiée), acheté chez Cloudflare Registrar (seul coût, ~10–20 €/an) + DNS Cloudflare. HTTPS automatique, redirection `www`, reconstruction à chaque push sur `main`, aperçu de chaque branche. E-mail au nom du domaine possible via Cloudflare Email Routing (renvoi vers Gmail) |
+| Analytics | **Fait partie de la mise en ligne** (actif dès le premier jour), sans cookies donc sans bandeau de consentement. **Principal : auto-hébergé sur ton infra (homelab)** — outil proposé : Umami + PostgreSQL en Docker, exposé en `stats.azarias-sawadogo.me` par un tunnel Cloudflare (aucun port ouvert chez toi), script servi depuis ton domaine pour limiter les bloqueurs de pubs. **Secondaire : Cloudflare Web Analytics**, seulement pour comparer les chiffres |
 
 ## 5. Étapes
 
@@ -55,9 +55,9 @@ En résumé : design system `aza-structure` 0.2.0 (vert `#1D5A4E`, Roboto Flex, 
 6. Accessibilité & perf : contrastes, alt des images, score Lighthouse > 90.
 7. **Mise en ligne et analytics, en même temps :**
    - acheter le nom de domaine chez Cloudflare et y relier le projet Cloudflare Pages (HTTPS, redirection `www`) ;
-   - mettre en place l'outil d'analytics et vérifier, sur l'aperçu de la branche, que chaque événement remonte bien ;
+   - installer l'analytics sur le homelab (Docker : outil + PostgreSQL, tunnel Cloudflare vers `stats.azarias-sawadogo.me`), activer Cloudflare Web Analytics pour la comparaison, et vérifier sur l'aperçu de la branche que chaque événement remonte bien ;
    - publier : fusion `new` → `main`, qui remplace la v1 ;
-   - une semaine après : premier point sur les chiffres.
+   - une semaine après : premier point sur les chiffres, et comparaison avec Cloudflare Web Analytics.
 
 ## 5 bis. Analytics : ce qu'on mesure
 
@@ -71,6 +71,5 @@ En résumé : design system `aza-structure` 0.2.0 (vert `#1D5A4E`, Roboto Flex, 
 
 - Valider les niveaux de maîtrise des outils (tableau `fiches` de `maquette/index.html`).
 - Nom de l'établissement du master IA (sous-titre du parcours).
-- Nom du domaine (disponibilité à vérifier chez Cloudflare Registrar).
-- Outil d'analytics : Cloudflare Web Analytics, Umami sur le homelab, ou les deux ; valider la liste des mesures du § 5 bis.
+- Outil d'analytics auto-hébergé : valider Umami (ou un autre) ; valider la liste des mesures du § 5 bis.
 - Reporter les écarts assumés dans `aza-structure` (voir § 6 de `maquette/COMPOSANTS.md`).
