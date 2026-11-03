@@ -42,7 +42,7 @@ En résumé : design system `aza-structure` 0.2.0 (vert `#1D5A4E`, Roboto Flex, 
 | JavaScript | Natif, sans jQuery (navigation par écrans, version mobile, fenêtres, thème) |
 | SEO | Sitemap + balises Open Graph |
 | Qualité | Prettier + Lighthouse CI (objectif > 90) |
-| Mise en ligne | Hébergeur gratuit + nom de domaine propre (pas de sous-domaine). Recommandé : **Cloudflare Pages** + domaine chez Cloudflare Registrar (~10–20 €/an, seul coût) — **à valider**. Reconstruction à chaque push sur `main`, aperçu de chaque branche |
+| Mise en ligne | **Cloudflare (validé)** : Cloudflare Pages (gratuit) + domaine propre acheté chez Cloudflare Registrar (~10–20 €/an, seul coût) + DNS Cloudflare. HTTPS automatique, redirection `www`, reconstruction à chaque push sur `main`, aperçu de chaque branche. E-mail au nom du domaine possible via Cloudflare Email Routing (renvoi vers Gmail) |
 | Analytics | **Fait partie de la mise en ligne** (actif dès le premier jour). Sans cookies, donc sans bandeau de consentement. Outil à choisir : Cloudflare Web Analytics (visites, gratuit, rien à héberger) et/ou Umami auto-hébergé (événements détaillés, données dans PostgreSQL) |
 
 ## 5. Étapes
@@ -54,7 +54,7 @@ En résumé : design system `aza-structure` 0.2.0 (vert `#1D5A4E`, Roboto Flex, 
 5. SEO & partage : balises meta, Open Graph (aperçu LinkedIn/WhatsApp), favicon.
 6. Accessibilité & perf : contrastes, alt des images, score Lighthouse > 90.
 7. **Mise en ligne et analytics, en même temps :**
-   - acheter le nom de domaine et le brancher à l'hébergeur (HTTPS, redirection `www`) ;
+   - acheter le nom de domaine chez Cloudflare et y relier le projet Cloudflare Pages (HTTPS, redirection `www`) ;
    - mettre en place l'outil d'analytics et vérifier, sur l'aperçu de la branche, que chaque événement remonte bien ;
    - publier : fusion `new` → `main`, qui remplace la v1 ;
    - une semaine après : premier point sur les chiffres.
@@ -71,6 +71,6 @@ En résumé : design system `aza-structure` 0.2.0 (vert `#1D5A4E`, Roboto Flex, 
 
 - Valider les niveaux de maîtrise des outils (tableau `fiches` de `maquette/index.html`).
 - Nom de l'établissement du master IA (sous-titre du parcours).
-- Hébergeur (recommandé : Cloudflare Pages) et nom du domaine (disponibilité à vérifier).
+- Nom du domaine (disponibilité à vérifier chez Cloudflare Registrar).
 - Outil d'analytics : Cloudflare Web Analytics, Umami sur le homelab, ou les deux ; valider la liste des mesures du § 5 bis.
 - Reporter les écarts assumés dans `aza-structure` (voir § 6 de `maquette/COMPOSANTS.md`).
