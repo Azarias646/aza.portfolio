@@ -47,7 +47,7 @@ En résumé : design system `aza-structure` 0.2.0 (vert `#1D5A4E`, Roboto Flex, 
 
 ## 5. Étapes
 
-1. ~~Valider la maquette~~ — **fait** : la maquette widgets est la maquette finale, version téléphone comprise (passe mobile validée : défilement normal, barre d'onglets en bas, voir § 4.3 de `maquette/COMPOSANTS.md`). Reste seulement à valider les niveaux de maîtrise des outils.
+1. ~~Valider la maquette~~ — **fait** : la maquette widgets est la maquette finale, version téléphone comprise (passe mobile validée : défilement normal, barre d'onglets en bas, voir § 4.3 de `maquette/COMPOSANTS.md`). Niveaux de maîtrise des outils validés (sauf Jinja, OSINT, GEOINT).
 2. ~~Choisir la stack~~ — **fait** : Astro (voir § 4).
 3. **Prochaine étape** — initialiser le projet Astro sur la branche `new` et reprendre la maquette widgets en composants, avec les projets et le parcours en fichiers Markdown. Les composants sont **marqués dès cette étape pour l'analytics** (attributs d'événement sur les boutons, liens et fiches), pour qu'aucun suivi ne soit à rajouter après coup.
 4. Rédiger les études de cas des 4 projets + compléter le parcours.
@@ -69,7 +69,7 @@ En résumé : design system `aza-structure` 0.2.0 (vert `#1D5A4E`, Roboto Flex, 
 
 ## 6. Reste à décider
 
-- Valider les niveaux de maîtrise des outils (tableau `fiches` de `maquette/index.html`).
+- Confirmer les niveaux de Jinja, OSINT et GEOINT (les autres outils sont validés).
 - Nom de l'établissement du master IA (sous-titre du parcours).
 - Valider la liste des mesures de l'analytics (§ 5 bis).
 - Reporter les écarts assumés dans `aza-structure` (voir § 6 de `maquette/COMPOSANTS.md`).

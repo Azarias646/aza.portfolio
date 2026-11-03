@@ -355,7 +355,10 @@ Sur téléphone, le site ne fonctionne plus en écrans plein écran : la page d�
 
 ## 5. Contenu et données
 
-- Niveaux de maîtrise : tableau `fiches` dans le script de `index.html` (texte + niveau 1 à 3). **Les niveaux sont des propositions à valider.**
+- Niveaux de maîtrise : tableau `fiches` dans le script de `index.html` (texte + niveau 1 Notions, 2 Opérationnel, 3 Avancé). **Validés** :
+  - Opérationnel : Python, PostgreSQL, MySQL, MongoDB, Spark, Airflow, MinIO, Docker, Linux, Debian, Ubuntu, Tailscale, Git, Django ;
+  - Notions : Caddy, Flutter, JavaScript, n8n ;
+  - encore à confirmer (valeurs actuelles) : Jinja (Opérationnel), OSINT (Opérationnel), GEOINT (Notions).
 - Schémas des projets : un SVG par projet, dans le `<template class="schema-src">` de chaque carte projet de `index.html`. Classes : `n` (bloc), `n a` (bloc principal), `l` (lien), `l a` (lien principal), `pointille`.
 
 ---
