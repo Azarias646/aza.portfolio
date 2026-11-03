@@ -1,5 +1,6 @@
 /* Base commune : remise à zéro, typographie, utilitaires partagés par plusieurs composants. */
-@import '@fontsource-variable/roboto-flex/wdth.css';
+/* Roboto Flex avec les axes opsz, wdth et wght, comme la maquette (Google Fonts : opsz,wdth,wght) */
+@import '@fontsource-variable/roboto-flex/standard.css';
 @import './tokens.css';
 @import './ecrans.css';
 

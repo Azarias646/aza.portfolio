@@ -9,7 +9,7 @@ En ligne (bientôt) sur **https://azarias-sawadogo.me**.
 ## Stack
 
 [Astro](https://astro.build) (site statique), CSS natif, TypeScript strict, JavaScript natif sans dépendance.
-Police Roboto Flex auto-hébergée. Mise en ligne sur Cloudflare Pages ; analytics Umami (auto-hébergé) et
+Police Roboto Flex auto-hébergée, avec les mêmes axes que la maquette (taille optique `opsz`, largeur `wdth`, graisse `wght`). Mise en ligne sur Cloudflare Pages ; analytics Umami (auto-hébergé) et
 Cloudflare Web Analytics.
 
 ## Commandes
