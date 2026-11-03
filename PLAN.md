@@ -42,22 +42,35 @@ En résumé : design system `aza-structure` 0.2.0 (vert `#1D5A4E`, Roboto Flex, 
 | JavaScript | Natif, sans jQuery (navigation par écrans, version mobile, fenêtres, thème) |
 | SEO | Sitemap + balises Open Graph |
 | Qualité | Prettier + Lighthouse CI (objectif > 90) |
-| Mise en ligne | GitHub Pages via GitHub Actions (reconstruction à chaque push sur `main`) |
-| Analytics | Souhaité ; outil à choisir plus tard (piste : Umami auto-hébergé, sans cookies). S'ajoute par un script, sans impact sur la stack |
+| Mise en ligne | Hébergeur gratuit + nom de domaine propre (pas de sous-domaine). Recommandé : **Cloudflare Pages** + domaine chez Cloudflare Registrar (~10–20 €/an, seul coût) — **à valider**. Reconstruction à chaque push sur `main`, aperçu de chaque branche |
+| Analytics | **Fait partie de la mise en ligne** (actif dès le premier jour). Sans cookies, donc sans bandeau de consentement. Outil à choisir : Cloudflare Web Analytics (visites, gratuit, rien à héberger) et/ou Umami auto-hébergé (événements détaillés, données dans PostgreSQL) |
 
 ## 5. Étapes
 
 1. ~~Valider la maquette~~ — **fait** : la maquette widgets est la maquette finale, version téléphone comprise (passe mobile validée : défilement normal, barre d'onglets en bas, voir § 4.3 de `maquette/COMPOSANTS.md`). Reste seulement à valider les niveaux de maîtrise des outils.
 2. ~~Choisir la stack~~ — **fait** : Astro (voir § 4).
-3. **Prochaine étape** — initialiser le projet Astro sur la branche `new` et reprendre la maquette widgets en composants, avec les projets et le parcours en fichiers Markdown.
+3. **Prochaine étape** — initialiser le projet Astro sur la branche `new` et reprendre la maquette widgets en composants, avec les projets et le parcours en fichiers Markdown. Les composants sont **marqués dès cette étape pour l'analytics** (attributs d'événement sur les boutons, liens et fiches), pour qu'aucun suivi ne soit à rajouter après coup.
 4. Rédiger les études de cas des 4 projets + compléter le parcours.
 5. SEO & partage : balises meta, Open Graph (aperçu LinkedIn/WhatsApp), favicon.
 6. Accessibilité & perf : contrastes, alt des images, score Lighthouse > 90.
-7. Déploiement sur GitHub Pages, puis remplacer la v1 (merge `new` → `main`).
+7. **Mise en ligne et analytics, en même temps :**
+   - acheter le nom de domaine et le brancher à l'hébergeur (HTTPS, redirection `www`) ;
+   - mettre en place l'outil d'analytics et vérifier, sur l'aperçu de la branche, que chaque événement remonte bien ;
+   - publier : fusion `new` → `main`, qui remplace la v1 ;
+   - une semaine après : premier point sur les chiffres.
+
+## 5 bis. Analytics : ce qu'on mesure
+
+- **Visites :** pages vues, visiteurs, pays, appareil, provenance (LinkedIn, GitHub, WhatsApp, Google, lien du CV).
+- **Événements :** téléchargement du CV ; clic « Me contacter » ; copie de l'e-mail ; clic « écrire » ; ouverture de chaque fiche projet ; ouverture de chaque fiche outil ; onglet du Parcours consulté ; section vue (Moi, À propos, Projets, Parcours, Contact) ; clics vers LinkedIn, GitHub et WhatsApp ; changement de thème.
+- **Parcours :** accueil → fiche projet → Contact.
+- **Campagnes :** liens marqués (`?utm_source=cv`, `?utm_source=linkedin`…) pour savoir d'où viennent les contacts.
+- **Plus loin (projet data) :** export quotidien des données Umami vers le lakehouse (MinIO, Airflow, Spark) et page « le site en chiffres ».
 
 ## 6. Reste à décider
 
 - Valider les niveaux de maîtrise des outils (tableau `fiches` de `maquette/index.html`).
 - Nom de l'établissement du master IA (sous-titre du parcours).
-- Outil d'analytics (hébergement : homelab ou service en ligne ; nom de domaine éventuel) et liste des événements à mesurer.
+- Hébergeur (recommandé : Cloudflare Pages) et nom du domaine (disponibilité à vérifier).
+- Outil d'analytics : Cloudflare Web Analytics, Umami sur le homelab, ou les deux ; valider la liste des mesures du § 5 bis.
 - Reporter les écarts assumés dans `aza-structure` (voir § 6 de `maquette/COMPOSANTS.md`).
