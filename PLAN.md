@@ -59,16 +59,45 @@ En résumé : design system `aza-structure` 0.2.0 (vert `#1D5A4E`, Roboto Flex, 
    - publier : fusion `new` → `main`, qui remplace la v1 ;
    - une semaine après : premier point sur les chiffres, et comparaison avec Cloudflare Web Analytics.
 
-## 5 bis. Analytics : ce qu'on mesure
+## 5 bis. Analytics : ce qu'on mesure (validé)
 
-- **Visites :** pages vues, visiteurs, pays, appareil, provenance (LinkedIn, GitHub, WhatsApp, Google, lien du CV).
-- **Événements :** téléchargement du CV ; clic « Me contacter » ; copie de l'e-mail ; clic « écrire » ; ouverture de chaque fiche projet ; ouverture de chaque fiche outil ; onglet du Parcours consulté ; section vue (Moi, À propos, Projets, Parcours, Contact) ; clics vers LinkedIn, GitHub et WhatsApp ; changement de thème.
-- **Parcours :** accueil → fiche projet → Contact.
-- **Campagnes :** liens marqués (`?utm_source=cv`, `?utm_source=linkedin`…) pour savoir d'où viennent les contacts.
-- **Plus loin (projet data) :** export quotidien des données Umami vers le lakehouse (MinIO, Airflow, Spark) et page « le site en chiffres ».
+Sans cookies, sans adresse IP conservée, sans contenu saisi. Chaque bouton porte un attribut `data-umami-event="…"` (+ `data-umami-event-<détail>`), posé dans les composants Astro.
+
+**1. Automatique (Umami) :** visiteurs et visites, provenance (LinkedIn, GitHub, Google, WhatsApp, direct), pays et langue, appareil / navigateur / système, liens marqués `?utm_source=…` (cv, linkedin, candidature…).
+
+**2. Événements essentiels (contact et intérêt)**
+
+| Événement | Détail | Question |
+|---|---|---|
+| `cv-telechargement` | endroit (accueil, pied de page) | Combien téléchargent le CV ? |
+| `contact-clic` | — | Le bouton « Me contacter » fonctionne-t-il ? |
+| `email-copie` | — | Combien récupèrent l'e-mail ? |
+| `email-ecrire` | — | Combien ouvrent leur messagerie ? |
+| `reseau-clic` | linkedin / github / whatsapp + endroit | Quel réseau pour te joindre ? |
+| `projet-ouverture` | projet | Quel projet intéresse le plus ? |
+
+**3. Engagement**
+
+| Événement | Détail | Question |
+|---|---|---|
+| `section-vue` | Moi / À propos / Projets / Parcours / Contact | Jusqu'où vont-ils, où décrochent-ils ? |
+| `outil-ouverture` | outil | Quelles compétences vérifient-ils ? |
+| `parcours-onglet` | Expérience / Cursus | Expérience ou diplômes ? |
+| `etude-cas-lecture` | projet | Les études de cas sont-elles lues ? |
+
+**4. Compléments (inclus)**
+
+| Événement | Détail | Question |
+|---|---|---|
+| `theme-changement` | clair / sombre / auto | Quel thème préfèrent-ils ? |
+| `section-temps` | section + durée par tranche (< 5 s, 5–15 s, 15–60 s, > 60 s), envoyé en quittant la section | Où passent-ils du temps ? |
+| `projet-temps` | projet + durée par tranche, envoyé à la fermeture de la fiche | Lisent-ils vraiment la fiche et le schéma ? |
+
+**Indicateurs suivis chaque mois :** taux de contact ((`email-copie` + `email-ecrire` + `reseau-clic` whatsapp) / visiteurs), téléchargements du CV, projet le plus ouvert, provenance des visiteurs qui contactent, décrochage par section.
+
+**Plus loin (projet data) :** export quotidien des données Umami vers le lakehouse (MinIO, Airflow, Spark) et page « le site en chiffres ».
 
 ## 6. Reste à décider
 
 - Nom de l'établissement du master IA (sous-titre du parcours).
-- Valider la liste des mesures de l'analytics (§ 5 bis).
 - Reporter les écarts assumés dans `aza-structure` (voir § 6 de `maquette/COMPOSANTS.md`).
