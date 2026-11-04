@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://azarias-sawadogo.me',
   trailingSlash: 'ignore',
-  integrations: [sitemap()],
+  integrations: [sitemap({ filter: (page) => !page.includes('/404') })],
   build: {
     // Petites feuilles de style intégrées à la page : une requête de moins au premier affichage.
     inlineStylesheets: 'auto',

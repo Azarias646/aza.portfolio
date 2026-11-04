@@ -42,7 +42,8 @@ src/
 ├── layouts/Base.astro   <head> (SEO, partage, thème, analytics), barre, écrans
 ├── scripts/             navigation par écrans, thème, fiches, boutons, analytics
 └── styles/              jetons (tokens.css), base (global.css), écrans (ecrans.css)
-public/                  fichiers servis tels quels (CV, favicon, robots.txt)
+public/                  fichiers servis tels quels (CV, favicon, icônes, manifeste, robots.txt, og.png)
+docs/og/                 sources de l'image d'aperçu et des icônes (voir docs/og/README.md)
 maquette/                maquette validée et sa documentation (référence, non publiée)
 archive/v1/              ancien portfolio, conservé pour mémoire
 ```

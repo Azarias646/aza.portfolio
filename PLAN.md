@@ -54,7 +54,7 @@ En résumé : design system `aza-structure` 0.2.0 (vert `#1D5A4E`, Roboto Flex, 
    - **Tranche 2 (validée, testée sur iPhone 12)** : les cinq projets, À propos (bento, fiche des outils avec jauge), Parcours (onglets, cartes illustrées), Contact (carte d'appel, copie de l'e-mail) et pied de page. Outils en YAML, étapes du parcours en Markdown. Tous les événements d'analytics prévus sont posés.
    - À faire à part : copier `docs/ci-github-actions.yml` dans `.github/workflows/ci.yml` (la session n'a pas le droit de créer ce fichier).
 4. ~~Études de cas~~ — **abandonné** : les projets restent comme dans la maquette (carte + fiche avec schéma), sans page dédiée.
-5. SEO & partage : balises meta, Open Graph (aperçu LinkedIn/WhatsApp), favicon.
+5. **En cours** — SEO & partage : balises meta, Open Graph (aperçu LinkedIn/WhatsApp), données structurées (schema.org Person), icônes iPhone / Android et manifeste, page 404, sitemap sans la 404. Image d'aperçu `public/og.png` à valider avant d'être branchée.
 6. Accessibilité & perf : contrastes, alt des images, score Lighthouse > 90.
 7. **Mise en ligne et analytics, en même temps :**
    - acheter le nom de domaine chez Cloudflare et y relier le projet Cloudflare Pages (HTTPS, redirection `www`) ;

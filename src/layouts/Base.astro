@@ -12,10 +12,39 @@ import { PUBLIC_CF_BEACON_TOKEN, PUBLIC_UMAMI_SRC, PUBLIC_UMAMI_WEBSITE_ID } fro
 interface Props {
   titre?: string;
   description?: string;
+  /** Page secondaire (404…) : pas de repères d'écran, liens de la barre vers la page d'accueil, non indexée. */
+  secondaire?: boolean;
 }
-const { titre = `${site.nom} — ${site.roles.join(' · ')}`, description = site.description } = Astro.props;
+const {
+  titre = `${site.nom} — ${site.roles.join(' · ')}`,
+  description = site.description,
+  secondaire = false,
+} = Astro.props;
 const canonique = new URL(Astro.url.pathname, Astro.site);
 const mesurer = import.meta.env.PROD;
+
+// Données structurées (schema.org) : aident Google à reconnaître la personne et ses profils
+const personne = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.nom,
+  url: Astro.site?.href,
+  jobTitle: site.roles[0],
+  description,
+  email: `mailto:${site.email}`,
+  knowsAbout: [
+    'Data engineering',
+    'Bases de données',
+    'PostgreSQL',
+    'Python',
+    'Apache Spark',
+    'Apache Airflow',
+    'Docker',
+    'Linux',
+  ],
+  alumniOf: { '@type': 'CollegeOrUniversity', name: 'Université de l’Unité Africaine' },
+  sameAs: site.reseaux.filter((r) => r.nom !== 'WhatsApp').map((r) => r.url),
+};
 ---
 
 <!doctype html>
@@ -27,17 +56,22 @@ const mesurer = import.meta.env.PROD;
     <meta name="description" content={description} />
     <link rel="canonical" href={canonique} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icone-180.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    {secondaire && <meta name="robots" content="noindex" />}
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b0b0c" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ededef" />
 
-    <!-- Partage (LinkedIn, WhatsApp…) ; l'image d'aperçu viendra à l'étape SEO -->
+    <!-- Partage (LinkedIn, WhatsApp…) -->
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_FR" />
     <meta property="og:title" content={titre} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonique} />
+    <meta property="og:site_name" content={site.nom} />
     <meta name="twitter:card" content="summary" />
+    {!secondaire && <script type="application/ld+json" set:html={JSON.stringify(personne)} />}
 
     <!-- Thème choisi appliqué avant l'affichage, pour éviter un flash de l'autre thème -->
     <script is:inline>
@@ -62,11 +96,11 @@ const mesurer = import.meta.env.PROD;
     <a class="aller-contenu" href="#contenu">
       Aller au contenu
     </a>
-    <Nav />
+    <Nav lienAccueil={secondaire ? '/' : ''} />
     <main class="ecrans" id="contenu" tabindex="-1">
       <slot />
     </main>
-    <Points />
+    {!secondaire && <Points />}
     <script>
       import '../scripts/main.ts';
     </script>

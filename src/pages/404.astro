@@ -1,0 +1,67 @@
+---
+/** Page introuvable : servie par Cloudflare Pages pour toute adresse inconnue. */
+import Base from '../layouts/Base.astro';
+import Bouton from '../components/Bouton.astro';
+---
+
+<Base titre="Page introuvable — Azarias Sawadogo" description="Cette page n’existe pas." secondaire>
+  <section class="introuvable wrap" aria-labelledby="titre-404">
+    <p class="invite" aria-hidden="true">
+      <span>~</span> $ cd page-demandee
+    </p>
+    <p class="erreur" aria-hidden="true">
+      cd: aucun fichier ou dossier de ce nom
+    </p>
+    <h1 id="titre-404">
+      <span class="barre" aria-hidden="true">
+        /
+      </span>
+      Page introuvable
+    </h1>
+    <p class="texte">
+      Le lien est peut-être ancien ou mal recopié. Tout le portfolio tient sur une seule page.
+    </p>
+    <Bouton href="/">Retour à l’accueil</Bouton>
+  </section>
+</Base>
+
+<style>
+  .introuvable {
+    display: grid;
+    justify-items: start;
+    align-content: center;
+    gap: 16px;
+    min-height: 100%;
+    padding-block: 48px;
+  }
+  .invite,
+  .erreur {
+    font: 500 14px / 1.4 var(--police-terminal);
+    color: var(--texte-discret);
+  }
+  .invite span {
+    color: var(--accent-trait);
+  }
+  .erreur {
+    margin-top: -10px;
+    color: var(--accent-trait);
+  }
+  h1 {
+    font-size: clamp(40px, 7vw, 80px);
+    line-height: 1;
+    font-weight: 700;
+    font-variation-settings: 'wdth' 125;
+    letter-spacing: -0.04em;
+  }
+  .barre {
+    margin-right: 0.12em;
+    color: var(--accent-texte);
+    font-weight: 500;
+  }
+  .texte {
+    max-width: 48ch;
+    margin-bottom: 12px;
+    color: var(--texte-attenue);
+    font-size: 17px;
+  }
+</style>

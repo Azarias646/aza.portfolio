@@ -7,17 +7,22 @@ import Icone from './Icone.astro';
 import { ecrans, site } from '../data/site';
 import type { NomIcone } from '../data/icones';
 
+interface Props {
+  /** Préfixe des liens : '' sur la page d'accueil, '/' sur une page secondaire. */
+  lienAccueil?: string;
+}
+const { lienAccueil = '' } = Astro.props;
 const liens = ecrans.filter((e) => e.id !== 'accueil') as ReadonlyArray<{ id: NomIcone; nom: string }>;
 ---
 
 <nav class="barre" aria-label="Navigation principale">
   <div class="wrap">
-    <a href="#accueil" class="marque">
+    <a href={`${lienAccueil}#accueil`} class="marque">
       {site.prenom}
     </a>
     <div class="liens">
       {liens.map((l) => (
-        <a href={`#${l.id}`}>
+        <a href={`${lienAccueil}#${l.id}`}>
           <Icone nom={l.id} />
           <span>{l.nom}</span>
         </a>
