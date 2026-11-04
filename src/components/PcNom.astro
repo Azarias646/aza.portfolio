@@ -276,8 +276,11 @@ const f = (n: number) => n.toFixed(1);
     }
   }
   @media (max-width: 760px) {
+    /* Téléphone : le PC est centré dans la page */
     .pc {
-      margin-bottom: 88px;
+      display: block;
+      width: fit-content;
+      margin: 22px auto 88px;
     }
   }
 </style>
