@@ -22,5 +22,3 @@ schema:
   etiquettes:
     - { texte: Accès distant, x: 180, y: 12 }
 ---
-
-<!-- Étude de cas (à rédiger, étape 4 du plan) : contexte, problème, architecture, ce que j'ai fait, résultats. -->

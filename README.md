@@ -33,7 +33,7 @@ Node.js 22.22 ou plus (voir `.nvmrc`).
 
 ```
 src/
-├── content/projets/     un fichier Markdown par projet (voir ci-dessous)
+├── content/projets/     un fichier Markdown par projet (carte et fiche ; voir ci-dessous)
 ├── content/parcours/    un fichier Markdown par étape du parcours
 ├── content/outils.yaml  outils d'« À propos » par groupe, avec description et niveau
 ├── content.config.ts    schéma des contenus : un champ manquant ou faux bloque la construction
@@ -66,8 +66,6 @@ schema: # schéma de la fiche (viewBox 360 × 170)
   liens:
     - { trace: 'M86 36 C104 36 104 84 118 84' }
 ---
-
-Texte de l'étude de cas (à venir).
 ```
 
 Pour **retirer** un projet : supprimer le fichier, ou mettre `brouillon: true`.

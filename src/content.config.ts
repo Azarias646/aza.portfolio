@@ -26,7 +26,7 @@ const etiquette = z.object({ texte: z.string(), x: z.number(), y: z.number() });
 
 /**
  * Projets : un fichier Markdown par projet dans `src/content/projets/`.
- * Le corps du fichier (facultatif) deviendra la page d'étude de cas.
+ * Seul l'en-tête (frontmatter) est utilisé : il alimente la carte et la fiche du projet.
  */
 const projets = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/projets' }),

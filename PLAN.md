@@ -53,7 +53,7 @@ En résumé : design system `aza-structure` 0.2.0 (vert `#1D5A4E`, Roboto Flex, 
    - **Tranche 1 (validée)** : base du projet (Astro, TypeScript strict, Prettier, CI GitHub), mise en page, barre de navigation, repères, thème, accueil avec le PC, écran Projets avec le projet ERP (fiche et schéma), version téléphone, analytics branché. Ancien site rangé dans `archive/v1/`.
    - **Tranche 2 (validée, testée sur iPhone 12)** : les cinq projets, À propos (bento, fiche des outils avec jauge), Parcours (onglets, cartes illustrées), Contact (carte d'appel, copie de l'e-mail) et pied de page. Outils en YAML, étapes du parcours en Markdown. Tous les événements d'analytics prévus sont posés.
    - À faire à part : copier `docs/ci-github-actions.yml` dans `.github/workflows/ci.yml` (la session n'a pas le droit de créer ce fichier).
-4. **En cours** — rédiger les études de cas des 5 projets (une page par projet : contexte, problème, architecture, ce que j'ai fait, résultats, stack) + compléter le parcours.
+4. ~~Études de cas~~ — **abandonné** : les projets restent comme dans la maquette (carte + fiche avec schéma), sans page dédiée.
 5. SEO & partage : balises meta, Open Graph (aperçu LinkedIn/WhatsApp), favicon.
 6. Accessibilité & perf : contrastes, alt des images, score Lighthouse > 90.
 7. **Mise en ligne et analytics, en même temps :**
@@ -86,7 +86,6 @@ Sans cookies, sans adresse IP conservée, sans contenu saisi. Chaque bouton port
 | `section-vue` | Moi / À propos / Projets / Parcours / Contact | Jusqu'où vont-ils, où décrochent-ils ? |
 | `outil-ouverture` | outil | Quelles compétences vérifient-ils ? |
 | `parcours-onglet` | Expérience / Cursus | Expérience ou diplômes ? |
-| `etude-cas-lecture` | projet | Les études de cas sont-elles lues ? |
 
 **4. Compléments (inclus)**
 

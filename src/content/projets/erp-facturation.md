@@ -22,5 +22,3 @@ schema:
     - { trace: 'M228 78 C246 78 246 40 262 40', principal: true }
     - { trace: 'M228 92 C246 92 246 130 262 130', principal: true }
 ---
-
-<!-- Étude de cas (à rédiger, étape 4 du plan) : contexte, problème, architecture, ce que j'ai fait, résultats. -->

@@ -23,5 +23,3 @@ schema:
     - { trace: 'M276 84 H290', principal: true }
     - { trace: 'M319 68 V100' }
 ---
-
-<!-- Étude de cas (à rédiger, étape 4 du plan) : contexte, problème, architecture, ce que j'ai fait, résultats. -->
