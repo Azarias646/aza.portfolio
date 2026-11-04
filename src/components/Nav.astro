@@ -159,10 +159,9 @@ const liens = ecrans.filter((e) => e.id !== 'accueil') as ReadonlyArray<{ id: No
 
   /* Téléphone : barre du haut collée, liens en barre d'onglets fixée en bas */
   @media (max-width: 760px) {
+    /* La barre du haut défile avec la page */
     .barre {
-      position: sticky;
-      top: 0;
-      background: linear-gradient(180deg, var(--page) 72%, transparent);
+      position: relative;
     }
     .liens {
       position: fixed;
@@ -178,6 +177,11 @@ const liens = ecrans.filter((e) => e.id !== 'accueil') as ReadonlyArray<{ id: No
       border: 1px solid var(--barre-bord);
       border-radius: 22px;
       background: var(--barre-fond);
+      transition: transform 320ms var(--courbe-sortie);
+    }
+    /* Cachée en descendant, de retour dès qu'on remonte (script barre-mobile.ts) */
+    :global(.barre-cachee) .liens {
+      transform: translateY(calc(100% + 12px + env(safe-area-inset-bottom, 0px)));
     }
     .liens a {
       flex-direction: column;

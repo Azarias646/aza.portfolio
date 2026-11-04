@@ -340,7 +340,8 @@ Sur téléphone, le site ne fonctionne plus en écrans plein écran : la page d�
   - L'onglet de la section au milieu de l'écran est actif : fond léger, partie claire de l'icône en vert.
   - Toucher un onglet fait défiler en douceur jusqu'à la section (`scroll-margin-top: 76px` pour passer sous la barre du haut). Toucher « Azarias » remonte en haut.
   - La page a une marge basse de 96 px pour que la barre ne cache pas la fin du pied de page.
-- **Barre du haut :** collée en haut pendant le défilement, sur un fondu de la couleur de la page pour que le contenu ne se voie pas au-dessus d'elle.
+- **Barre du haut :** dans le site Astro, elle n'est plus collée : elle défile avec la page (le bouton de thème reste en haut de page).
+- **Barre d'onglets du bas (site Astro) :** elle se cache quand on fait défiler vers le bas et réapparaît dès qu'on remonte (8 px de seuil). Elle reste visible en haut et en bas de la page, et quand un de ses onglets a le focus clavier (script `barre-mobile.ts`). L'accueil garde une adresse sans `#`.
 - **Repères d'écran (`ol.points`) :** masqués.
 - **Onglets du Parcours :** icône au-dessus du libellé (12,5 px, sur une ligne).
 - **Zones à toucher :** au moins 44 px pour les icônes copier / écrire et le bouton de thème.

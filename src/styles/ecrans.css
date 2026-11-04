@@ -84,7 +84,7 @@ body {
     overflow-x: clip; /* rien ne dépasse sur les côtés (aplat du portrait, filigranes) */
     visibility: visible;
     padding-block: 56px 16px;
-    scroll-margin-top: 76px;
+    scroll-margin-top: 0;
   }
   #accueil.ecran {
     padding-top: 8px;

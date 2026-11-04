@@ -50,7 +50,8 @@ export function initEcrans(reduit: boolean): void {
       else a.removeAttribute('aria-current');
     });
     try {
-      history.replaceState(null, '', `#${id}`);
+      // L'accueil garde une adresse sans #, pour ne pas décaler la page au chargement
+      history.replaceState(null, '', courant === 0 ? location.pathname + location.search : `#${id}`);
     } catch {
       // Adresse non modifiable (aperçu dans une iframe) : sans effet sur la navigation.
     }
