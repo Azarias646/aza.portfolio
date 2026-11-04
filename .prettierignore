@@ -10,3 +10,4 @@ src/data/logos.ts
 *.md
 src/data/vignettes.ts
 docs/og/
+outils/

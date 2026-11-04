@@ -48,7 +48,7 @@ Les composants n'utilisent que ces variables, jamais une couleur écrite en dur 
 | `--carte` | dégradé 160° `#24242a` → `#18181c` | dégradé 160° `#ffffff` → `#f6f6f8` | Fond de toutes les cartes |
 | `--texte` | `#f2f3f3` | `#141516` | Texte principal |
 | `--texte-attenue` | `#a3a6ab` | `#5a5f63` | Texte secondaire, libellés |
-| `--texte-discret` | `#8b8f95` | `#6b7075` | Mentions |
+| `--texte-discret` | `#909499` | `#63686c` | Mentions (site Astro : éclairci / foncé pour passer le contraste AA ; maquette : `#8b8f95` / `#6b7075`) |
 | `--accent` | `#1d5a4e` | `#1d5a4e` | Aplat vert : bouton principal, pastilles, jauge |
 | `--accent-survol` | `#256b5e` | `#256b5e` | Aplat vert survolé |
 | `--accent-texte` | `#7ccbb7` | `#256b5e` | Texte et « / » en vert |

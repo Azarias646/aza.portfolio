@@ -8,8 +8,8 @@ export default defineConfig({
   trailingSlash: 'ignore',
   integrations: [sitemap({ filter: (page) => !page.includes('/404') })],
   build: {
-    // Petites feuilles de style intégrées à la page : une requête de moins au premier affichage.
-    inlineStylesheets: 'auto',
+    // Styles intégrés à la page : rien ne bloque le premier affichage (environ 25 Ko).
+    inlineStylesheets: 'always',
   },
   env: {
     // Analytics : vides en local, renseignées dans Cloudflare Pages (Settings → Variables).

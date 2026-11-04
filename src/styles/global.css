@@ -1,8 +1,19 @@
 /* Base commune : remise à zéro, typographie, utilitaires partagés par plusieurs composants. */
-/* Roboto Flex avec les axes opsz, wdth et wght, comme la maquette (Google Fonts : opsz,wdth,wght) */
-@import '@fontsource-variable/roboto-flex/standard.css';
 @import './tokens.css';
 @import './ecrans.css';
+
+/*
+ * Roboto Flex réduite à ce qui sert (outils/police.py) : axes opsz, wdth et wght, comme la maquette,
+ * caractères latins et ponctuation française. Préchargée dans Base.astro.
+ */
+@font-face {
+  font-family: 'Roboto Flex Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 1000;
+  font-stretch: 25% 151%;
+  src: url('/polices/roboto-flex.woff2') format('woff2-variations');
+}
 
 *,
 *::before,

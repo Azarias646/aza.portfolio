@@ -44,6 +44,7 @@ src/
 └── styles/              jetons (tokens.css), base (global.css), écrans (ecrans.css)
 public/                  fichiers servis tels quels (CV, favicon, icônes, manifeste, robots.txt, og.png)
 docs/og/                 sources de l'image d'aperçu et des icônes (voir docs/og/README.md)
+outils/police.py         prépare public/polices/roboto-flex.woff2 (axes et caractères utiles seulement)
 maquette/                maquette validée et sa documentation (référence, non publiée)
 archive/v1/              ancien portfolio, conservé pour mémoire
 ```

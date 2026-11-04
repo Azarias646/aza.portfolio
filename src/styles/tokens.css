@@ -17,7 +17,7 @@
   --carte: linear-gradient(160deg, light-dark(#ffffff, #24242a) 0%, light-dark(#f6f6f8, #18181c) 100%);
   --texte: light-dark(#141516, #f2f3f3);
   --texte-attenue: light-dark(#5a5f63, #a3a6ab);
-  --texte-discret: light-dark(#6b7075, #8b8f95);
+  --texte-discret: light-dark(#63686c, #909499); /* contraste AA (4,5:1) sur page, carte et surface-2 */
   --accent: #1d5a4e;
   --accent-survol: #256b5e;
   --accent-texte: light-dark(#256b5e, #7ccbb7);
