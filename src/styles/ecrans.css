@@ -81,6 +81,7 @@ body {
     inset: auto;
     display: block;
     overflow: visible;
+    overflow-x: clip; /* rien ne dépasse sur les côtés (aplat du portrait, filigranes) */
     visibility: visible;
     padding-block: 64px 40px;
     scroll-margin-top: 76px;

@@ -216,6 +216,10 @@ const panneaux = [
     }
   }
   @media (max-width: 760px) {
+    /* Sur téléphone, les onglets n'ont pas la même hauteur : on masque vraiment l'onglet caché */
+    .onglet-panneau[hidden] {
+      display: none !important;
+    }
     .onglet {
       flex-direction: column;
       gap: 6px;
