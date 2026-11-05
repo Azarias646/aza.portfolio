@@ -10,31 +10,33 @@
   color-scheme: dark light;
 
   /* Couleurs */
-  --page: light-dark(#ededef, #0b0b0c);
-  --surface: light-dark(#ffffff, #1c1c20);
-  --surface-2: light-dark(#f1f1f3, #2a2a30);
-  --filet: light-dark(#e2e2e6, #2a2a30);
-  --carte: linear-gradient(160deg, light-dark(#ffffff, #24242a) 0%, light-dark(#f6f6f8, #18181c) 100%);
-  --texte: light-dark(#141516, #f2f3f3);
-  --texte-attenue: light-dark(#5a5f63, #a3a6ab);
-  --texte-discret: light-dark(#63686c, #909499); /* contraste AA (4,5:1) sur page, carte et surface-2 */
+  --page: light-dark(#ededed, #0b0b0c);
+  --fond: var(--page); /* aza-structure : fond d'un écran (le portfolio pose ses écrans sur la page) */
+  --surface: light-dark(#ffffff, #1c1c1c);
+  --surface-2: light-dark(#f1f1f1, #2a2a2a);
+  --filet: light-dark(#e2e2e2, #2a2a2a);
+  --carte: linear-gradient(160deg, light-dark(#ffffff, #242424) 0%, light-dark(#f6f6f6, #181818) 100%);
+  --texte: light-dark(#151515, #f2f3f3);
+  --texte-attenue: light-dark(#5e5e5e, #a6a6a6);
+  --texte-discret: light-dark(#676767, #949494); /* contraste AA (4,5:1) sur page, carte et surface-2 */
   --accent: #1d5a4e;
   --accent-survol: #256b5e;
   --accent-texte: light-dark(#256b5e, #7ccbb7);
   --accent-trait: light-dark(#2e7d6c, #7ccbb7);
   --sur-accent: light-dark(#ffffff, #e6f4f0);
-  --filigrane: light-dark(#f5f5f7, #1a1a1e);
+  --erreur: light-dark(#a63d32, #e8908a); /* seule couleur d'état (aza-structure) */
+  --filigrane: light-dark(#f5f5f5, #1a1a1a);
 
   /* Barre de navigation, carte d'appel, pied de page */
-  --barre-fond: linear-gradient(180deg, light-dark(#ffffff, #1d1d21) 0%, light-dark(#f1f1f3, #101012) 100%);
+  --barre-fond: linear-gradient(180deg, light-dark(#ffffff, #1d1d1d) 0%, light-dark(#f1f1f1, #101010) 100%);
   --barre-bord: light-dark(rgba(0, 0, 0, 0.07), rgba(255, 255, 255, 0.08));
   --barre-bord-bas: light-dark(rgba(0, 0, 0, 0.07), rgba(255, 255, 255, 0.03));
   --barre-halo: light-dark(rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.07));
   --lien-survol: light-dark(rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05));
   --lien-actif: light-dark(rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.06));
-  --ico-fonce: light-dark(#7d8187, #8d9096);
-  --ico-moyen: #b8bbbf;
-  --ico-clair: light-dark(#b5b8bc, #d9dbdd);
+  --ico-fonce: light-dark(#818181, #909090);
+  --ico-moyen: #bbbbbb;
+  --ico-clair: light-dark(#b8b8b8, #dbdbdb);
 
   /* PC de l'accueil (§ 3.17) */
   --trait-pc: light-dark(rgba(0, 0, 0, 0.22), rgba(255, 255, 255, 0.13));
@@ -53,16 +55,20 @@
   --rayon-pilule: 999px;
 
   /* Typographie */
-  --police: 'Roboto Flex Variable', 'Manrope', system-ui, sans-serif;
+  --police: 'Roboto Flex Variable', system-ui, sans-serif;
   --police-terminal: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
   --taille-petit: 12.5px;
   --taille-texte: 14.5px;
+  --taille-min: 12.5px; /* plus petite taille de texte autorisée (aza-structure : « Petit ») */
 
   /* Mouvement */
   --duree-rapide: 120ms;
   --duree-standard: 220ms;
   --duree-lente: 600ms;
+  --duree-ambiance: 7s;
   --courbe-sortie: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --courbe-douce: cubic-bezier(0.45, 0, 0.55, 1);
+  /* Propres au portfolio (écart noté au § 6 de maquette/COMPOSANTS.md) : fondu du contenu, poussée entre écrans */
   --courbe-fondu: cubic-bezier(0.25, 0.1, 0.25, 1);
   --courbe-poussee: cubic-bezier(0.65, 0, 0.35, 1);
 
